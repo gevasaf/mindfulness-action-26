@@ -75,6 +75,7 @@
         '<bdi class="pfull-time" dir="ltr" data-p="time">0:00</bdi>' +
         '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
         '<button type="button" class="ibtn ibtn-main ibtn-big" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
+        '<a class="ibtn ibtn-share" data-p="share" href="meditations.html" target="_blank" rel="noopener" aria-label="שיתוף בוואטסאפ" title="שיתוף בוואטסאפ">' + icon("share") + "</a>" +
         '<button type="button" class="ibtn" data-p="close" aria-label="עצירה וסגירת הנגן">' + icon("close") + "</button>" +
         '<span class="pfull-time pfull-note">קול ממוחשב זמני</span>' +
       "</div>" +

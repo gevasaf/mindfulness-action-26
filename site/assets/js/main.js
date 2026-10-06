@@ -114,11 +114,21 @@
     if (!cd) return;
     var parts = { d: cd.querySelector("[data-cd=d]"), h: cd.querySelector("[data-cd=h]"), m: cd.querySelector("[data-cd=m]") };
     var caption = document.querySelector("[data-countdown-caption]");
+    // After the countdown, the caption follows the days (Israel time, UTC+2):
+    // 27.10 07:00-22:00 polls open · 27.10 22:00 until 28.10 ends: the day after · then thanks.
+    var CLOSE = new Date("2026-10-27T22:00:00+02:00").getTime();
+    var AFTER_END = new Date("2026-10-29T00:00:00+02:00").getTime();
     var tick = function () {
-      var left = ELECTION - Date.now();
+      var now = Date.now(), left = ELECTION - now;
       if (left <= 0) {
         cd.hidden = true;
-        if (caption) caption.textContent = "היום, או כבר אחרי, יום הבחירות. הרגע הזה לא מובן מאליו.";
+        if (caption) {
+          caption.innerHTML = now < CLOSE
+            ? 'היום יום הבחירות. הקלפיות פתוחות עד 22:00. <a href="election-day.html">מדיטציה לדרך לקלפי</a>'
+            : now < AFTER_END
+              ? 'הקלפיות נסגרו. <a href="day-after.html">היום שאחרי</a>: נושמים יחד, בלי קשר לתוצאות.'
+              : 'תודה שהייתם נוכחים.';
+        }
         return;
       }
       var mins = Math.floor(left / 60000);
