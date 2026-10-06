@@ -3,7 +3,7 @@
 //   - in-place navigation: site links swap <main> instead of reloading, so the
 //     meditation player (player.js, outside <main>) keeps playing across pages.
 //     Without JS, or if a fetch fails, links are ordinary page loads;
-//   - mobile menu, countdown, WhatsApp share links, hero video, motion pause.
+//   - logo breath on hover, mobile menu, countdown, WhatsApp share links, hero video, motion pause.
 (function () {
   document.documentElement.classList.add("js");
 
@@ -17,6 +17,16 @@
       if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true });
     } catch (e) {}
   };
+
+  // ---------- logo: one full breath on hover or focus (header is static, bind once) ----------
+  var mark = document.querySelector(".brand-mark");
+  var brand = document.querySelector(".brand");
+  if (mark && brand) {
+    var breathe = function () { brand.classList.add("breathing"); };
+    brand.addEventListener("mouseenter", breathe);
+    brand.addEventListener("focus", breathe);
+    mark.addEventListener("animationend", function (e) { if (e.target === mark) brand.classList.remove("breathing"); });
+  }
 
   // ---------- mobile menu (header is static, bind once) ----------
   var toggle = document.querySelector(".menu-toggle");
