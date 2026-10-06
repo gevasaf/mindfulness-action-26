@@ -150,7 +150,7 @@ window.onPage(function () {
     ctx.direction = "rtl"; ctx.textAlign = "center";
     ctx.fillStyle = "#4f6852"; ctx.font = "700 44px 'M PLUS Rounded 1c', Assistant, sans-serif";
     ctx.fillText("נוֹכְחִים", W / 2, 350);
-    ctx.fillStyle = "#2b2925"; ctx.font = "700 76px 'Frank Ruhl Libre', serif";
+    ctx.fillStyle = "#2b2925"; ctx.font = "700 72px 'M PLUS Rounded 1c', Assistant, sans-serif";
     ctx.fillText("התוכנית שלי להצביע", W / 2, 470);
     var y = 590;
     items.forEach(function (it) {

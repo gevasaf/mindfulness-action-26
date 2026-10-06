@@ -8,7 +8,7 @@
 | Site | Plain **HTML + CSS + vanilla JS** in `site/` | No build step and no dependencies, so it's easy to change between iterations. |
 | Deploy | GitHub Actions (`.github/workflows/pages.yml`) | Every push to `main` that touches `site/` gets deployed. |
 | Language/direction | Hebrew, `lang="he" dir="rtl"` | The movement's audience. |
-| Fonts | **Self-hosted** Assistant + Frank Ruhl Libre, plus M PLUS Rounded 1c for the brand name only (Hebrew subset with niqqud, 5 KB; site v1.0.1) (woff2, SIL OFL) in `site/assets/fonts/` | No third-party requests; fast. |
+| Fonts | **Self-hosted** Assistant + Frank Ruhl Libre, plus M PLUS Rounded 1c for the brand name (v1.0.1) and all titles (v1.0.6) (Hebrew subset with niqqud, 5 KB, + Latin subset, 22 KB) (woff2, SIL OFL) in `site/assets/fonts/` | No third-party requests; fast. |
 | Navigation (v0.2) | Vanilla JS in-place navigation (swap `<main>`, History API) | Lets the meditation player keep playing across pages. No framework, no build step; plain page loads without JS. |
 | Third-party code | `site/assets/js/vendor/qrcode.js` (qrcode-generator, MIT), self-hosted | QR on the printable sign. |
 | Audio (v0) | Pre-rendered MP3s in `site/content/meditations/audio/` (ElevenLabs voice + generated music, mono 80 kbps) with stanza timing JSON, played by the global player (`player.js`) | Shareable files, same voice everywhere. See F1. |
