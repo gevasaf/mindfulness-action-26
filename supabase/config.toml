@@ -1,0 +1,9 @@
+# Supabase CLI settings for this repo (tech/backend-setup.md). Only what differs
+# from the defaults; the project itself is chosen with `supabase link`.
+project_id = "mindfulness-action-26"
+
+[functions.create-circle]
+verify_jwt = true   # needs a signed-in (phone-verified) user
+
+[functions.report-circle]
+verify_jwt = true   # the site's anon key is enough

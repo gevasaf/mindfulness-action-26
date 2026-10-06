@@ -36,6 +36,9 @@ GitHub Pages only serves static files. It has **no server, no database, and no s
 
 Third-party embeds keep us on Pages, but they are still a decision (privacy, cost, vendor), so they must be flagged too.
 
+## Backend (design-v2)
+Set up by the repo owner with [`backend-setup.md`](backend-setup.md); how it fits together: `design-doc.md` → "Backend (design-v2)".
+
 ## Flagged features (pending user decision)
 
 | Design version | Feature | Options considered | Recommendation | User decision |
