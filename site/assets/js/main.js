@@ -2,6 +2,13 @@
 (function () {
   document.documentElement.classList.add("js");
 
+  // Anonymous event count (GoatCounter: no cookies, no personal data). Only the event name is sent.
+  window.countEvent = function (name) {
+    try {
+      if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: name, title: name, event: true });
+    } catch (e) {}
+  };
+
   // Mobile menu
   var toggle = document.querySelector(".menu-toggle");
   var nav = document.getElementById("site-nav");
@@ -45,6 +52,7 @@
     a.href = "https://wa.me/?text=" + encodeURIComponent(title + ": רגע של נשימה לפני הבחירות.\n" + url);
     a.target = "_blank";
     a.rel = "noopener";
+    a.addEventListener("click", function () { window.countEvent("share-meditation-whatsapp"); });
   });
 
   // Pause / resume the hero's slow motion (design-v0 §7: visible stop button)

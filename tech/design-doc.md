@@ -44,7 +44,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 | Download / share audio file | "בקרוב" (no audio files exist yet); "send on WhatsApp" shares the page link | flag F1 |
 | Voting plan | `assets/js/plan.js`: three questions (when: slot or exact time; with whom; whom I invite), no question on political views. Outputs a card, WhatsApp share text (`wa.me`), a PNG card drawn on `<canvas>` (Web Share with file, or download), an `.ics` event with alarms 1 h and 18 h before, and a link to the Central Elections Committee site. Nothing stored or sent: no cookies, no localStorage, no network calls | yes |
 | Background video strip | CSS gradient stand-in + "רצועת וידאו: בקרוב" | flag F2 |
-| Measurement (plans, listens, shares) | Not built | flag F3 |
+| Measurement (plans, listens, shares) | GoatCounter script on every page. Page views plus anonymous events from `window.countEvent` (`main.js`): `plan-created`, `plan-whatsapp`, `plan-image`, `plan-calendar`, `listen-<script>`, `listen-complete-<script>`, `share-meditation-whatsapp`. Only the event name is sent, never what people type. A footer line says so | yes (F3, approved) |
 | WhatsApp channel / groups / hosts group | "בקרוב" placeholders | needs links from the team |
 | Donations | Explanation only, no payment UI | yes |
 
@@ -53,7 +53,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 - `prefers-reduced-motion`: hero drift and breathing animation stop entirely; the stop-motion button covers everyone else.
 - Player: current line in an `aria-live="polite"` region; full script readable as text; works without a voice.
 - Mobile menu collapses behind a toggle only when JS runs; without JS the nav is a plain list.
-- No third-party requests, no images other than an SVG icon, fonts preloaded; total page weight well under 300 KB.
+- The only third-party request is GoatCounter's script and counter; no images other than an SVG icon, fonts preloaded; total page weight well under 300 KB.
 - Verified with Playwright (Chromium) at 1280×900 and 390×844, light and dark: no console errors, no failed requests, no horizontal overflow.
 
 ## Traceability
@@ -70,7 +70,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 | §13 voting plan in browser only, share card + calendar | `plan.js`, no storage | done |
 | §8 polling-place link (CEC) | Link to `https://www.bechirot.gov.il/` | done (see A2) |
 | §13 countdown to 27.10.2026 | `main.js` | done |
-| §13 privacy-preserving measurement | Not built | F3 |
+| §13 privacy-preserving measurement | GoatCounter, anonymous events | done |
 | §8 v0 pages: meditations, circles, host kit, journey, donate, election day, day after | One page each | done |
 | §9 trauma sensitivity | "You can stop any time" callout before players; support lines on every page | done |
 | §5 / §13 neutrality in code and meta | All copy, meta descriptions and alt text checked against the non-partisan test | done |
@@ -87,5 +87,5 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
-| t1 | design-v0 | 2026-10-06 | Full v0 prototype: 8 pages, browser TTS meditations with generated music, working voting plan, countdown, self-hosted fonts. Flags F1–F3. |
+| t1 | design-v0 | 2026-10-06 | Full v0 prototype: 8 pages, browser TTS meditations with generated music, working voting plan, countdown, self-hosted fonts. Flags F1–F3. F1: stay on browser TTS; F2: stay on gradient; F3: GoatCounter built. |
 | t0 | — | 2026-10-06 | Scaffold only |

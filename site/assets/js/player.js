@@ -176,6 +176,7 @@
     if (synth && !this.voice) this.note("לא נמצא קול עברי בדפדפן או במכשיר הזה, ולכן ההקראה שקטה: המילים יופיעו כאן בקצב המדיטציה, עם המוזיקה.", true);
     var self = this;
     this.load().then(function () {
+      if (self.state === "idle" || self.state === "done") window.countEvent("listen-" + self.src.replace(/^.*\/|\.md$/g, ""));
       if (self.state === "done") self.i = 0;
       self.state = "playing";
       self.btnPlay.textContent = "❚❚ השהיה";
@@ -245,6 +246,7 @@
   };
 
   Player.prototype.finish = function () {
+    if (this.state !== "done") window.countEvent("listen-complete-" + this.src.replace(/^.*\/|\.md$/g, ""));
     this.state = "done";
     this.pad.stop();
     this.btnPlay.textContent = "▶ להאזין שוב";

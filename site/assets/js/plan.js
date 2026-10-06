@@ -1,5 +1,6 @@
-// "My voting plan": runs entirely in the browser. Nothing is sent or stored
-// (no network calls, no cookies, no localStorage). design-v0 §8 and §13.
+// "My voting plan": runs entirely in the browser. What people type is never sent
+// or stored (no cookies, no localStorage). The only network call is an anonymous
+// GoatCounter event name ("plan-created" etc.), never the plan itself. design-v0 §8, §13.
 (function () {
   var form = document.getElementById("plan-form");
   if (!form) return;
@@ -133,18 +134,22 @@
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     render(read());
+    if (out.hidden) window.countEvent("plan-created");
     out.hidden = false;
     out.querySelector("h3").focus();
   });
   form.addEventListener("input", function () { if (!out.hidden) render(read()); });
 
   out.querySelector("[data-act=whatsapp]").addEventListener("click", function () {
+    window.countEvent("plan-whatsapp");
     window.open("https://wa.me/?text=" + encodeURIComponent(shareText(read())), "_blank", "noopener");
   });
   out.querySelector("[data-act=calendar]").addEventListener("click", function () {
+    window.countEvent("plan-calendar");
     download(new Blob([ics(read())], { type: "text/calendar;charset=utf-8" }), "voting-plan-27-10.ics");
   });
   out.querySelector("[data-act=image]").addEventListener("click", function () {
+    window.countEvent("plan-image");
     var p = read();
     var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     ready.then(function () { return cardImage(p); }).then(function (blob) {
