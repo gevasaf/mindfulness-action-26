@@ -1,11 +1,11 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v0.html` (design-v0, released 2026-10-06), plus the user's answer to questions-for-design #1 and the user's direct design remarks for site v0.2 (see below; to be folded into design-v1, question #6)
-**Tech doc version:** t1.2.7 · **Site version:** v0.2.7 (shown in every page footer; approved by the user 2026-10-06)
+**Tech doc version:** t1.2.8 · **Site version:** v0.2.7 (shown in every page footer; approved by the user 2026-10-06)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
-design-v0 is a touchable prototype of the whole vision: a full home page, three sample meditations read by a temporary computer voice over quiet background music, a voting plan that really works, and previews of every future feature, clearly labelled. Per the user's decision (questions-for-design #1) it is deployed to the public GitHub Pages site as usual, with a draft banner on every page and no indexing block.
+design-v0 is a touchable prototype of the whole vision: a full home page, three sample meditations read by a temporary computer voice over quiet background music, a voting plan that really works, and previews of every future feature, clearly labelled. Per the user's decision (questions-for-design #1) it is deployed to the public GitHub Pages site as usual, with a draft banner on every page and no indexing block. Since then the site has gone through v0.2–v0.2.7 with the user's direct design remarks (see "Site v0.2" below); it is still a draft, not v1.
 
 ## Information architecture
 Flat, static pages in `site/`, one shared header (brand + nav) and footer (support lines + neutrality line).
@@ -35,7 +35,7 @@ Anchors on the home page: `#ways`, `#plan`, `#circles`, `#great-silence`, `#abou
 - **Labels:** `.tag-soon` "בקרוב", `.tag-sample` "דוגמה", `.tag-tts` "קול ממוחשב זמני"; disabled buttons are dashed `aria-disabled` spans, so nothing looks clickable that isn't.
 
 ## Content
-- Page copy is hand-written HTML in `site/*.html`, taken from the release text. Header (with the draft banner), footer (with the version line) and support section are identical on every page; the HTML files are the source, so when editing them, change all nine pages (`sign.html` and `host-guide.html` are standalone). Bump the version in every footer and in the printables' sheet footers.
+- Page copy is hand-written HTML in `site/*.html`, taken from the release text. Header (with the draft banner), footer (with the version line) and support section are identical on every page; the HTML files are the source, so when editing them, change all ten pages (`sign.html` and `host-guide.html` are standalone). Bump the version in every footer and in the printables' sheet footers.
 - Meditation scripts are copied verbatim from `design/releases/design-v0-meditations/` to `site/content/meditations/` (the deploy only ships `site/`); the same text is embedded in each meditation's "לקריאת התסריט" panel. Recordings and stanza timings are in `site/content/meditations/audio/`, made with `tech/tools/mix-meditation-audio.py`. The hero video loop is made with `tech/tools/video-pingpong.py`.
 - Sample circles, journey days and Great Silence details are placeholders marked "דוגמה" / "בקרוב".
 
@@ -73,13 +73,26 @@ Given directly by the user in the build chat, on top of design-v0. Not yet in a 
 4. A visible version mark.
 5. The hero video is less visible behind the text (stronger paper veil in the text column).
 
+Further remarks, v0.2.1 to v0.2.7 (same status: built, waiting for design-v1):
+6. Share buttons read "שיתוף"; the WhatsApp icon carries the meaning (v0.2.1).
+7. The draft banner can be closed for the session (v0.2.1).
+8. The mobile menu button is a hamburger icon (v0.2.1).
+9. The player bar and the full-screen player have a WhatsApp share icon for the meditation playing now (v0.2.1, v0.2.2).
+10. On phones, the whole hero including both buttons fits in the first screen (v0.2.2).
+11. The countdown is replaced by captions on election day, the day after and later; wording by build, question #7 (v0.2.2).
+12. Voting plan: location (calendar only), dedication of the moment (fixed list), meditation for the way (in the calendar); question #8 (v0.2.3).
+13. The voting plan has its own page, `plan.html`, with texts rewritten around the moment behind the curtain; the home page keeps a teaser; question #9 (v0.2.4). Election day is a day off, so the copy mentions errands, not work (v0.2.6).
+14. When a meditation ends, the player shows "התוכנית שלי" and the support lines together, no toast and no delay; the button is more prominent in full screen (v0.2.4, v0.2.5).
+15. The home page no longer has the central-meditation box; the hero's play button starts it (v0.2.7).
+16. The player's meditation name has a chevron: down elsewhere, up on the meditations page (v0.2.7).
+
 ## Traceability
 | Design requirement (release §) | Technical decision | Status |
 |---|---|---|
 | §8 draft marking on every screen | Sticky draft banner, wording per questions-for-design #1 | done |
 | §8 "בקרוב" / "דוגמה" / "קול ממוחשב זמני" labels | `.tag-*` classes on every unready feature, sample datum and recording | done |
-| §8 home page structure 1–8 | `index.html` sections in that order; support (8) is on every page | done |
-| §8 primary action: listen; secondary: voting plan | Hero buttons "להאזנה (7 דקות)" + "להכין תוכנית הצבעה" | done |
+| §8 home page structure 1–8 | `index.html` in that order, with user changes: (2) the central meditation is started from the hero's play button rather than a separate box (v0.2.7); (4) the voting plan is a teaser linking to `plan.html` (v0.2.4); support (8) is on every page | done (adapted) |
+| §8 primary action: listen; secondary: voting plan | Hero buttons "להאזנה (7 דקות)" (starts the global player) + "לתכנן הצבעה" (to `plan.html`); every meditation ending also invites to the plan ("התוכנית שלי") | done |
 | §7 palette, type, breathing circle, space | CSS tokens, self-hosted fonts, CSS animation | done |
 | §7 video strip | Eased ping-pong loop, no sound, pause button, poster for reduced motion / slow connections, paper-toned overlay | done |
 | §9 / §13 TTS meditations with music | ElevenLabs voice + mixed music bed, labelled "קול ממוחשב זמני (ElevenLabs)" | done |
@@ -104,6 +117,7 @@ Given directly by the user in the build chat, on top of design-v0. Not yet in a 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t1.2.8 | design-v0 + user remarks | 2026-10-06 | Docs only: overview, remarks list 6–16 (v0.2.1–v0.2.7), traceability for the home page and primary actions brought up to date. |
 | t1.2.7 | design-v0 + user remarks | 2026-10-06 | Site v0.2.7: home page drops the "המדיטציה המרכזית" box (the hero's play button starts it; the meditations page has the details); the player's title has a chevron (down = open the meditation's details, flips up on the meditations page). |
 | t1.2.6 | design-v0 + user remarks | 2026-10-06 | Site v0.2.6: plan page copy: election day is a day off, so "בין סידורים, קניות וכל ההמולה" instead of mentioning work. |
 | t1.2.5 | design-v0 + user remarks | 2026-10-06 | Site v0.2.5: player end button reads "התוכנית שלי" (accessible name "התוכנית שלי: תוכנית ההצבעה"); larger primary button in full screen. |
