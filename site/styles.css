@@ -1,0 +1,18 @@
+:root {
+  --bg: #fafaf7;
+  --fg: #222;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: system-ui, "Segoe UI", Arial, sans-serif;
+  text-align: center;
+  padding: 16px;
+}
