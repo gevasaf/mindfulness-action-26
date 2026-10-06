@@ -6,12 +6,10 @@ Writes site/content/meditations/audio/<id>.mp3 and <id>.json. Needs ffmpeg.
 Stanza timings come from silence detection: gaps of 1.5 s or more must match
 the script's stanza breaks (blank lines / [שקט] markers), or the script stops."""
 import subprocess, re, json, sys, pathlib
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
 U = pathlib.Path(sys.argv[1])
 OUT = pathlib.Path("site/content/meditations/audio"); OUT.mkdir(parents=True, exist_ok=True)
-PRE, TAIL = 3.0, 6.0
-# soft D-A-E-F#-D pad with slow breath-like swells (same chord as the in-browser pad)
-notes = [(146.83, .050, -4), (220.0, .073, 4), (329.63, .096, -4), (369.99, .119, 4), (293.66, .142, -4)]
-expr = "+".join(f"0.18*sin(2*PI*{f*(2**(c/1200)):.3f}*t)*(0.6+0.4*sin(2*PI*{l}*t+{i}))" for i, (f, l, c) in enumerate(notes))
+from meditation_mix import PRE, TAIL, duration, mix  # shared with the v2 worker
 
 def stanzas(name):
     s = open(f"site/content/meditations/{name}.md", encoding="utf-8").read().split("\n---\n", 1)[1]
@@ -26,7 +24,7 @@ def stanzas(name):
 
 for name in ["behind-the-curtain", "clarity-in-the-noise", "on-the-way-to-vote"]:
     src = next(U.glob(f"*{name}.voice.mp3"))
-    dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src]))
+    dur = duration(src)
     log = subprocess.run(["ffmpeg", "-v", "info", "-i", src, "-af", "silencedetect=n=-45dB:d=1.5", "-f", "null", "-"], capture_output=True, text=True).stderr
     starts = [float(x) for x in re.findall(r"silence_start: ([\d.]+)", log)]
     ends = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", log)]
@@ -35,16 +33,6 @@ for name in ["behind-the-curtain", "clarity-in-the-noise", "on-the-way-to-vote"]
     assert len(sil) == len(st) - 1, (name, len(sil), len(st))
     bounds = [0.0] + [x for a, b in sil for x in (a, b)] + [dur]
     timings = [{"start": round(bounds[2*i] + PRE, 2), "end": round(bounds[2*i+1] + PRE, 2), "text": t} for i, t in enumerate(st)]
-    total = PRE + dur + TAIL
-    subprocess.run(["ffmpeg", "-v", "error", "-y",
-        "-f", "lavfi", "-i", f"aevalsrc='{expr}':s=44100:d={total}",
-        "-i", str(src),
-        "-filter_complex",
-        f"[0]lowpass=f=900,loudnorm=I=-37:TP=-6:LRA=7,afade=t=in:d=4,afade=t=out:st={total-6}:d=6[m];"
-        f"[1]adelay={int(PRE*1000)},apad=whole_dur={total}[v];"
-        "[v][m]amix=inputs=2:normalize=0:duration=first,alimiter=limit=0.95",
-        "-ac", "1", "-ar", "44100", "-c:a", "libmp3lame", "-b:a", "80k",
-        "-metadata", "title=" + name, "-metadata", "artist=נוכחים (קול: ElevenLabs)",
-        str(OUT / f"{name}.mp3")], check=True)
+    total = mix(src, OUT / f"{name}.mp3", name, "נוכחים (קול: ElevenLabs)")
     (OUT / f"{name}.json").write_text(json.dumps({"duration": round(total, 2), "stanzas": timings}, ensure_ascii=False, indent=1), encoding="utf-8")
     print(name, round(total, 1), "s", len(timings), "stanzas")
