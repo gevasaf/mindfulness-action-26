@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.1 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -28,6 +28,7 @@ Anchors on the home page: `#idea`, `#ways`, `#plan`, `#about`; `#support` on eve
 
 ## Visual system
 - **Colors** (CSS custom properties in `site/styles.css`): `--paper #f7f3ec`, `--ink #2b2925`, `--sage #6f8a72`, `--clay #b9684a`, `--sage-soft #e6ece4`, `--clay-soft`, plus the release's dark-mode set under `prefers-color-scheme: dark`. Darker `--sage-ink` / `--clay-ink` variants are used for text and button fills so they meet WCAG AA contrast.
+- **Brand name** (site v1.0.1, user request): written with niqqud, "נוֹכְחִים", in **M PLUS Rounded 1c** 700 (Google Fonts, SIL OFL), self-hosted Hebrew subset (`assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2`, 5 KB, preloaded; licence `OFL-MPLUSRounded1c.txt`), via `--brand-font`. Used in the header, the plan card, the plan PNG and the printable sign. Running text and `<title>` keep "נוכחים" without niqqud.
 - **Type:** Frank Ruhl Libre (headings, 500/700) and Assistant (body, 400/600/700), **self-hosted** woff2 (Hebrew + Latin subsets, ~140 KB total, SIL OFL, licences in `site/assets/fonts/`). Chosen over Google Fonts so the site makes no third-party requests.
 - **Breathing circle:** CSS animation, 5 s in / 5 s out, with "שאיפה / נשיפה" labels.
 - **Hero video strip:** Pexels clip "Golden wheat field swaying in the breeze" by †reny aleksa (credited in the hero). Colour muted toward sand/sage (the source is saturated yellow-orange, which §7 avoids). The clip doesn't loop, so it is pre-rendered as a ping-pong (forward, then reversed) whose speed eases to zero at each turn over 1.8 s: 30 s loop, 960×540, WebM VP9 + MP4 H.264, ~2 MB each, in `site/assets/video/`. A poster still shows first; the video loads only without reduced motion, data saver or 2G. The stop-motion button pauses it. The gradient stays underneath as a fallback.
@@ -82,6 +83,9 @@ Further remarks, v0.2.1 to v0.2.7 (same status: built, waiting for design-v1):
 15. The home page no longer has the central-meditation box; the hero's play button starts it (v0.2.7).
 16. The player's meditation name has a chevron: down elsewhere, up on the meditations page (v0.2.7).
 
+After design-v1 (site v1.0.1, waiting for a design release, question #11):
+17. The brand name has niqqud, "נוֹכְחִים", and uses M PLUS Rounded 1c.
+
 ## Traceability
 | Design requirement (design-v1 §) | Technical decision | Status |
 |---|---|---|
@@ -108,6 +112,7 @@ Further remarks, v0.2.1 to v0.2.7 (same status: built, waiting for design-v1):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.1 | design-v1 + user remark | 2026-10-06 | Site v1.0.1: brand name "נוֹכְחִים" with niqqud in M PLUS Rounded 1c (self-hosted Hebrew subset), in header, plan card, plan PNG and sign; question #11. |
 | t2.0 | design-v1 | 2026-10-06 | Site v1.0, public launch: draft banner and "דוגמה"/"בקרוב" labels removed; circles, journey, day-after and donate pages removed (plus home circles and Great Silence sections); "הרעיון" section on the home page; About rewritten (Assaf Geva, no nonprofit, no donations); detailed host kit, sign and host guide (30-minute circle, "באים בלבן", election day); "לארץ הזאת" dedication; "קול ממוחשב (AI)" label; 404 page. A7, A8, question #10. |
 | t1.2.8 | design-v0 + user remarks | 2026-10-06 | Docs only: overview, remarks list 6–16 (v0.2.1–v0.2.7), traceability for the home page and primary actions brought up to date. |
 | t1.2.7 | design-v0 + user remarks | 2026-10-06 | Site v0.2.7: home page drops the "המדיטציה המרכזית" box (the hero's play button starts it; the meditations page has the details); the player's title has a chevron (down = open the meditation's details, flips up on the meditations page). |

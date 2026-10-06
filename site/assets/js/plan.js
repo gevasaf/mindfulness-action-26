@@ -148,8 +148,8 @@ window.onPage(function () {
     ctx.fillStyle = "rgba(111,138,114,0.15)";
     ctx.beginPath(); ctx.arc(W / 2, 200, 52, 0, Math.PI * 2); ctx.fill();
     ctx.direction = "rtl"; ctx.textAlign = "center";
-    ctx.fillStyle = "#4f6852"; ctx.font = "700 40px Assistant, sans-serif";
-    ctx.fillText("נוכחים", W / 2, 350);
+    ctx.fillStyle = "#4f6852"; ctx.font = "700 44px 'M PLUS Rounded 1c', Assistant, sans-serif";
+    ctx.fillText("נוֹכְחִים", W / 2, 350);
     ctx.fillStyle = "#2b2925"; ctx.font = "700 76px 'Frank Ruhl Libre', serif";
     ctx.fillText("התוכנית שלי להצביע", W / 2, 470);
     var y = 590;
