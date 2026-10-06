@@ -82,6 +82,11 @@ img { max-width: 100%; height: auto; }
   padding: 8px 16px;
 }
 .draft-banner b { color: var(--clay-ink); }
+.draft-banner { display: flex; align-items: center; justify-content: center; gap: 8px; padding-inline: 44px; position: sticky; }
+.draft-close { position: absolute; inset-inline-end: 6px; top: 50%; transform: translateY(-50%); display: grid; place-items: center; width: 32px; height: 32px; border: 0; border-radius: 50%; background: transparent; color: var(--ink); cursor: pointer; padding: 0; }
+.draft-close svg { width: 18px; height: 18px; fill: currentColor; }
+.draft-close:hover { background: color-mix(in srgb, var(--clay) 18%, transparent); }
+.no-draft-banner .draft-banner { display: none; }
 
 /* Header & nav */
 .site-header { border-bottom: 1px solid var(--line); background: var(--paper); }

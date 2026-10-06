@@ -29,6 +29,17 @@
     });
   }
 
+  // Draft banner: closable; stays closed for this browser session (sessionStorage, per viewer only).
+  var draftClose = document.querySelector(".draft-close");
+  if (draftClose) {
+    draftClose.addEventListener("click", function () {
+      document.documentElement.classList.add("no-draft-banner");
+      try { sessionStorage.setItem("draftBannerClosed", "1"); } catch (e) {}
+      var main = document.getElementById("main");
+      if (main) { main.setAttribute("tabindex", "-1"); main.focus({ preventScroll: true }); }
+    });
+  }
+
   // ---------- in-place navigation ----------
   var loadedPath = location.pathname;
 
