@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.3 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.4 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -15,10 +15,10 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | `index.html` | Home: hero (its play button starts the central meditation), "the idea" (`#idea`), two ways (listen, plan), voting-plan teaser, short about | §8 "home page structure", §10 "הרעיון" |
 | `meditations.html` | Three meditations, labelled "קול ממוחשב (AI)" | §8, §9 "בעמוד המדיטציות", §10 |
 | `plan.html` | Voting plan; dedications include "לארץ הזאת" | §8, §10 "הקדשות" |
-| `host-kit.html` | Detailed host kit (release `design-v1-content/host-kit.md`), see A7 | §8, §10 "ערכת מארח/ת מפורטת" |
+| `host-kit.html` | "לפתוח מעגל" (v1.0.4; was "ערכת מארח/ת"; file name kept so links still work): detailed kit (release `design-v1-content/host-kit.md`), see A7 | §8, §10 "ערכת מארח/ת מפורטת" |
 | `election-day.html` | 27.10: morning circles (with a link to the host kit), "on the way" meditation, polling-place link | §8, §10 "עמוד יום הבחירות" |
 | `about.html` | Who's behind it (Assaf Geva, GitHub link), what we do, what we're not, transparency, credits | §10 "מי אנחנו", §14 |
-| `sign.html` | Printable A4 sign: "נוכחים · מעגל נשימה", when/where lines to fill in, QR to the site | §10 host kit "חומרים" |
+| `sign.html` | Printable A4 sign (v1.0.4): headline "לפני שבוחרים, נושמים", "מעגל נשימה לקראת הבחירות לכנסת · 27.10", when/where lines to fill in, QR to the site | §10 host kit "חומרים" |
 | `host-guide.html` | Printable one-page host guide: 30-minute flow, rules, roles, safety, election day, support lines | §10 host kit "חומרים" |
 | `404.html` | Not-found page (GitHub Pages serves it for any missing path, e.g. old links to removed pages), `noindex` | build choice |
 
@@ -43,6 +43,7 @@ Anchors on the home page: `#idea`, `#ways`, `#plan`, `#about`; `#support` on eve
   - **A circle host's own "we"** (the WhatsApp templates, the opening words, the sign's "לשבת איתנו") stays: there it means the people in the circle.
   - **The founder speaks in the first person in one place only:** a signed note on the About page explaining that "we" means everyone who lives here.
   - The meditation scripts' "ואפילו אותנו" stays (it is in the recordings).
+- **No "host" (site v1.0.4, user decision):** a circle isn't hosting guests, so "מארח/ת" is gone. The person who starts a circle "פותח/ת מעגל" (the release's own audience term); the page is "לפתוח מעגל" and the kit "ערכה לפתיחת מעגל". Roles inside the circle stay "מנחה/ה" and "מלווה".
   - The nav item and page title "מי אנחנו" became "על המיזם"; the home page section is "מי מאחורי זה".
 - Page copy is hand-written HTML in `site/*.html`, taken from the release text. Header, footer (with the version line) and support section are identical on every page; the HTML files are the source, so when editing them, change all seven pages (including `404.html`) (`sign.html` and `host-guide.html` are standalone). Bump the version in every footer and in the printables' sheet footers.
 - Meditation scripts are copied verbatim from `design/releases/design-v0-meditations/` to `site/content/meditations/` (the deploy only ships `site/`); the same text is embedded in each meditation's "לקריאת התסריט" panel. Recordings and stanza timings are in `site/content/meditations/audio/`, made with `tech/tools/mix-meditation-audio.py`. The hero video loop is made with `tech/tools/video-pingpong.py`.
@@ -96,6 +97,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 17. The brand name has niqqud, "נוֹכְחִים", and uses M PLUS Rounded 1c.
 18. The logo circle breathes once on hover; both breathing circles get a white echo that grows past them and fades out (v1.0.2).
 19. "We" (v1.0.3): no organizational "we"; impersonal voice for the project, a signed first-person note from the founder on the About page, "על המיזם" instead of "מי אנחנו" (see Content).
+20. No "host" (v1.0.4): "מארח/ת" becomes "לפתוח מעגל" / "ערכה לפתיחת מעגל"; the printable sign leads with "לפני שבוחרים, נושמים" and names the elections.
 
 ## Traceability
 | Design requirement (design-v1 §) | Technical decision | Status |
@@ -123,6 +125,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.4 | design-v1 + user decisions | 2026-10-06 | Site v1.0.4: "מארח/ת" replaced across the site ("לפתוח מעגל" in the nav and page title, "ערכה לפתיחת מעגל" in links, "דף הנחיה למעגל"); the sign's headline is "לפני שבוחרים, נושמים" with "מעגל נשימה לקראת הבחירות לכנסת · 27.10"; question #13. |
 | t2.0.3 | design-v1 + user decision | 2026-10-06 | Site v1.0.3: who "we" is. Organizational "we" rewritten in the impersonal (footer, support lines, plan, election day, host kit, sign, guide, home); About page renamed "על המיזם" with a signed first-person note from Assaf Geva; voice rule recorded under Content; question #12. |
 | t2.0.2 | design-v1 + user remarks | 2026-10-06 | Site v1.0.2: one logo breath on hover or focus; white fading echo behind the hero's breathing circle and the logo circle. |
 | t2.0.1 | design-v1 + user remark | 2026-10-06 | Site v1.0.1: brand name "נוֹכְחִים" with niqqud in M PLUS Rounded 1c (self-hosted Hebrew subset), in header, plan card, plan PNG and sign; question #11. |

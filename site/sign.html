@@ -4,14 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>שלט להדפסה · נוכחים</title>
-<meta name="description" content="שלט להדפסה למעגל נשימה של חצי שעה, עם קוד QR לאתר.">
+<meta name="description" content="שלט להדפסה למעגל נשימה של חצי שעה לקראת הבחירות, עם קוד QR לאתר.">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/print.css">
 <style>
   .sign { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0; }
   .sign .mark { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #6f8a72; background: #e6ece4; margin: 6mm 0 4mm; }
   .sign .brand { font-family: var(--brand-font); font-weight: 700; color: #4f6852; font-size: 22px; margin: 0; }
-  .sign h1 { font-size: 84px; margin: 8mm 0 4mm; line-height: 1.1; }
+  .sign h1 { font-size: 76px; margin: 6mm 0 3mm; line-height: 1.08; }
+  .sign .kicker { font-size: 24px; font-weight: 700; color: #4f6852; margin: 0 0 7mm; }
   .sign .lead { font-size: 26px; line-height: 1.5; max-width: 150mm; margin: 0 0 4mm; }
   .sign .soft { font-size: 20px; color: #625d55; margin: 0 0 10mm; }
   .fill { display: flex; gap: 12mm; font-size: 22px; margin: 0 0 12mm; }
@@ -23,11 +24,12 @@
 </style>
 </head>
 <body>
-<div class="toolbar"><span>ממלאים ביד את היום, השעה והמקום, ומדפיסים.</span><span><button class="btn secondary" type="button" onclick="window.print()">להדפסה</button> <a href="host-kit.html">לערכת המארח/ת</a></span></div>
+<div class="toolbar"><span>ממלאים ביד את היום, השעה והמקום, ומדפיסים.</span><span><button class="btn secondary" type="button" onclick="window.print()">להדפסה</button> <a href="host-kit.html">לערכה לפתיחת מעגל</a></span></div>
 <main class="sheet sign" id="main">
   <div class="mark" aria-hidden="true"></div>
   <p class="brand">נוֹכְחִים</p>
-  <h1>מעגל נשימה</h1>
+  <h1>לפני שבוחרים,<br>נושמים</h1>
+  <p class="kicker">מעגל נשימה לקראת הבחירות לכנסת · 27.10</p>
   <p class="lead">חצי שעה של שקט, מדיטציה קצרה ושיתוף במילה אחת. יחד.</p>
   <p class="soft">כל מי שגר כאן מוזמן/ת לשבת איתנו. לא צריך ניסיון.</p>
   <div class="fill"><div>מתי:<span></span></div><div>איפה:<span></span></div></div>
@@ -36,7 +38,7 @@
     <p>מדיטציות קצרות ותוכנית הצבעה אישית:<br><b id="qr-url"></b></p>
   </div>
   <p class="neutral">כאן לא אומרים בעד מי להצביע, ולא שואלים.</p>
-  <div class="sheet-foot"><span>גרסה v1.0.3</span><span>לפני שבוחרים, נושמים.</span></div>
+  <div class="sheet-foot"><span>גרסה v1.0.4</span><span>נוֹכְחִים</span></div>
 </main>
 <script src="assets/js/vendor/qrcode.js"></script>
 <script>
