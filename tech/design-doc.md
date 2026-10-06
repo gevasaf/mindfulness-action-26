@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.2 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.3 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -36,6 +36,14 @@ Anchors on the home page: `#idea`, `#ways`, `#plan`, `#about`; `#support` on eve
 - **Labels:** only `.tag-tts` "קול ממוחשב (AI)" remains (on every computer-voiced recording, and in the player). The "בקרוב" / "דוגמה" tags and the draft banner were removed in site v1.0.
 
 ## Content
+- **Who "we" is (site v1.0.3, user decision):** the project is one volunteer, so the site doesn't speak as an organizational "we".
+  - **Keep "we" = all of us** (the neutrality rule's meaning): "ארבע שנים עברו עלינו", "רבים מאיתנו", "לחיים שלנו".
+  - **Organizational statements use the Hebrew impersonal or the site/project as subject:** "כאן לא אומרים בעד מי להצביע, ולא שואלים", "האתר סופר ביקורים", "זה לא טיפול. כאן מפנים...", "נוכחים הוא לא מפלגה...".
+  - **Statements of belief may keep "אנחנו מאמינים"** (an invitation the reader can share).
+  - **A circle host's own "we"** (the WhatsApp templates, the opening words, the sign's "לשבת איתנו") stays: there it means the people in the circle.
+  - **The founder speaks in the first person in one place only:** a signed note on the About page explaining that "we" means everyone who lives here.
+  - The meditation scripts' "ואפילו אותנו" stays (it is in the recordings).
+  - The nav item and page title "מי אנחנו" became "על המיזם"; the home page section is "מי מאחורי זה".
 - Page copy is hand-written HTML in `site/*.html`, taken from the release text. Header, footer (with the version line) and support section are identical on every page; the HTML files are the source, so when editing them, change all seven pages (including `404.html`) (`sign.html` and `host-guide.html` are standalone). Bump the version in every footer and in the printables' sheet footers.
 - Meditation scripts are copied verbatim from `design/releases/design-v0-meditations/` to `site/content/meditations/` (the deploy only ships `site/`); the same text is embedded in each meditation's "לקריאת התסריט" panel. Recordings and stanza timings are in `site/content/meditations/audio/`, made with `tech/tools/mix-meditation-audio.py`. The hero video loop is made with `tech/tools/video-pingpong.py`.
 - Sample circles, journey days and Great Silence details are placeholders marked "דוגמה" / "בקרוב".
@@ -87,6 +95,7 @@ Further remarks, v0.2.1 to v0.2.7 (same status: built, waiting for design-v1):
 After design-v1 (site v1.0.1, waiting for a design release, question #11):
 17. The brand name has niqqud, "נוֹכְחִים", and uses M PLUS Rounded 1c.
 18. The logo circle breathes once on hover; both breathing circles get a white echo that grows past them and fades out (v1.0.2).
+19. "We" (v1.0.3): no organizational "we"; impersonal voice for the project, a signed first-person note from the founder on the About page, "על המיזם" instead of "מי אנחנו" (see Content).
 
 ## Traceability
 | Design requirement (design-v1 §) | Technical decision | Status |
@@ -114,6 +123,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.3 | design-v1 + user decision | 2026-10-06 | Site v1.0.3: who "we" is. Organizational "we" rewritten in the impersonal (footer, support lines, plan, election day, host kit, sign, guide, home); About page renamed "על המיזם" with a signed first-person note from Assaf Geva; voice rule recorded under Content; question #12. |
 | t2.0.2 | design-v1 + user remarks | 2026-10-06 | Site v1.0.2: one logo breath on hover or focus; white fading echo behind the hero's breathing circle and the logo circle. |
 | t2.0.1 | design-v1 + user remark | 2026-10-06 | Site v1.0.1: brand name "נוֹכְחִים" with niqqud in M PLUS Rounded 1c (self-hosted Hebrew subset), in header, plan card, plan PNG and sign; question #11. |
 | t2.0 | design-v1 | 2026-10-06 | Site v1.0, public launch: draft banner and "דוגמה"/"בקרוב" labels removed; circles, journey, day-after and donate pages removed (plus home circles and Great Silence sections); "הרעיון" section on the home page; About rewritten (Assaf Geva, no nonprofit, no donations); detailed host kit, sign and host guide (30-minute circle, "באים בלבן", election day); "לארץ הזאת" dedication; "קול ממוחשב (AI)" label; 404 page. A7, A8, question #10. |
