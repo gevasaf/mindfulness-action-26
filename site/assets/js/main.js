@@ -184,8 +184,9 @@
       motionBtn.addEventListener("click", function () {
         var paused = hero.classList.toggle("paused");
         if (video && video.currentSrc) { if (paused) video.pause(); else video.play(); }
-        motionBtn.setAttribute("aria-pressed", paused ? "true" : "false");
-        motionBtn.textContent = paused ? "להפעיל תנועה" : "לעצור תנועה";
+        var label = paused ? "להפעיל תנועה" : "לעצור תנועה";
+        motionBtn.setAttribute("aria-label", label);
+        motionBtn.title = label;
       });
     }
   });

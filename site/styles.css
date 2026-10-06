@@ -172,7 +172,12 @@ main { display: block; }
 .hero h1 { margin-bottom: 12px; }
 .hero .lede { margin: 0 auto 28px; }
 .hero-tag { position: absolute; bottom: 12px; inset-inline-start: 16px; }
-.motion-toggle { position: absolute; bottom: 12px; inset-inline-end: 16px; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: .9rem; cursor: pointer; min-height: 40px; }
+/* Motion on/off: wavy lines; a slash through them when motion is paused (not play/pause, which belongs to audio). */
+.motion-toggle svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; }
+.motion-toggle .ic-slash { display: none; stroke-width: 2; }
+.paused .motion-toggle .ic-slash { display: inline; }
+.motion-toggle .ic-gap { stroke: var(--card); stroke-width: 5; }
+.motion-toggle { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; position: absolute; bottom: 12px; inset-inline-end: 16px; background: var(--card); color: var(--ink); border: 1px solid var(--line); border-radius: 999px; font: inherit; font-size: .9rem; cursor: pointer; min-height: 40px; }
 .paused .hero-bg, .paused .breath, .paused .breath-echo, .paused .breath-label span { animation-play-state: paused !important; }
 @media (prefers-reduced-motion: reduce) {
   .hero-bg, .breath, .breath-label span { animation: none !important; }
