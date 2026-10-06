@@ -29,17 +29,6 @@
     });
   }
 
-  // Draft banner: closable; stays closed for this browser session (sessionStorage, per viewer only).
-  var draftClose = document.querySelector(".draft-close");
-  if (draftClose) {
-    draftClose.addEventListener("click", function () {
-      document.documentElement.classList.add("no-draft-banner");
-      try { sessionStorage.setItem("draftBannerClosed", "1"); } catch (e) {}
-      var main = document.getElementById("main");
-      if (main) { main.setAttribute("tabindex", "-1"); main.focus({ preventScroll: true }); }
-    });
-  }
-
   // ---------- in-place navigation ----------
   var loadedPath = location.pathname;
 
@@ -126,7 +115,7 @@
           caption.innerHTML = now < CLOSE
             ? 'היום יום הבחירות. הקלפיות פתוחות עד 22:00. <a href="election-day.html">מדיטציה לדרך לקלפי</a>'
             : now < AFTER_END
-              ? 'הקלפיות נסגרו. <a href="day-after.html">היום שאחרי</a>: נושמים יחד, בלי קשר לתוצאות.'
+              ? 'הקלפיות נסגרו. היום שאחרי: נושמים יחד, בלי קשר לתוצאות.'
               : 'תודה שהייתם נוכחים.';
         }
         return;

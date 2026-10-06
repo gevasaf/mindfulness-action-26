@@ -9,7 +9,6 @@
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
-<script>try { if (sessionStorage.getItem("draftBannerClosed")) document.documentElement.classList.add("no-draft-banner"); } catch (e) {}</script>
 <script src="assets/js/main.js" defer></script>
 <script src="assets/js/plan.js" defer></script>
 <script src="assets/js/player.js" defer></script>
@@ -17,22 +16,17 @@
 </head>
 <body>
 <a class="skip" href="#main">דילוג לתוכן</a>
-<div class="draft-banner" role="note"><span><b>טיוטה:</b> האתר עוד לא הושק. התכנים, הקולות והנתונים לדוגמה.</span><button type="button" class="draft-close" aria-label="סגירת הודעת הטיוטה" title="סגירה"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button></div>
 <header class="site-header">
   <div class="inner">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>נוכחים <small>שם עבודה</small></a>
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>נוכחים</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="תפריט"><svg class="ic-menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg><svg class="ic-x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button>
     <nav class="site-nav" id="site-nav" aria-label="ראשי">
       <ul>
         <li><a href="index.html">ראשי</a></li>
         <li><a href="meditations.html">מדיטציות</a></li>
         <li><a href="plan.html" aria-current="page">תוכנית הצבעה</a></li>
-        <li><a href="circles.html">מעגלים</a></li>
-        <li><a href="journey.html">המסע היומי</a></li>
         <li><a href="host-kit.html">ערכת מארח/ת</a></li>
         <li><a href="election-day.html">יום הבחירות</a></li>
-        <li><a href="day-after.html">היום שאחרי</a></li>
-        <li><a href="donate.html">תרומה</a></li>
         <li><a href="about.html">מי אנחנו</a></li>
       </ul>
     </nav>
@@ -88,6 +82,7 @@
             <option value="לזכרם של מי שאיבדנו">לזכרם של מי שאיבדנו</option>
             <option value="לשכנים שלי, גם לאלה שחושבים אחרת">לשכנים שלי, גם לאלה שחושבים אחרת</option>
             <option value="לעתיד של כולנו">לעתיד של כולנו</option>
+            <option value="לארץ הזאת">לארץ הזאת</option>
             <option value="לעצמי">לעצמי</option>
           </select>
         </div>
@@ -150,9 +145,9 @@
 </section>
 <footer class="site-footer">
   <div class="inner">
-    <p><b>נוכחים</b> (שם עבודה) היא תנועה אזרחית של מיינדפולנס. אנחנו לא אומרים בעד מי להצביע, ולא שואלים.</p>
+    <p><b>נוכחים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים בעד מי להצביע, ולא שואלים.</p>
     <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. אנחנו סופרים ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">טיוטה · גרסה <bdi dir="ltr">v0.2.7</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p class="version">גרסה <bdi dir="ltr">v1.0</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>
