@@ -40,8 +40,8 @@ create table public.admins (
 create table public.localities (  -- CBS list (tech/tools/map/build_map_data.py)
   id   integer primary key,
   name text not null,
-  lat  double precision not null,
-  lon  double precision not null
+  lat  double precision,  -- null: no coordinates found; the distance warning is skipped
+  lon  double precision
 );
 
 create table public.land_rings (  -- Natural Earth land, buffered; only to block pins in the sea
@@ -222,7 +222,7 @@ begin
   if not on_land(v_lat, v_lon) then return '{"ok":false,"error":"in_sea"}'; end if;
   select * into v_loc from localities where id = (p->>'locality_id')::int;
   if not found then return '{"ok":false,"error":"locality"}'; end if;
-  if km_between(v_lat, v_lon, v_loc.lat, v_loc.lon) > 8 and
+  if v_loc.lat is not null and km_between(v_lat, v_lon, v_loc.lat, v_loc.lon) > 8 and
      not coalesce((p->>'confirm_far')::boolean, false) then
     return jsonb_build_object('ok', false, 'error', 'far_from_locality', 'warning', true, 'locality', v_loc.name);
   end if;

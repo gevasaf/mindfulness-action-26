@@ -3,10 +3,12 @@
 Runs in GitHub Actions (.github/workflows/map-data.yml), which has open
 internet access; the build sandbox does not. Outputs, under site/assets/map/:
 
-  localities.json  CBS list of localities (data.gov.il) joined with OSM
-                   coordinates: [{"id": CBS code, "name": Hebrew name,
-                   "lat": .., "lon": ..}]. The official list is the list of
-                   places where citizens who vote live (design-v2 §9).
+  localities.json  The full CBS list of localities (data.gov.il), with OSM
+                   coordinates where a match is found: [{"id": CBS code,
+                   "name": Hebrew name, "lat": .., "lon": ..}]. The official
+                   list is the list of places where citizens who vote live
+                   (design-v2 §9); every entry is kept, also without
+                   coordinates (then the "far from locality" warning is skipped).
   land.json        Natural Earth 10 m land, clipped to the map rectangle,
                    simplified and buffered ~300 m so beach lawns count as land.
                    Used only to block pins in the sea; it has no borders.
@@ -14,7 +16,7 @@ internet access; the build sandbox does not. Outputs, under site/assets/map/:
 The vector tiles (region.pmtiles) are extracted by the workflow itself with
 the pmtiles CLI. Coordinates are WGS84.
 """
-import io, json, os, sys, time, unicodedata, urllib.parse, urllib.request, zipfile
+import difflib, io, json, os, re, sys, time, unicodedata, urllib.parse, urllib.request, zipfile
 
 BBOX = (34.15, 29.40, 35.95, 33.40)  # west, south, east, north: a plain rectangle, not a border
 OUT = "site/assets/map/"
@@ -36,7 +38,7 @@ def get(url, data=None, tries=4):
 def norm(name):
     """Compare Hebrew names loosely: no niqqud, no punctuation, single spaces."""
     s = "".join(c for c in unicodedata.normalize("NFD", name or "") if not unicodedata.combining(c))
-    for ch in "-–־\"'״׳()":
+    for ch in "-–־\"'״׳()`’":
         s = s.replace(ch, " ")
     return " ".join(s.split())
 
@@ -59,7 +61,7 @@ def cbs_localities():
 def osm_places():
     w, s, e, n = BBOX
     q = f"""[out:json][timeout:180];
-    (node["place"~"^(city|town|village|hamlet|isolated_dwelling|neighbourhood|suburb|locality)$"]({s},{w},{n},{e}););
+    (nwr["place"~"^(city|town|village|hamlet|isolated_dwelling|neighbourhood|suburb|locality)$"]({s},{w},{n},{e}););
     out tags center;"""
     data = get("https://overpass-api.de/api/interpreter", data=urllib.parse.urlencode({"data": q}).encode())
     els = json.loads(data)["elements"]
@@ -73,7 +75,11 @@ def osm_places():
                 continue
             for part in nm.split(";"):
                 k = norm(part)
-                cand = (rank.get(t.get("place"), 9), el["lat"], el["lon"])
+                lat = el.get("lat", el.get("center", {}).get("lat"))
+                lon = el.get("lon", el.get("center", {}).get("lon"))
+                if lat is None:
+                    continue
+                cand = (rank.get(t.get("place"), 9), lat, lon)
                 if k and (k not in by or cand < by[k]):
                     by[k] = cand
     print(f"OSM places with names: {len(by)}")
@@ -82,20 +88,31 @@ def osm_places():
 
 def localities():
     cbs, osm = cbs_localities(), osm_places()
-    out, missing = [], []
+    keys = list(osm)
+    out, how = [], {"exact": 0, "no_parens": 0, "fuzzy": 0, "none": 0}
+    missing = []
     for loc in cbs:
-        hit = osm.get(norm(loc["name"]))
+        n = norm(loc["name"])
+        hit, kind = osm.get(n), "exact"
+        if not hit:  # "בן שמן (מושב)" -> "בן שמן", "אבו קרינאת (יישוב)" -> "אבו קרינאת"
+            n2 = norm(re.sub(r"\(.*?\)", " ", loc["name"]))
+            hit, kind = osm.get(n2), "no_parens"
+            if not hit and len(n2) >= 4:
+                close = difflib.get_close_matches(n2, keys, n=1, cutoff=0.88)
+                hit, kind = (osm[close[0]], "fuzzy") if close else (None, "none")
+        how[kind] += 1
+        entry = {"id": loc["id"], "name": loc["name"]}
         if hit:
-            out.append({"id": loc["id"], "name": loc["name"], "lat": round(hit[1], 5), "lon": round(hit[2], 5)})
+            entry.update(lat=round(hit[1], 5), lon=round(hit[2], 5))
         else:
             missing.append(loc["name"])
+        out.append(entry)
     out.sort(key=lambda x: x["name"])
-    print(f"matched {len(out)}, missing {len(missing)}")
-    print("missing (first 80):", ", ".join(missing[:80]))
+    print("matching:", how)
     with open(OUT + "localities.json", "w", encoding="utf-8") as f:
         json.dump(out, f, ensure_ascii=False, separators=(",", ":"))
     with open("tech/tools/map/localities-missing.txt", "w", encoding="utf-8") as f:
-        f.write("\n".join(missing) + "\n")
+        f.write("# CBS localities with no coordinates found (kept in the list, no distance check)\n" + "\n".join(missing) + "\n")
 
 
 def land():

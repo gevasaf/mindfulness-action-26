@@ -8,7 +8,7 @@ on:
     inputs:
       maxzoom:
         description: "Highest tile zoom to extract"
-        default: "14"
+        default: "13"
   push:
     branches: ["claude/**"]
     paths:
@@ -38,7 +38,7 @@ jobs:
       - name: Vector tiles (Protomaps build, map rectangle only)
         env:
           GH_TOKEN: ${{ github.token }}
-          MAXZOOM: ${{ github.event.inputs.maxzoom || '14' }}
+          MAXZOOM: ${{ github.event.inputs.maxzoom || '13' }}
         run: |
           set -euo pipefail
           gh release download --repo protomaps/go-pmtiles --pattern '*Linux_x86_64.tar.gz' --output pmtiles.tar.gz

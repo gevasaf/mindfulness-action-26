@@ -12,7 +12,7 @@ begin
 end $$;
 
 -- Reference data: two localities, a land square around them (no sea there).
-insert into localities values (1, 'מקום א', 32.08, 34.78), (2, 'מקום ב', 31.25, 34.79);
+insert into localities values (1, 'מקום א', 32.08, 34.78), (2, 'מקום ב', 31.25, 34.79), (3, 'מקום בלי נקודה', null, null);
 insert into land_rings (xs, ys) values (array[34.70, 35.90, 35.90, 34.70, 34.70], array[29.50, 29.50, 33.30, 33.30, 29.50]);
 insert into admins values ('972500000009');
 
@@ -49,6 +49,7 @@ begin
   perform pg_temp.expect('in the sea', create_circle_as(u, '972501111111', b || '{"lat":32.08,"lon":34.50}'), 'in_sea');
   perform pg_temp.expect('unknown locality', create_circle_as(u, '972501111111', b || '{"locality_id":99}'), 'locality');
   perform pg_temp.expect('far from locality warns', create_circle_as(u, '972501111111', b || '{"locality_id":2}'), 'far_from_locality');
+  perform pg_temp.expect('locality without coordinates: no distance check', create_circle_as(u, '972501111111', b || '{"locality_id":3}', true), 'ok');
   perform pg_temp.expect('far, confirmed', create_circle_as(u, '972501111111', b || '{"locality_id":2,"confirm_far":true}', true), 'ok');
 
   r := create_circle_as(u, '972501111111', b);
