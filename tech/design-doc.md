@@ -103,6 +103,23 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 22. Home page (v1.0.7): voting-plan teaser and "מי מאחורי זה" section removed; "עוד על המיזם" link under "הרעיון"; a paragraph on healing and what was pushed aside ("נדחק הצידה") added to "הרעיון".
 23. The hero's motion button is an icon (v1.0.8): wavy lines for motion on, the same with a slash when paused (play/pause icons are reserved for audio). Its accessible name and tooltip read "לעצור תנועה" / "להפעיל תנועה".
 24. "לפתוח מעגל" (v1.0.10): "באים בלבן" also in the invitation template; closing section asking people to post on social media and to open their own circle.
+25. About, "מי עומד מאחורי זה" in the user's words: "...כיוזמה פרטית, וללא קשר לכל עמותה או מפלגה"; the first-person note is shorter and unsigned (v1.0.9).
+26. The printable guide mirrors the "לפתוח מעגל" page: "אחרי המעגל: להעביר הלאה", and the closing step invites people to open their own circle (v1.0.11).
+27. Formal disclaimer in the support section: "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע." (v1.0.12).
+28. The neutrality promise speaks in "we": "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו." (footer on every page, the sign, the guide; v1.0.13).
+29. Niqqud on every "נוֹכְחִים" on the site, running text and tab titles included: confirmed by the user on 6.10, after design-v2 §7 said otherwise (see "Open against design-v2").
+
+### Open against design-v2 (raised as questions-for-design #16)
+design-v2 (updated 6.10, answers to #10–#14) adopted remarks 17–22 but contradicts or omits later user decisions. **Until design fixes the release, the v2 build keeps the live site's wording and behaviour wherever they differ (assumption A9).**
+
+| design-v2 says | User decision (live) | Remark |
+|---|---|---|
+| §7: the name has niqqud only as a mark; running text and the tab title without | Niqqud on every "נוֹכְחִים" | 29 |
+| §6 "we" rule: "כאן לא אומרים בעד מי להצביע, ולא שואלים"; a *signed* note on the About page | "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו."; the note is unsigned, in the user's words | 28, 25 |
+| §12: "לא טיפול. אנחנו מפנים לאנשי מקצוע ולקווי סיוע." | "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע." | 27 |
+| §1, §10, §13 About: "כאדם פרטי ובשמו המלא. אין עמותה, אין מפלגה, אין תרומות ואין מימון" | "כיוזמה פרטית, וללא קשר לכל עמותה או מפלגה" (no funding is still stated elsewhere on the page) | 25 |
+| `design-v2-content/host-kit.md`: "אנחנו מציעים לבוא בלבן" (against its own "we" rule); invitation without "בלבן"; no closing section | "מציעים לבוא בלבן"; "אם יש, אפשר לבוא בלבן." in the invitation; "אחרי המעגל: להעביר הלאה" | 19, 24 |
+| (missing) | The guide mirrors the kit; the motion button is an icon | 26, 23 |
 
 ## Traceability
 | Design requirement (design-v1 §) | Technical decision | Status |
@@ -123,6 +140,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Assumptions
 - **A1** (questions-for-design #1, answered): the draft banner wording and public deploy follow the user's answer, not the release's "internal, do not publish" text.
 - **A7** (design-v1, question #10): the release's host kit has a step "לפתוח את המעגל באתר" (map, phone verification, delete), which is v2. In v1 the kit shows three steps (place, time, invite): "סימון במפה" for a private home reads "לפרסם נקודה כללית", and the invitation template ends "לתיאום: לכתוב לי בוואטסאפ" instead of a link to the circle's page. The rest of the kit is verbatim. When v2 is built the fourth step comes back.
+- **A9** (design-v2, question #16): where design-v2 contradicts or omits a later user decision (remarks 23–29, table "Open against design-v2"), the build follows the user's decision and the live site.
 - **A8** (design-v1): the release says removal requests reach the founder "through the contact details on the About page" but gives no contact details beyond the GitHub profile, so the About page offers contact through the GitHub profile. Waiting for the user to choose another channel if wanted.
 - **A2:** the polling-place link points to the Central Elections Committee home page; the exact lookup URL for the 26th Knesset could not be verified from the build environment. Check before promoting.
 - **A4** (question #3): support lines are ERAN 1201, NATAL 1-800-363-363, SAHAR (online chat), plus 101/100 for emergencies.
@@ -130,6 +148,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.14 | design-v1 + user decisions | 2026-10-06 | Docs only: remarks 25–29 folded in (About wording, guide mirrors the kit, formal disclaimer, "we" neutrality promise, niqqud everywhere confirmed); new table "Open against design-v2" listing where the updated design-v2 contradicts or omits user decisions; assumption A9; questions-for-design #16. |
 | t2.0.13 | design-v1 + user remark | 2026-10-06 | Site v1.0.13: the neutrality promise reads "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו." in every footer, on the sign and in the guide. |
 | t2.0.12 | design-v1 + user remark | 2026-10-06 | Site v1.0.12: the support section's disclaimer is formal: "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע." (every page); About's "מה זה לא" item matches. |
 | t2.0.11 | design-v1 + user remark | 2026-10-06 | Site v1.0.11: the printable circle guide (`host-guide.html`) follows the "לפתוח מעגל" page: "צילום" became "אחרי המעגל: להעביר הלאה" (share on social media with the photo rule, invite participants to open their own circle), and the closing step adds the invitation to open a circle. Still one A4 page (checked by printing to PDF). Rule: any change to `host-kit.html` is mirrored in `host-guide.html` (and the sign, where relevant). |
