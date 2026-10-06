@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.13 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0.15 · **Site version:** v1.0.13 (shown in every page footer), **approved by the user 2026-10-06**
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -148,6 +148,7 @@ design-v2 (updated 6.10, answers to #10–#14) adopted remarks 17–22 but contr
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.15 | design-v1 | 2026-10-06 | v1 approved by the user at site v1.0.13. Next: design-v2 (server features, flagged in stack.md before building). |
 | t2.0.14 | design-v1 + user decisions | 2026-10-06 | Docs only: remarks 25–29 folded in (About wording, guide mirrors the kit, formal disclaimer, "we" neutrality promise, niqqud everywhere confirmed); new table "Open against design-v2" listing where the updated design-v2 contradicts or omits user decisions; assumption A9; questions-for-design #16. |
 | t2.0.13 | design-v1 + user remark | 2026-10-06 | Site v1.0.13: the neutrality promise reads "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו." in every footer, on the sign and in the guide. |
 | t2.0.12 | design-v1 + user remark | 2026-10-06 | Site v1.0.12: the support section's disclaimer is formal: "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע." (every page); About's "מה זה לא" item matches. |
