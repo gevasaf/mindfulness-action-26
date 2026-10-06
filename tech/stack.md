@@ -8,7 +8,8 @@
 | Site | Plain **HTML + CSS + vanilla JS** in `site/` | No build step and no dependencies, so it's easy to change between iterations. |
 | Deploy | GitHub Actions (`.github/workflows/pages.yml`) | Every push to `main` that touches `site/` gets deployed. |
 | Language/direction | Hebrew, `lang="he" dir="rtl"` | The movement's audience. |
-| Fonts | Google Fonts or self-hosted | To be decided in the design doc. |
+| Fonts | **Self-hosted** Assistant + Frank Ruhl Libre (woff2, SIL OFL) in `site/assets/fonts/` | No third-party requests; fast. |
+| Audio (v0) | Browser **Web Speech API** (device's Hebrew voice) + music generated with **Web Audio** | No files, no external service, no licences. Interim, see F1. |
 
 ### One-time setup (repo owner)
 - Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**. The deploy workflow fails until this is set.
@@ -37,9 +38,12 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 
 | Design version | Feature | Options considered | Recommendation | User decision |
 |---|---|---|---|---|
-| — | — | — | — | — |
+| design-v0 | **F1. Hebrew TTS audio files** (download/share as a WhatsApp file, same voice on every device) | (a) Keep browser TTS (built): free, no service, but voice quality varies by device and some devices have no Hebrew voice (then the words show on screen). (b) Pre-render MP3s with a cloud TTS (Google, Azure, ElevenLabs): consistent voice and downloadable files, but needs an account, a licence check for publishing synthetic audio, and maybe cost. (c) Skip to human recordings for v1, as the design plans. | (a) for v0, then (c). Only take (b) if the team needs shareable files before teachers record. | pending |
+| design-v0 | **F2. Background video strip** | (a) Free stock clip (Pexels, Pixabay, Mixkit) under its licence, compressed to ~1–2 MB WebM/MP4, with poster image: stays on Pages. (b) Keep the CSS gradient stand-in (built). | (a) once someone picks a clip that passes the neutrality rules (§7); build needs the file and its licence link. | pending |
+| design-v0 | **F3. Privacy-preserving measurement** (voting plans, listens, shares) | (a) GoatCounter (free for non-commercial, no cookies, can self-host). (b) Plausible (paid, EU, no cookies). (c) Cloudflare Web Analytics (free, no cookies, needs Cloudflare account). (d) No measurement. All are third-party scripts, so a privacy note on the site is needed. | (a) GoatCounter, counting only page views and anonymous events (no plan contents). Not built until approved. | pending |
 
 ## Stack change log
 | Date | Change | Reason | Approved by user |
 |---|---|---|---|
 | 2026-10-06 | Initial stack: static HTML/CSS/JS on GitHub Pages | Simplest start | yes |
+| 2026-10-06 | Self-hosted fonts; browser-only TTS and generated music for v0 | design-v0, no new service or dependency | within current stack |
