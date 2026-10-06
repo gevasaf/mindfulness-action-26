@@ -142,7 +142,7 @@
 
   // "Send on WhatsApp": data-share-wa="<meditation id>" shares that meditation's
   // section on the meditations page; data-share-wa="#anchor" shares this page.
-  window.onPage(function shareLinks() {
+  function shareLinks() {
     Array.prototype.forEach.call(document.querySelectorAll("[data-share-wa]"), function (a) {
       var v = a.getAttribute("data-share-wa");
       var med = window.MEDITATIONS && window.MEDITATIONS[v];
@@ -156,7 +156,9 @@
         a.addEventListener("click", function () { window.countEvent("share-whatsapp-" + (med ? v : "page")); });
       }
     });
-  });
+  }
+  window.onPage(shareLinks);
+  window.onPage.rerunShare = shareLinks;  // for content added later (teacher meditations)
 
   // Hero video strip (design-v0 §7): a pre-rendered ping-pong loop, no sound.
   // Skipped (poster image only) for reduced motion, data saver or slow connections.
