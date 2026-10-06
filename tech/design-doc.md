@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.10 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.11 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -19,7 +19,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | `election-day.html` | 27.10: morning circles (with a link to the host kit), "on the way" meditation, polling-place link | §8, §10 "עמוד יום הבחירות" |
 | `about.html` | Who's behind it (Assaf Geva, GitHub link), what we do, what we're not, transparency, credits | §10 "מי אנחנו", §14 |
 | `sign.html` | Printable A4 sign (v1.0.4): headline "לפני שבוחרים, נושמים", "מעגל נשימה לקראת הבחירות לכנסת · 27.10", when/where lines to fill in, QR to the site | §10 host kit "חומרים" |
-| `host-guide.html` | Printable one-page host guide: 30-minute flow, rules, roles, safety, election day, support lines | §10 host kit "חומרים" |
+| `host-guide.html` | Printable one-page guide; mirrors `host-kit.html` (keep them in step, v1.0.11): 30-minute flow, rules, roles, safety, election day, support lines | §10 host kit "חומרים" |
 | `404.html` | Not-found page (GitHub Pages serves it for any missing path, e.g. old links to removed pages), `noindex` | build choice |
 
 Removed in site v1.0 (design-v1 §8): `circles.html`, `journey.html`, `day-after.html`, `donate.html`.
@@ -129,6 +129,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.11 | design-v1 + user remark | 2026-10-06 | Site v1.0.11: the printable circle guide (`host-guide.html`) follows the "לפתוח מעגל" page: "צילום" became "אחרי המעגל: להעביר הלאה" (share on social media with the photo rule, invite participants to open their own circle), and the closing step adds the invitation to open a circle. Still one A4 page (checked by printing to PDF). Rule: any change to `host-kit.html` is mirrored in `host-guide.html` (and the sign, where relevant). |
 | t2.0.10 | design-v1 + user remarks | 2026-10-06 | Site v1.0.10, "לפתוח מעגל": the invitation template adds "אם יש, אפשר לבוא בלבן."; new closing section "אחרי המעגל: להעביר הלאה" (share on social media with the photo rules, invite participants to open their own circle, a suggested post, and a WhatsApp share button for the page). |
 | t2.0.9 | design-v1 + user remark | 2026-10-06 | Site v1.0.9: About, "מי עומד מאחורי זה" rewritten in the user's words (a private initiative, not connected to any nonprofit or party); the first-person note shortened and no longer signed. |
 | t2.0.8 | design-v1 + user remark | 2026-10-06 | Site v1.0.8: the hero's motion on/off button is a 44 px round icon button (wavy lines; slashed when paused), with aria-label and title instead of visible text. |
