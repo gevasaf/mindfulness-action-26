@@ -49,7 +49,9 @@
       '<div class="pbar-info">' +
         '<a class="pbar-title" data-p="title" href="meditations.html"></a>' +
         '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב זמני</div>' +
+        '<div class="pbar-endnote">סוף המדיטציה<br><a href="#support" data-p="help" title="אם עלה משהו קשה">קווי סיוע</a></div>' +
       "</div>" +
+      '<a class="btn pbar-plan" data-p="plan" href="index.html#plan">לתוכנית הצבעה</a>' +
       '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
       '<button type="button" class="ibtn" data-p="expand" aria-label="מסך מלא">' + icon("expand") + "</button>" +
       '<a class="ibtn ibtn-share" data-p="share" href="meditations.html" target="_blank" rel="noopener" aria-label="שיתוף בוואטסאפ" title="שיתוף בוואטסאפ">' + icon("share") + "</a>" +
@@ -69,6 +71,10 @@
       '<button type="button" class="ibtn" data-p="collapse" aria-label="יציאה ממסך מלא">' + icon("collapse") + "</button>" +
     "</div>" +
     '<div class="pfull-caption" aria-live="polite"><p></p><p></p></div>' +
+    '<div class="pfull-end">' +
+      '<a href="#support" data-p="help">אם עלה משהו קשה, אפשר לדבר עם מישהו: קווי סיוע</a>' +
+      '<a class="btn secondary pfull-plan" data-p="plan" href="index.html#plan">כשמתאים: להכין תוכנית הצבעה</a>' +
+    "</div>" +
     '<div class="pfull-controls">' +
       '<input type="range" class="pseek" data-p="seek" min="0" max="1000" step="1" value="0" aria-label="מיקום בהקלטה">' +
       '<div class="pfull-row">' +
@@ -138,11 +144,23 @@
     if (idx !== caption) { caption = idx; setCaption(idx >= 0 ? stanzas[idx].text : ""); }
   }
 
+  // ---------- end of a meditation ----------
+  // First the support lines (at once), then, a few seconds later and only if no
+  // plan was made in this visit, a quiet invitation to plan the vote.
+  var endTimer = null;
+  function setEnded(on) {
+    clearTimeout(endTimer);
+    [bar, full].forEach(function (el) { el.classList.toggle("ended", on); el.classList.remove("show-plan"); });
+    if (on && !window.planMade) {
+      endTimer = setTimeout(function () { [bar, full].forEach(function (el) { el.classList.add("show-plan"); }); }, 4000);
+    }
+  }
+
   // ---------- actions ----------
   function load(id) {
     current = id;
     started = false;
-    stanzas = []; caption = -2; setCaption("");
+    stanzas = []; caption = -2; setCaption(""); setEnded(false);
     audio.src = AUDIO_DIR + id + ".mp3";
     each("title", function (a) { a.textContent = MEDITATIONS[id].title; a.href = "meditations.html#" + id; });
     // Share the meditation that is playing now (same text as the page's share buttons)
@@ -157,6 +175,7 @@
     if (id && MEDITATIONS[id] && id !== current) load(id);
     if (!current) return;
     if (audio.ended) audio.currentTime = 0;
+    setEnded(false);
     showBar();
     var p = audio.play();
     if (p && p.catch) p.catch(function () {});
@@ -168,6 +187,7 @@
   }
 
   function stop() {
+    setEnded(false);
     audio.pause();
     closeFull();
     hideBar();
@@ -205,7 +225,8 @@
   audio.addEventListener("ended", function () {
     window.countEvent("listen-complete-" + current);
     started = false;
-    setCaption("סוף המדיטציה. ואם עלה משהו קשה, קווי הסיוע נמצאים בתחתית כל עמוד.");
+    setCaption("סוף המדיטציה.\nלאט, לחזור לחדר, לגוף, לנשימה.");
+    setEnded(true);
     syncButtons();
   });
 
@@ -220,6 +241,8 @@
       case "collapse": closeFull(); break;
       case "close": stop(); break;
       case "title": closeFull(); break;
+      case "help": closeFull(); break; // #support is on every page
+      case "plan": window.countEvent("plan-from-player-" + current); closeFull(); setEnded(false); break;
       case "share": window.countEvent("share-whatsapp-player-" + current); break; // the link opens WhatsApp // the link itself navigates (in place, via main.js)
     }
   });

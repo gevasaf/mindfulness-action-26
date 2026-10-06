@@ -295,6 +295,22 @@ html.pfull-open, html.pfull-open body { overflow: hidden; }
 /* Hero: secondary button stays legible on the light veil */
 .hero .btn.secondary { background: color-mix(in srgb, var(--card) 85%, transparent); border-color: var(--line); }
 
+/* End of a meditation: support first, plan invitation fades in later */
+.pbar-endnote, .pbar-plan, .pfull-end { display: none; }
+.pbar.ended .pbar-meta, .pbar.ended [data-p="back"], .pbar.ended [data-p="expand"] { display: none; }
+.pbar.ended .pbar-endnote { display: block; font-size: .85rem; color: var(--muted); }
+.pbar-endnote a { color: var(--clay-ink); font-weight: 600; }
+.pbar.ended .pbar-plan { display: inline-flex; min-height: 38px; padding: 6px 14px; font-size: .9rem; white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity 1.2s ease; }
+.pbar.ended.show-plan .pbar-plan { opacity: 1; pointer-events: auto; }
+.pfull.ended .pfull-end { display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 0 24px 24px; text-align: center; }
+.pfull-end a[data-p="help"] { color: var(--clay-ink); font-weight: 600; }
+.pfull-plan { opacity: 0; pointer-events: none; transition: opacity 1.6s ease; }
+.pfull.show-plan .pfull-plan { opacity: 1; pointer-events: auto; }
+.pfull { grid-template-rows: auto 1fr auto auto; }
+
+/* Voting plan: sub-heading for the optional "moment" fields */
+.plan-sub { font-size: 1.15rem; margin: 26px 0 12px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--sage-ink); }
+
 /* Version line */
 .site-footer .version { font-size: .85rem; }
 
