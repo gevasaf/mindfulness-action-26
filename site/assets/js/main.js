@@ -55,12 +55,32 @@
     a.addEventListener("click", function () { window.countEvent("share-meditation-whatsapp"); });
   });
 
+  // Hero video strip (design-v0 §7): a pre-rendered ping-pong loop, no sound.
+  // Skipped (poster image only) for reduced motion, data saver or slow connections.
+  var video = document.querySelector("[data-hero-video]");
+  var conn = navigator.connection || {};
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var slow = conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
+  if (video && !reduce && !slow) {
+    [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (s) {
+      var src = document.createElement("source");
+      src.src = video.getAttribute("data-" + s[0]);
+      src.type = s[1];
+      video.appendChild(src);
+    });
+    video.addEventListener("playing", function () { video.classList.add("ready"); }, { once: true });
+    video.load();
+    var p = video.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+
   // Pause / resume the hero's slow motion (design-v0 §7: visible stop button)
   var motionBtn = document.querySelector(".motion-toggle");
   var hero = document.querySelector(".hero");
   if (motionBtn && hero) {
     motionBtn.addEventListener("click", function () {
       var paused = hero.classList.toggle("paused");
+      if (video && video.currentSrc) { if (paused) video.pause(); else video.play(); }
       motionBtn.setAttribute("aria-pressed", paused ? "true" : "false");
       motionBtn.textContent = paused ? "להפעיל תנועה" : "לעצור תנועה";
     });

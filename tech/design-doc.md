@@ -27,7 +27,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 - **Colors** (CSS custom properties in `site/styles.css`): `--paper #f7f3ec`, `--ink #2b2925`, `--sage #6f8a72`, `--clay #b9684a`, `--sage-soft #e6ece4`, `--clay-soft`, plus the release's dark-mode set under `prefers-color-scheme: dark`. Darker `--sage-ink` / `--clay-ink` variants are used for text and button fills so they meet WCAG AA contrast.
 - **Type:** Frank Ruhl Libre (headings, 500/700) and Assistant (body, 400/600/700), **self-hosted** woff2 (Hebrew + Latin subsets, ~140 KB total, SIL OFL, licences in `site/assets/fonts/`). Chosen over Google Fonts so the site makes no third-party requests.
 - **Breathing circle:** CSS animation, 5 s in / 5 s out, with "שאיפה / נשיפה" labels.
-- **Hero background:** slow drifting warm gradient as a stand-in for the video strip (see flagged features), with a visible "stop motion" button.
+- **Hero video strip:** Pexels clip "Golden wheat field swaying in the breeze" by †reny aleksa (credited in the hero). Colour muted toward sand/sage (the source is saturated yellow-orange, which §7 avoids). The clip doesn't loop, so it is pre-rendered as a ping-pong (forward, then reversed) whose speed eases to zero at each turn over 1.8 s: 30 s loop, 960×540, WebM VP9 + MP4 H.264, ~2 MB each, in `site/assets/video/`. A poster still shows first; the video loads only without reduced motion, data saver or 2G. The stop-motion button pauses it. The gradient stays underneath as a fallback.
 - **Labels:** `.tag-soon` "בקרוב", `.tag-sample` "דוגמה", `.tag-tts` "קול ממוחשב זמני"; disabled buttons are dashed `aria-disabled` spans, so nothing looks clickable that isn't.
 
 ## Content
@@ -43,7 +43,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 | Meditations (TTS + music) | `assets/js/player.js`: browser **Web Speech API** with the device's Hebrew voice, rate 0.72; `[שקט X שניות]` → X s silence, blank line → 2.5 s. Music is a soft pad **generated with Web Audio** (no file, no licence). If no Hebrew voice exists, "silent reading" mode shows each line on screen at the script's pace. Live caption of the current line, play/pause/restart, music toggle, script in a `<details>` | yes (interim, see flag F1) |
 | Download / share audio file | "בקרוב" (no audio files exist yet); "send on WhatsApp" shares the page link | flag F1 |
 | Voting plan | `assets/js/plan.js`: three questions (when: slot or exact time; with whom; whom I invite), no question on political views. Outputs a card, WhatsApp share text (`wa.me`), a PNG card drawn on `<canvas>` (Web Share with file, or download), an `.ics` event with alarms 1 h and 18 h before, and a link to the Central Elections Committee site. Nothing stored or sent: no cookies, no localStorage, no network calls | yes |
-| Background video strip | CSS gradient stand-in + "רצועת וידאו: בקרוב" | flag F2 |
+| Background video strip | `<video>` sources added by `main.js` when motion and connection allow; poster image otherwise | yes (F2, approved) |
 | Measurement (plans, listens, shares) | GoatCounter script on every page. Page views plus anonymous events from `window.countEvent` (`main.js`): `plan-created`, `plan-whatsapp`, `plan-image`, `plan-calendar`, `listen-<script>`, `listen-complete-<script>`, `share-meditation-whatsapp`. Only the event name is sent, never what people type. A footer line says so | yes (F3, approved) |
 | WhatsApp channel / groups / hosts group | "בקרוב" placeholders | needs links from the team |
 | Donations | Explanation only, no payment UI | yes |
@@ -64,7 +64,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 | §8 home page structure 1–8 | `index.html` sections in that order; support (8) is on every page | done |
 | §8 primary action: listen; secondary: voting plan | Hero buttons "להאזנה (7 דקות)" + "להכין תוכנית הצבעה" | done |
 | §7 palette, type, breathing circle, space | CSS tokens, self-hosted fonts, CSS animation | done |
-| §7 video strip | Gradient stand-in, pause button, reduced-motion static | partial, F2 |
+| §7 video strip | Eased ping-pong loop, no sound, pause button, poster for reduced motion / slow connections, paper-toned overlay | done |
 | §9 / §13 TTS meditations with music | Web Speech API + Web Audio pad | done (interim), F1 |
 | §13 audio: light files, accessible player, download & share | Accessible player; share link; download "בקרוב" | partial, F1 |
 | §13 voting plan in browser only, share card + calendar | `plan.js`, no storage | done |
@@ -87,5 +87,5 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
-| t1 | design-v0 | 2026-10-06 | Full v0 prototype: 8 pages, browser TTS meditations with generated music, working voting plan, countdown, self-hosted fonts. Flags F1–F3. F1: stay on browser TTS; F2: stay on gradient; F3: GoatCounter built. |
+| t1 | design-v0 | 2026-10-06 | Full v0 prototype: 8 pages, browser TTS meditations with generated music, working voting plan, countdown, self-hosted fonts. Flags F1–F3. F1: stay on browser TTS; F2: wheat video built; F3: GoatCounter built. |
 | t0 | — | 2026-10-06 | Scaffold only |
