@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.12 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.13 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -39,6 +39,7 @@ Anchors on the home page: `#idea`, `#ways`; `#support` on every page.
 - **Who "we" is (site v1.0.3, user decision):** the project is one volunteer, so the site doesn't speak as an organizational "we".
   - **Keep "we" = all of us** (the neutrality rule's meaning): "ארבע שנים עברו עלינו", "רבים מאיתנו", "לחיים שלנו".
   - **Organizational statements use the Hebrew impersonal or the site/project as subject:** "כאן לא אומרים בעד מי להצביע, ולא שואלים", "האתר סופר ביקורים", "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי..." (formal wording, v1.0.12), "נוכחים הוא לא מפלגה...".
+  - **Exception (v1.0.13, user decision):** the neutrality promise speaks directly, in "we": "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו." (footer on every page, the sign, the guide's footer).
   - **Statements of belief may keep "אנחנו מאמינים"** (an invitation the reader can share).
   - **A circle host's own "we"** (the WhatsApp templates, the opening words, the sign's "לשבת איתנו") stays: there it means the people in the circle.
   - **The founder speaks in the first person in one place only:** a short note on the About page (v1.0.9: the user's own wording, unsigned) explaining that "we" means everyone who lives here.
@@ -129,6 +130,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.13 | design-v1 + user remark | 2026-10-06 | Site v1.0.13: the neutrality promise reads "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו." in every footer, on the sign and in the guide. |
 | t2.0.12 | design-v1 + user remark | 2026-10-06 | Site v1.0.12: the support section's disclaimer is formal: "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע." (every page); About's "מה זה לא" item matches. |
 | t2.0.11 | design-v1 + user remark | 2026-10-06 | Site v1.0.11: the printable circle guide (`host-guide.html`) follows the "לפתוח מעגל" page: "צילום" became "אחרי המעגל: להעביר הלאה" (share on social media with the photo rule, invite participants to open their own circle), and the closing step adds the invitation to open a circle. Still one A4 page (checked by printing to PDF). Rule: any change to `host-kit.html` is mirrored in `host-guide.html` (and the sign, where relevant). |
 | t2.0.10 | design-v1 + user remarks | 2026-10-06 | Site v1.0.10, "לפתוח מעגל": the invitation template adds "אם יש, אפשר לבוא בלבן."; new closing section "אחרי המעגל: להעביר הלאה" (share on social media with the photo rules, invite participants to open their own circle, a suggested post, and a WhatsApp share button for the page). |
