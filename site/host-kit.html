@@ -4,12 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ערכת מארח/ת · נוכחים</title>
-<meta name="description" content="איך מארחים מעגל נוכחות: מהלך, תפקידים, כללי שיחה ובטיחות.">
+<meta name="description" content="איך פותחים מעגל תרגול של חצי שעה: מקום, זמן, הזמנה, מהלך, תפקידים ובטיחות. במיוחד ביום הבחירות, הרחק מהקלפיות.">
 <meta name="theme-color" content="#f7f3ec">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
-<script>try { if (sessionStorage.getItem("draftBannerClosed")) document.documentElement.classList.add("no-draft-banner"); } catch (e) {}</script>
 <script src="assets/js/main.js" defer></script>
 <script src="assets/js/plan.js" defer></script>
 <script src="assets/js/player.js" defer></script>
@@ -17,22 +16,17 @@
 </head>
 <body>
 <a class="skip" href="#main">דילוג לתוכן</a>
-<div class="draft-banner" role="note"><span><b>טיוטה:</b> האתר עוד לא הושק. התכנים, הקולות והנתונים לדוגמה.</span><button type="button" class="draft-close" aria-label="סגירת הודעת הטיוטה" title="סגירה"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button></div>
 <header class="site-header">
   <div class="inner">
-    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>נוכחים <small>שם עבודה</small></a>
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>נוכחים</a>
     <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="תפריט"><svg class="ic-menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg><svg class="ic-x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button>
     <nav class="site-nav" id="site-nav" aria-label="ראשי">
       <ul>
         <li><a href="index.html">ראשי</a></li>
         <li><a href="meditations.html">מדיטציות</a></li>
         <li><a href="plan.html">תוכנית הצבעה</a></li>
-        <li><a href="circles.html">מעגלים</a></li>
-        <li><a href="journey.html">המסע היומי</a></li>
         <li><a href="host-kit.html" aria-current="page">ערכת מארח/ת</a></li>
         <li><a href="election-day.html">יום הבחירות</a></li>
-        <li><a href="day-after.html">היום שאחרי</a></li>
-        <li><a href="donate.html">תרומה</a></li>
         <li><a href="about.html">מי אנחנו</a></li>
       </ul>
     </nav>
@@ -41,26 +35,112 @@
 <main id="main">
 <section class="page" aria-labelledby="page-h">
   <div class="inner prose">
-    <h1 id="page-h">ערכת מארח/ת <span class="tag tag-sample">טיוטה</span></h1>
-    <p class="lede">כל מה שצריך כדי לארח מעגל נוכחות: מקום, שעה, ועוד אדם אחד שישמור על המעגל.</p>
+    <h1 id="page-h">ערכת מארח/ת: לפתוח מעגל תרגול</h1>
+    <p class="lede">לבד קל לדחות. יחד, עשרים דקות של שקט הופכות לרגע שזוכרים.</p>
+    <p>מעגל הוא כמה אנשים שיושבים זה לצד זה, נושמים, מאזינים למדיטציה, ומשתפים במילה או שתיים. גם מי שחושבים אחרת. לא צריך ניסיון בהנחיה: הערכה הזו, ומדיטציה מוקלטת, מספיקות.</p>
+
+    <h2 style="margin-top:40px">שלושה צעדים לפתיחת מעגל</h2>
     <ol class="steps">
-      <li><h2 style="font-size:1.25rem">מה זה מעגל</h2><p>20 עד 40 דקות, 5 עד 30 אנשים, בפארק, בגינה או בסלון.</p></li>
-      <li><h2 style="font-size:1.25rem">תפקידים</h2><p>מנחה, ועוד אדם אחד שמלווה בעיניים פקוחות: לא מתרגל/ת, ושומר/ת על המעגל.</p></li>
-      <li><h2 style="font-size:1.25rem">מהלך</h2><p>פתיחה וכללים · שלוש נשימות · מדיטציה (מוקלטת או מונחית) · סבב "במילה אחת" · פינת הקשבה · סיום עם הזמנה להכין תוכנית הצבעה.</p></li>
-      <li><h2 style="font-size:1.25rem">כללי השיחה</h2><p>מדברים מהלב על חוויות, לא על מפלגות. מקשיבים בלי לתקן.</p></li>
-      <li><h2 style="font-size:1.25rem">בטיחות</h2><p>נפגשים הרחק מקלפיות. מול פרובוקציה לא מתווכחים: נשארים לשבת, נושמים, ומתעדים. במקרה של אלימות פונים למשטרה, בטלפון 100.</p></li>
-      <li><h2 style="font-size:1.25rem">חומרים</h2><p>שלט להדפסה עם קוד QR, קובץ אודיו, ודף הנחיה של עמוד אחד.</p>
-        <div class="btn-row">
-          <a class="btn secondary" href="sign.html" data-no-swap target="_blank">שלט להדפסה <span class="tag tag-sample">טיוטה</span></a>
-          <a class="btn secondary" href="content/meditations/audio/behind-the-curtain.mp3" download="מאחורי-הפרגוד.mp3">קובץ אודיו: מאחורי הפרגוד</a>
-          <a class="btn secondary" href="host-guide.html" data-no-swap target="_blank">דף הנחיה <span class="tag tag-sample">טיוטה</span></a>
-        </div>
+      <li><h3 style="font-size:1.25rem">לבחור מקום</h3>
+        <ul>
+          <li><b>ממליצים בחום על מקום ציבורי ופתוח:</b> גינה, פארק, דשא ליד ספרייה, חוף.</li>
+          <li>בבית פרטי: על אחריותך. עדיף לפרסם נקודה כללית ולתת את הכתובת רק למי שפונה.</li>
+          <li>שקט יחסית, עם צל או קורת גג.</li>
+          <li><b>הרחק מקלפיות</b>, ובמיוחד ביום הבחירות.</li>
+          <li>נגיש: שביל ישר, ספסלים למי שלא יושב על הקרקע.</li>
+        </ul>
+      </li>
+      <li><h3 style="font-size:1.25rem">לבחור זמן</h3>
+        <ul>
+          <li><b>ביום הבחירות, 27.10.</b> זה היום שאנחנו הכי מקווים בו להרבה מעגלים. הבוקר הוא הכי מתאים: "נושמים ויוצאים להצביע". אבל אפשר בכל שעה שהקלפיות פתוחות.</li>
+          <li><b>חד-פעמי</b> (תאריך ושעה), או <b>כל שבוע עד הבחירות</b> (למשל כל שלישי ב-19:00, עד 27.10 כולל).</li>
+          <li><b>כל מעגל נמשך חצי שעה.</b> זה קבוע, ומספיק בדיוק.</li>
+        </ul>
+      </li>
+      <li><h3 style="font-size:1.25rem">להזמין</h3>
+        <ul>
+          <li>לשלוח לחברים, לשכנים ולקבוצות הבניין והשכונה. נוסח מוכן בהמשך.</li>
+          <li>להדפיס את <a href="sign.html" data-no-swap target="_blank">השלט</a> ולתלות בלוח המודעות השכונתי, אם מותר.</li>
+        </ul>
       </li>
     </ol>
-    <div class="callout warm" style="margin-top:28px"><b>רגישות:</b> רבים מאיתנו נושאים טראומה. אף פעם לא מכריחים להיזכר. תמיד אפשר לפקוח עיניים, לעצור ולבקש עזרה. כדאי להכיר את קווי הסיוע שבתחתית העמוד לפני המעגל.</div>
-    <div class="btn-row" style="margin-top:20px">
-      <span class="btn" aria-disabled="true">להצטרף לקבוצת המארחים <span class="tag tag-soon">בקרוב</span></span>
+
+    <h2 style="margin-top:40px">נוסח הזמנה לשיתוף</h2>
+    <blockquote class="say-box">מוזמנים למעגל נשימה שקט לפני הבחירות 🌾<br>
+[יום ושעה] · [מקום]<br>
+חצי שעה של שקט, מדיטציה קצרה ושיתוף במילה אחת. לא צריך ניסיון.<br>
+אנחנו לא אומרים בעד מי להצביע. רק עוצרים יחד.<br>
+לתיאום: לכתוב לי בוואטסאפ</blockquote>
+
+    <h2 style="margin-top:40px">כשמישהו פונה אלייך בוואטסאפ</h2>
+    <p>נוסח מוצע לתשובה:</p>
+    <blockquote class="say-box">היי, איזה כיף שבאת 🌾<br>
+אנחנו נפגשים ב[מקום] ב[יום ושעה], לחצי שעה של נשימה, מדיטציה קצרה ושיתוף במילה אחת. לא צריך ניסיון.<br>
+כמה דברים קטנים:<br>
+• מדברים מהלב, על חוויות, לא על מפלגות ומועמדים.<br>
+• כל מי שגר כאן מוזמן/ת, גם מי שחושב/ת אחרת.<br>
+• אם יש, אפשר לבוא בלבן.<br>
+נתראה!</blockquote>
+    <p><b>אם מצטרפים הרבה:</b> אפשר לפתוח קבוצה כדי לעדכן את כולם, אבל זו בחירה שלך ולא חובה. בקבוצה כולם רואים את מספרי הטלפון של כולם, וכדאי להגיד את זה.</p>
+
+    <h2 style="margin-top:40px">מהלך מעגל (30 דקות)</h2>
+    <ol>
+      <li><b>התכנסות (3 דקות):</b> לשבת במעגל. ברכה קצרה: "תודה שבאתם. אנחנו כאן כדי לעצור יחד. בלי פוליטיקה של מפלגות, רק נוכחות."</li>
+      <li><b>כללים (דקה):</b> "מותר לעצום עיניים או להשאיר פקוחות. מותר לצאת בכל רגע. מה שנאמר כאן נשאר כאן."</li>
+      <li><b>שלוש נשימות יחד (דקה).</b></li>
+      <li><b>מדיטציה (7 עד 10 דקות):</b> מוקלטת מהאתר, דרך רמקול קטן, או מונחית בקול שלך.</li>
+      <li><b>סבב במילה אחת (4 דקות):</b> "מילה אחת על מה שאני מרגיש/ה עכשיו." מותר לוותר.</li>
+      <li><b>פינת הקשבה (אופציונלי, 5 דקות):</b> בזוגות, כל אחד ואחת מדברים שתי דקות על "מה חשוב לי בתקופה הזו", והשני רק מקשיב.</li>
+      <li><b>סיום (2 דקות):</b> נשימה אחת, תודה, והזמנה: "מי שרוצה, אפשר להכין תוכנית הצבעה באתר. דקה אחת."</li>
+    </ol>
+
+    <h2 style="margin-top:40px">תפקידים</h2>
+    <ul>
+      <li><b>מנחה/ה:</b> מוביל/ה את המהלך.</li>
+      <li><b>מלווה בעיניים פקוחות:</b> מישהו שלא מתרגל, שומר על המעגל ושם לב לסביבה. בכל מעגל, תמיד.</li>
+    </ul>
+
+    <h2 style="margin-top:40px">באים בלבן</h2>
+    <p>אנחנו מציעים לבוא בלבן: חולצה לבנה, צעיף לבן, מה שיש. זה סימן היכר שקט ופשוט, שלכל אחד יש בארון. לבן בלבד, בלי שילוב עם כחול. זו המלצה ולא חובה. ביום הבחירות, לבוא בלבן למעגל ולא להנחות אנשים לבוא בלבן לקלפי.</p>
+
+    <h2 style="margin-top:40px">בטיחות ואי-אלימות</h2>
+    <ul>
+      <li><b>פרובוקציה:</b> לא מתווכחים ולא עונים. נשארים לשבת ונושמים. המלווה מדבר/ת בשקט ובאדיבות, ואם צריך מזיזים את המעגל.</li>
+      <li><b>אלימות או איום:</b> מתרחקים, ופונים למשטרה (<a href="tel:100">100</a>). מתעדים רק אם בטוח לעשות את זה.</li>
+      <li><b>מצוקה רגשית במעגל:</b> לפנות בעדינות, להציע מים ומקום שקט, ולהפנות לקווי הסיוע (ער"ן <a href="tel:1201">1201</a>, נט"ל <a href="tel:1800363363">1-800-363-363</a>).</li>
+      <li><b>מעגל גדול:</b> כשמגיעים יותר מכ-30 אנשים, עדיף לפצל לשני מעגלים.</li>
+      <li><b>אחרי המעגל:</b> לספר לנו על כל אירוע חריג, כדי שנלמד.</li>
+    </ul>
+
+    <h2 style="margin-top:40px">יום הבחירות (27.10)</h2>
+    <ul>
+      <li><b>היום החשוב ביותר למעגלים.</b> אם תפתחו רק מעגל אחד, שיהיה ביום הזה.</li>
+      <li>הכי מתאים בבוקר: "נושמים ויוצאים להצביע". אפשר גם מאוחר יותר, כל עוד הקלפיות פתוחות.</li>
+      <li><b>הרחק מקלפיות.</b> לא מתכנסים ליד בתי ספר או מקומות שמשמשים כקלפי.</li>
+      <li>בלי שלטים ובלי חולצות עם מסרים. רק שקט.</li>
+      <li>בסוף אפשר להאזין יחד ל<a href="meditations.html#on-the-way-to-vote">"בדרך לקלפי"</a>, ולהתפזר.</li>
+    </ul>
+
+    <h2 style="margin-top:40px">צילום ופרטיות</h2>
+    <ul>
+      <li>מצלמים רק מאחור, מרחוק, או ברשות.</li>
+      <li>לא מעלים לרשת פנים של אנשים שלא הסכימו.</li>
+      <li>תמונה טובה: מעגל מרחוק, אור בוקר, ידיים, שמיים.</li>
+    </ul>
+
+    <h2 style="margin-top:40px">חומרים</h2>
+    <ul>
+      <li><b>שלט להדפסה (A4)</b> עם קוד QR לאתר.</li>
+      <li><b>דף הנחיה של עמוד אחד:</b> מהלך המעגל, הכללים ומספרי קווי הסיוע.</li>
+      <li><b>מדיטציות להורדה:</b> מ<a href="meditations.html">עמוד המדיטציות</a>.</li>
+      <li><b>רמקול קטן</b>, ומחצלת למי שאין.</li>
+    </ul>
+    <div class="btn-row">
+      <a class="btn secondary" href="sign.html" data-no-swap target="_blank">שלט להדפסה</a>
+      <a class="btn secondary" href="host-guide.html" data-no-swap target="_blank">דף הנחיה</a>
+      <a class="btn secondary" href="content/meditations/audio/behind-the-curtain.mp3" download="מאחורי-הפרגוד.mp3">קובץ אודיו: מאחורי הפרגוד</a>
     </div>
+    <div class="callout warm" style="margin-top:28px"><b>רגישות:</b> רבים מאיתנו נושאים טראומה. אף פעם לא מכריחים להיזכר. תמיד אפשר לפקוח עיניים, לעצור ולבקש עזרה. כדאי להכיר את קווי הסיוע שבתחתית העמוד לפני המעגל.</div>
   </div>
 </section>
 </main>
@@ -79,9 +159,9 @@
 </section>
 <footer class="site-footer">
   <div class="inner">
-    <p><b>נוכחים</b> (שם עבודה) היא תנועה אזרחית של מיינדפולנס. אנחנו לא אומרים בעד מי להצביע, ולא שואלים.</p>
+    <p><b>נוכחים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים בעד מי להצביע, ולא שואלים.</p>
     <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. אנחנו סופרים ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">טיוטה · גרסה <bdi dir="ltr">v0.2.7</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p class="version">גרסה <bdi dir="ltr">v1.0</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>

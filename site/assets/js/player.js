@@ -48,7 +48,7 @@
       '<button type="button" class="ibtn ibtn-main" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
       '<div class="pbar-info">' +
         '<a class="pbar-title" data-p="title" href="meditations.html"><span class="ptitle-text"></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg></a>' +
-        '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב זמני</div>' +
+        '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב (AI)</div>' +
       "</div>" +
       '<div class="pbar-end">' +
         '<a class="btn pbar-plan" data-p="plan" href="plan.html" aria-label="התוכנית שלי: תוכנית ההצבעה">התוכנית שלי</a>' +
@@ -85,7 +85,7 @@
         '<button type="button" class="ibtn ibtn-main ibtn-big" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
         '<a class="ibtn ibtn-share" data-p="share" href="meditations.html" target="_blank" rel="noopener" aria-label="שיתוף בוואטסאפ" title="שיתוף בוואטסאפ">' + icon("share") + "</a>" +
         '<button type="button" class="ibtn" data-p="close" aria-label="עצירה וסגירת הנגן">' + icon("close") + "</button>" +
-        '<span class="pfull-time pfull-note">קול ממוחשב זמני</span>' +
+        '<span class="pfull-time pfull-note">קול ממוחשב (AI)</span>' +
       "</div>" +
     "</div>";
 
