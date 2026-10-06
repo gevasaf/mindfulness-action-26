@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.8 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.9 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -41,7 +41,7 @@ Anchors on the home page: `#idea`, `#ways`; `#support` on every page.
   - **Organizational statements use the Hebrew impersonal or the site/project as subject:** "כאן לא אומרים בעד מי להצביע, ולא שואלים", "האתר סופר ביקורים", "זה לא טיפול. כאן מפנים...", "נוכחים הוא לא מפלגה...".
   - **Statements of belief may keep "אנחנו מאמינים"** (an invitation the reader can share).
   - **A circle host's own "we"** (the WhatsApp templates, the opening words, the sign's "לשבת איתנו") stays: there it means the people in the circle.
-  - **The founder speaks in the first person in one place only:** a signed note on the About page explaining that "we" means everyone who lives here.
+  - **The founder speaks in the first person in one place only:** a short note on the About page (v1.0.9: the user's own wording, unsigned) explaining that "we" means everyone who lives here.
   - The meditation scripts' "ואפילו אותנו" stays (it is in the recordings).
 - **No "host" (site v1.0.4, user decision):** a circle isn't hosting guests, so "מארח/ת" is gone. The person who starts a circle "פותח/ת מעגל" (the release's own audience term); the page is "לפתוח מעגל" and the kit "ערכה לפתיחת מעגל". Roles inside the circle stay "מנחה/ה" and "מלווה".
   - The nav item and page title "מי אנחנו" became "על המיזם"; the home page section is "מי מאחורי זה".
@@ -128,6 +128,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.9 | design-v1 + user remark | 2026-10-06 | Site v1.0.9: About, "מי עומד מאחורי זה" rewritten in the user's words (a private initiative, not connected to any nonprofit or party); the first-person note shortened and no longer signed. |
 | t2.0.8 | design-v1 + user remark | 2026-10-06 | Site v1.0.8: the hero's motion on/off button is a 44 px round icon button (wavy lines; slashed when paused), with aria-label and title instead of visible text. |
 | t2.0.7 | design-v1 + user remarks | 2026-10-06 | Site v1.0.7, home page: removed the voting-plan teaser (`#plan`) and the short about (`#about`); "עוד על המיזם" link under "הרעיון"; new paragraph in "הרעיון" on healing and what we pushed aside. |
 | t2.0.6 | design-v1 + user remarks | 2026-10-06 | Site v1.0.6: all titles (h1–h3, player titles, plan PNG title) in M PLUS Rounded 1c, with its Latin subset added; "נוֹכְחִים" with niqqud everywhere on the site (33 places). |
