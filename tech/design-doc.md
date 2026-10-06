@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v0.html` (design-v0, released 2026-10-06), plus the user's answer to questions-for-design #1 and the user's direct design remarks for site v0.2 (see below; to be folded into design-v1, question #6)
-**Tech doc version:** t1.2.5 · **Site version:** v0.2.5 (shown in every page footer; approved by the user 2026-10-06)
+**Tech doc version:** t1.2.6 · **Site version:** v0.2.6 (shown in every page footer; approved by the user 2026-10-06)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -104,6 +104,7 @@ Given directly by the user in the build chat, on top of design-v0. Not yet in a 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t1.2.6 | design-v0 + user remarks | 2026-10-06 | Site v0.2.6: plan page copy: election day is a day off, so "בין סידורים, קניות וכל ההמולה" instead of mentioning work. |
 | t1.2.5 | design-v0 + user remarks | 2026-10-06 | Site v0.2.5: player end button reads "התוכנית שלי" (accessible name "התוכנית שלי: תוכנית ההצבעה"); larger primary button in full screen. |
 | t1.2.4 | design-v0 + user remarks | 2026-10-06 | Site v0.2.4: voting plan on its own page (`plan.html`, in the nav) with rewritten texts (question #9); home page teaser; end of meditation shows the plan button and support lines together, no delay; the bar's end state replaces title/time until replay or seek; player wording "לתכנן הצבעה". |
 | t1.2.3 | design-v0 + user remarks | 2026-10-06 | Site v0.2.3, voting-plan funnel: location (calendar only), dedication of the moment (fixed list), meditation for the way (linked in the calendar); invite link in the calendar instead of a WhatsApp link; after a meditation ends, support lines first and a delayed, quiet invitation to plan (question #8). |
