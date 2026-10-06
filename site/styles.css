@@ -234,6 +234,8 @@ body.has-pbar { padding-bottom: 92px; }
 .ibtn-big { width: 72px; height: 72px; }
 .ibtn-big svg { width: 34px; height: 34px; }
 @media (max-width: 480px) { .pbar [data-p="back"] { display: none; } }
+.ibtn-share { margin-inline-start: 6px; }
+.ibtn-share svg { width: 22px; height: 22px; }
 
 /* Global player: full-screen overlay */
 .pfull { position: fixed; inset: 0; grid-template-columns: minmax(0, 1fr); z-index: 80; display: grid; grid-template-rows: auto 1fr auto; background: var(--paper); color: var(--ink); opacity: 0; transition: opacity .5s ease; overflow: hidden; isolation: isolate; }

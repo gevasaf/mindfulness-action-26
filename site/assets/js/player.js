@@ -21,6 +21,7 @@
     pause: '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>',
     expand: '<path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM6 15v3h3v2H4v-5zm12 0h2v5h-5v-2h3z"/>',
     collapse: '<path d="M9 4v5H4V7h3V4zm6 0h2v3h3v2h-5zM4 15h5v5H7v-3H4zm11 0h5v2h-3v3h-2z"/>',
+    share: '<path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>',
     close: '<path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/>',
     back: '<path d="M12 4a8 8 0 1 1-7.6 10.5l1.9-.6A6 6 0 1 0 12 6v3L7.5 5 12 1z"/><text x="12" y="15.6" font-size="6" text-anchor="middle" font-family="sans-serif" font-weight="700">15</text>'
   };
@@ -51,6 +52,7 @@
       "</div>" +
       '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
       '<button type="button" class="ibtn" data-p="expand" aria-label="מסך מלא">' + icon("expand") + "</button>" +
+      '<a class="ibtn ibtn-share" data-p="share" href="meditations.html" target="_blank" rel="noopener" aria-label="שיתוף בוואטסאפ" title="שיתוף בוואטסאפ">' + icon("share") + "</a>" +
       '<button type="button" class="ibtn" data-p="close" aria-label="עצירה וסגירת הנגן">' + icon("close") + "</button>" +
     "</div>";
 
@@ -142,6 +144,9 @@
     stanzas = []; caption = -2; setCaption("");
     audio.src = AUDIO_DIR + id + ".mp3";
     each("title", function (a) { a.textContent = MEDITATIONS[id].title; a.href = "meditations.html#" + id; });
+    // Share the meditation that is playing now (same text as the page's share buttons)
+    var url = new URL("meditations.html#" + id, location.href).href;
+    each("share", function (a) { a.href = "https://wa.me/?text=" + encodeURIComponent(MEDITATIONS[id].title + ": רגע של נשימה לפני הבחירות.\n" + url); });
     fetch(AUDIO_DIR + id + ".json").then(function (r) { return r.json(); })
       .then(function (j) { if (current === id) { stanzas = j.stanzas || []; caption = -2; tick(); } })
       .catch(function () {});
@@ -213,7 +218,8 @@
       case "expand": openFull(); break;
       case "collapse": closeFull(); break;
       case "close": stop(); break;
-      case "title": closeFull(); break; // the link itself navigates (in place, via main.js)
+      case "title": closeFull(); break;
+      case "share": window.countEvent("share-whatsapp-player-" + current); break; // the link opens WhatsApp // the link itself navigates (in place, via main.js)
     }
   });
   document.addEventListener("input", function (e) {
