@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.4 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.5 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -31,7 +31,7 @@ Anchors on the home page: `#idea`, `#ways`, `#plan`, `#about`; `#support` on eve
 - **Brand name** (site v1.0.1, user request): written with niqqud, "נוֹכְחִים", in **M PLUS Rounded 1c** 700 (Google Fonts, SIL OFL), self-hosted Hebrew subset (`assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2`, 5 KB, preloaded; licence `OFL-MPLUSRounded1c.txt`), via `--brand-font`. Used in the header, the plan card, the plan PNG and the printable sign. Running text and `<title>` keep "נוכחים" without niqqud.
 - **Type:** Frank Ruhl Libre (headings, 500/700) and Assistant (body, 400/600/700), **self-hosted** woff2 (Hebrew + Latin subsets, ~140 KB total, SIL OFL, licences in `site/assets/fonts/`). Chosen over Google Fonts so the site makes no third-party requests.
 - **Breathing circle:** CSS animation, 5 s in / 5 s out, with "שאיפה / נשיפה" labels. Since v1.0.2 a white echo circle (`.breath-echo`) sits behind it: on the in-breath it grows past the circle (scale .72 → 1.75) while fading from 50% opacity to 0, then waits through the out-breath. Paused by the stop-motion button, hidden under reduced motion.
-- **Logo breath (v1.0.2):** hovering or focusing the logo runs one breath of the header circle (10 s, scale 1 → 1.35 → 1) with the same white echo (scale 1 → 1.5, fading 50% → 0). `main.js` adds `.breathing` to `.brand` and removes it on `animationend`, so the loop always completes and can run again. The circle's fill is `::after` and the echo `::before`, so the echo stays behind and centred. Off under reduced motion.
+- **Logo breath (v1.0.2):** hovering, focusing or touching (phones, v1.0.5) the logo runs one breath of the header circle (10 s, scale 1 → 1.35 → 1) with the same white echo (scale 1 → 1.5, fading 50% → 0). `main.js` adds `.breathing` to `.brand` and removes it on `animationend`, so the loop always completes and can run again. The circle's fill is `::after` and the echo `::before`, so the echo stays behind and centred. Off under reduced motion.
 - **Hero video strip:** Pexels clip "Golden wheat field swaying in the breeze" by †reny aleksa (credited in the hero). Colour muted toward sand/sage (the source is saturated yellow-orange, which §7 avoids). The clip doesn't loop, so it is pre-rendered as a ping-pong (forward, then reversed) whose speed eases to zero at each turn over 1.8 s: 30 s loop, 960×540, WebM VP9 + MP4 H.264, ~2 MB each, in `site/assets/video/`. A poster still shows first; the video loads only without reduced motion, data saver or 2G. The stop-motion button pauses it. The gradient stays underneath as a fallback.
 - **Labels:** only `.tag-tts` "קול ממוחשב (AI)" remains (on every computer-voiced recording, and in the player). The "בקרוב" / "דוגמה" tags and the draft banner were removed in site v1.0.
 
@@ -45,7 +45,7 @@ Anchors on the home page: `#idea`, `#ways`, `#plan`, `#about`; `#support` on eve
   - The meditation scripts' "ואפילו אותנו" stays (it is in the recordings).
 - **No "host" (site v1.0.4, user decision):** a circle isn't hosting guests, so "מארח/ת" is gone. The person who starts a circle "פותח/ת מעגל" (the release's own audience term); the page is "לפתוח מעגל" and the kit "ערכה לפתיחת מעגל". Roles inside the circle stay "מנחה/ה" and "מלווה".
   - The nav item and page title "מי אנחנו" became "על המיזם"; the home page section is "מי מאחורי זה".
-- Page copy is hand-written HTML in `site/*.html`, taken from the release text. Header, footer (with the version line) and support section are identical on every page; the HTML files are the source, so when editing them, change all seven pages (including `404.html`) (`sign.html` and `host-guide.html` are standalone). Bump the version in every footer and in the printables' sheet footers.
+- Page copy is hand-written HTML in `site/*.html`, taken from the release text. Header, footer (with the version line) and support section are identical on every page; the HTML files are the source, so when editing them, change all seven pages (including `404.html`) (`sign.html` and `host-guide.html` are standalone). Bump the version in every footer and in the printables' sheet footers, **and in the `?v=` cache-busting query on every `styles.css`, `print.css` (including its `@import`) and `assets/js/*.js` reference.** GitHub Pages lets browsers cache CSS/JS for about 10 minutes; without the query, new HTML can meet old CSS (seen in v1.0.2: the echo element pushed the breathing circle off its label, and the logo did nothing).
 - Meditation scripts are copied verbatim from `design/releases/design-v0-meditations/` to `site/content/meditations/` (the deploy only ships `site/`); the same text is embedded in each meditation's "לקריאת התסריט" panel. Recordings and stanza timings are in `site/content/meditations/audio/`, made with `tech/tools/mix-meditation-audio.py`. The hero video loop is made with `tech/tools/video-pingpong.py`.
 - Sample circles, journey days and Great Silence details are placeholders marked "דוגמה" / "בקרוב".
 
@@ -125,6 +125,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.5 | design-v1 + user remarks | 2026-10-06 | Site v1.0.5 (fix): cache-busting `?v=` on all CSS/JS references, so new HTML never runs with cached old CSS/JS (the user saw an off-centre breathing label, no echo and no logo breath after v1.0.2). The logo breath also starts on touch. |
 | t2.0.4 | design-v1 + user decisions | 2026-10-06 | Site v1.0.4: "מארח/ת" replaced across the site ("לפתוח מעגל" in the nav and page title, "ערכה לפתיחת מעגל" in links, "דף הנחיה למעגל"); the sign's headline is "לפני שבוחרים, נושמים" with "מעגל נשימה לקראת הבחירות לכנסת · 27.10"; question #13. |
 | t2.0.3 | design-v1 + user decision | 2026-10-06 | Site v1.0.3: who "we" is. Organizational "we" rewritten in the impersonal (footer, support lines, plan, election day, host kit, sign, guide, home); About page renamed "על המיזם" with a signed first-person note from Assaf Geva; voice rule recorded under Content; question #12. |
 | t2.0.2 | design-v1 + user remarks | 2026-10-06 | Site v1.0.2: one logo breath on hover or focus; white fading echo behind the hero's breathing circle and the logo circle. |

@@ -18,13 +18,14 @@
     } catch (e) {}
   };
 
-  // ---------- logo: one full breath on hover or focus (header is static, bind once) ----------
+  // ---------- logo: one full breath on hover, focus or touch (header is static, bind once) ----------
   var mark = document.querySelector(".brand-mark");
   var brand = document.querySelector(".brand");
   if (mark && brand) {
     var breathe = function () { brand.classList.add("breathing"); };
     brand.addEventListener("mouseenter", breathe);
     brand.addEventListener("focus", breathe);
+    brand.addEventListener("touchstart", breathe, { passive: true }); // phones have no hover
     mark.addEventListener("animationend", function (e) { if (e.target === mark) brand.classList.remove("breathing"); });
   }
 
