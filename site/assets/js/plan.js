@@ -63,7 +63,7 @@ window.onPage(function () {
       (p.invite ? "מזמין/ה גם את: " + p.invite + "\n" : "") +
       (p.dedication ? "את הרגע מאחורי הפרגוד אני מקדיש/ה " + p.dedication + "\n" : "") +
       (p.medTitle ? "בדרך אקשיב למדיטציה \"" + p.medTitle + "\"\n" : "") +
-      "\nלפני שבוחרים, נושמים. אפשר להכין תוכנית משלך כאן:\n" + SITE_URL + "#plan";
+      "\nלפני שבוחרים, נושמים. אפשר להכין תוכנית משלך כאן:\n" + SITE_URL + "plan.html";
   }
 
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
@@ -91,7 +91,7 @@ window.onPage(function () {
     if (p.invite) desc.push("מזמין/ה: " + p.invite);
     if (p.dedication) desc.push("את הרגע מאחורי הפרגוד אני מקדיש/ה " + p.dedication);
     if (p.medTitle) desc.push("", "מדיטציה לפני היציאה או בדרך: " + p.medTitle + " (כ-" + MED_MINUTES[p.med] + " דקות)", p.medUrl);
-    desc.push("", "איפה הקלפי שלי: " + CEC_URL, "להזמין עוד מישהו להכין תוכנית: " + SITE_URL + "#plan");
+    desc.push("", "איפה הקלפי שלי: " + CEC_URL, "להזמין עוד מישהו להכין תוכנית: " + SITE_URL + "plan.html");
     var alarm = "עוד שעה: הולכים להצביע" + (p.medTitle ? ". לפני היציאה: " + p.medTitle : "");
     var lines = [
       "BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//nochechim//voting-plan//HE", "CALSCALE:GREGORIAN",

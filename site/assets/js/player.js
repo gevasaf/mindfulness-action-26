@@ -49,9 +49,11 @@
       '<div class="pbar-info">' +
         '<a class="pbar-title" data-p="title" href="meditations.html"></a>' +
         '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב זמני</div>' +
-        '<div class="pbar-endnote">סוף המדיטציה<br><a href="#support" data-p="help" title="אם עלה משהו קשה">קווי סיוע</a></div>' +
       "</div>" +
-      '<a class="btn pbar-plan" data-p="plan" href="index.html#plan">לתוכנית הצבעה</a>' +
+      '<div class="pbar-end">' +
+        '<a class="btn pbar-plan" data-p="plan" href="plan.html">לתכנן הצבעה</a>' +
+        '<a class="pbar-help" href="#support" data-p="help" title="אם עלה משהו קשה, אפשר לדבר עם מישהו">קווי סיוע</a>' +
+      "</div>" +
       '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
       '<button type="button" class="ibtn" data-p="expand" aria-label="מסך מלא">' + icon("expand") + "</button>" +
       '<a class="ibtn ibtn-share" data-p="share" href="meditations.html" target="_blank" rel="noopener" aria-label="שיתוף בוואטסאפ" title="שיתוף בוואטסאפ">' + icon("share") + "</a>" +
@@ -72,8 +74,8 @@
     "</div>" +
     '<div class="pfull-caption" aria-live="polite"><p></p><p></p></div>' +
     '<div class="pfull-end">' +
+      '<a class="btn secondary pfull-plan" data-p="plan" href="plan.html">כשמתאים: לתכנן את ההצבעה</a>' +
       '<a href="#support" data-p="help">אם עלה משהו קשה, אפשר לדבר עם מישהו: קווי סיוע</a>' +
-      '<a class="btn secondary pfull-plan" data-p="plan" href="index.html#plan">כשמתאים: להכין תוכנית הצבעה</a>' +
     "</div>" +
     '<div class="pfull-controls">' +
       '<input type="range" class="pseek" data-p="seek" min="0" max="1000" step="1" value="0" aria-label="מיקום בהקלטה">' +
@@ -145,15 +147,14 @@
   }
 
   // ---------- end of a meditation ----------
-  // First the support lines (at once), then, a few seconds later and only if no
-  // plan was made in this visit, a quiet invitation to plan the vote.
-  var endTimer = null;
+  // The support lines and an invitation to plan the vote appear together. The
+  // plan link is skipped if a plan was already made in this visit (in memory).
+  // In the bar they replace the title and time until playback or seeking resumes.
   function setEnded(on) {
-    clearTimeout(endTimer);
-    [bar, full].forEach(function (el) { el.classList.toggle("ended", on); el.classList.remove("show-plan"); });
-    if (on && !window.planMade) {
-      endTimer = setTimeout(function () { [bar, full].forEach(function (el) { el.classList.add("show-plan"); }); }, 4000);
-    }
+    [bar, full].forEach(function (el) {
+      el.classList.toggle("ended", on);
+      el.classList.toggle("show-plan", on && !window.planMade);
+    });
   }
 
   // ---------- actions ----------
@@ -248,6 +249,7 @@
   });
   document.addEventListener("input", function (e) {
     if (e.target.getAttribute && e.target.getAttribute("data-p") === "seek" && audio.duration) {
+      setEnded(false);
       audio.currentTime = e.target.value / 1000 * audio.duration;
     }
   });

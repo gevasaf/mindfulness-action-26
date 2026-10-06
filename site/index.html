@@ -26,6 +26,7 @@
       <ul>
         <li><a href="index.html" aria-current="page">ראשי</a></li>
         <li><a href="meditations.html">מדיטציות</a></li>
+        <li><a href="plan.html">תוכנית הצבעה</a></li>
         <li><a href="circles.html">מעגלים</a></li>
         <li><a href="journey.html">המסע היומי</a></li>
         <li><a href="host-kit.html">ערכת מארח/ת</a></li>
@@ -62,7 +63,7 @@
     <p class="countdown-caption" data-countdown-caption>עד יום הבחירות לכנסת, שלישי 27.10.2026</p>
     <div class="btn-row" style="justify-content:center">
       <a class="btn" data-play="behind-the-curtain" href="content/meditations/audio/behind-the-curtain.mp3"><span class="play-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg></span>להאזנה (7 דקות)</a>
-      <a class="btn secondary" href="#plan">להכין תוכנית הצבעה</a>
+      <a class="btn secondary" href="plan.html">לתכנן הצבעה</a>
     </div>
   </div>
   <p class="hero-credit">וידאו: <a href="https://www.pexels.com/video/golden-wheat-field-swaying-in-the-breeze-30178060/" rel="noopener"><bdi dir="ltr">†reny aleksa</bdi>, Pexels</a></p>
@@ -105,7 +106,7 @@
       <article class="card">
         <h3>להכין תוכנית הצבעה</h3>
         <p>שלוש שאלות קצרות: מתי, עם מי, ואת מי מזמינים. בסוף מקבלים כרטיס לשיתוף ותזכורת ליומן.</p>
-        <div class="card-foot btn-row"><a class="btn secondary" href="#plan">לתוכנית</a></div>
+        <div class="card-foot btn-row"><a class="btn secondary" href="plan.html">לתכנן הצבעה</a></div>
       </article>
     </div>
   </div>
@@ -113,84 +114,13 @@
 
 <section class="section wide" id="plan" aria-labelledby="plan-h">
   <div class="inner">
-    <p class="eyebrow">מתי, עם מי, את מי מזמינים</p>
-    <h2 id="plan-h">תוכנית ההצבעה שלי</h2>
-    <p class="lede">מי שמתכנן מראש מתי ואיך יגיע לקלפי, מגיע יותר. כמה שאלות קצרות, דקה אחת. אף אחת מהן לא חובה.</p>
-    <div class="plan">
-      <form id="plan-form" novalidate>
-        <fieldset class="field">
-          <legend>מתי אני הולך/ת להצביע?<span class="hint">שלישי, 27.10. הקלפיות פתוחות בדרך כלל בין 7:00 ל-22:00.</span></legend>
-          <div class="choices">
-            <label><input type="radio" name="slot" value="morning" checked> בבוקר</label>
-            <label><input type="radio" name="slot" value="noon"> בצהריים</label>
-            <label><input type="radio" name="slot" value="afternoon"> אחר הצהריים</label>
-            <label><input type="radio" name="slot" value="evening"> בערב</label>
-          </div>
-        </fieldset>
-        <div class="field">
-          <label for="exact">שעה מדויקת<span class="hint">לא חובה</span></label>
-          <input type="time" id="exact" name="exact" min="07:00" max="21:30" step="900">
-        </div>
-        <div class="field">
-          <label for="where">איפה אני מצביע/ה?<span class="hint">שם הקלפי או הכתובת. נכנס רק לתזכורת ביומן שלך, לא לכרטיס לשיתוף. <a href="https://www.bechirot.gov.il/" rel="noopener">איפה הקלפי שלי?</a></span></label>
-          <input type="text" id="where" name="where" maxlength="60" autocomplete="off">
-        </div>
-        <div class="field">
-          <label for="withWhom">עם מי אני הולך/ת?<span class="hint">לדוגמה: עם השכנה, עם המשפחה, לבד. לא חובה.</span></label>
-          <input type="text" id="withWhom" name="withWhom" maxlength="60" autocomplete="off">
-        </div>
-        <div class="field">
-          <label for="invite">את מי אני מזמין/ה להצטרף?<span class="hint">מישהו שאולי לא היה מגיע לבד. לא חובה.</span></label>
-          <input type="text" id="invite" name="invite" maxlength="60" autocomplete="off">
-        </div>
-        <h3 class="plan-sub">לרגע שמאחורי הפרגוד</h3>
-        <div class="field">
-          <label for="dedication">למי אני מקדיש/ה את הרגע?<span class="hint">רגע אחד של שקט לפני שבוחרים. לא חובה.</span></label>
-          <select id="dedication" name="dedication">
-            <option value="">בלי הקדשה, רק להיות שם</option>
-            <option value="לילדים שלי">לילדים שלי</option>
-            <option value="למשפחה שלי">למשפחה שלי</option>
-            <option value="לאנשים הקרובים לי">לאנשים הקרובים לי</option>
-            <option value="לזכרם של מי שאיבדנו">לזכרם של מי שאיבדנו</option>
-            <option value="לשכנים שלי, גם לאלה שחושבים אחרת">לשכנים שלי, גם לאלה שחושבים אחרת</option>
-            <option value="לעתיד של כולנו">לעתיד של כולנו</option>
-            <option value="לעצמי">לעצמי</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="meditation">מדיטציה לדרך<span class="hint">הקישור אליה ייכנס לתזכורת ביומן. לא חובה.</span></label>
-          <select id="meditation" name="meditation">
-            <option value="">בלי מדיטציה</option>
-            <option value="on-the-way-to-vote">בדרך לקלפי (כ-2 דקות, בהליכה או בתור)</option>
-            <option value="behind-the-curtain">מאחורי הפרגוד (כ-7 דקות, בבית לפני היציאה)</option>
-            <option value="clarity-in-the-noise">בהירות בתוך הרעש (כ-3 דקות)</option>
-          </select>
-        </div>
-        <button type="submit" class="btn">ליצור את הכרטיס שלי</button>
-        <p class="privacy-note" style="margin-top:14px">התוכנית נוצרת רק במכשיר שלך. אנחנו לא שומרים, לא שולחים ולא רואים אותה, ולא שואלים בעד מי מצביעים. אנחנו רק סופרים שנוצרה עוד תוכנית.</p>
-      </form>
-
-      <div id="plan-result" hidden>
-        <div class="plan-card">
-          <p class="pc-brand">נוכחים</p>
-          <h3 tabindex="-1">התוכנית שלי להצביע</h3>
-          <dl>
-            <dt>מתי</dt><dd data-pc="when"></dd>
-            <dt>עם מי</dt><dd data-pc="with"></dd>
-            <dt data-pc-row="invite">מזמין/ה גם את</dt><dd data-pc="invite" data-pc-row="invite"></dd>
-            <dt data-pc-row="dedication">את הרגע מאחורי הפרגוד אני מקדיש/ה</dt><dd data-pc="dedication" data-pc-row="dedication"></dd>
-            <dt data-pc-row="med">מדיטציה לדרך</dt><dd data-pc="med" data-pc-row="med"></dd>
-          </dl>
-          <p class="pc-foot">לפני שבוחרים, נושמים.</p>
-        </div>
-        <div class="btn-row" style="margin-top:16px">
-          <button type="button" class="btn" data-act="whatsapp" aria-label="שיתוף בוואטסאפ"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>שיתוף</button>
-          <button type="button" class="btn secondary" data-act="image">לשמור כתמונה</button>
-          <button type="button" class="btn secondary" data-act="calendar">תזכורת ליומן</button>
-        </div>
-        <p style="margin-top:16px">איפה הקלפי שלי? <a href="https://www.bechirot.gov.il/" rel="noopener">לבדיקה באתר ועדת הבחירות המרכזית</a>.</p>
-        <p class="privacy-note">ועכשיו: לשלוח לשלושה אנשים, ולהזמין גם אותם להכין תוכנית.</p>
+    <div class="plan-teaser">
+      <div>
+        <p class="eyebrow">הדרך אל הרגע שמאחורי הפרגוד</p>
+        <h2 id="plan-h">תוכנית ההצבעה שלי</h2>
+        <p class="lede">מתי, עם מי, ולמי אני מקדיש/ה את הרגע. דקה אחת עכשיו, ורגע שקט אחר כך.</p>
       </div>
+      <a class="btn" href="plan.html">לתכנן הצבעה</a>
     </div>
   </div>
 </section>
@@ -248,7 +178,7 @@
   <div class="inner">
     <p><b>נוכחים</b> (שם עבודה) היא תנועה אזרחית של מיינדפולנס. אנחנו לא אומרים בעד מי להצביע, ולא שואלים.</p>
     <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. אנחנו סופרים ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">טיוטה · גרסה <bdi dir="ltr">v0.2.3</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p class="version">טיוטה · גרסה <bdi dir="ltr">v0.2.4</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>
