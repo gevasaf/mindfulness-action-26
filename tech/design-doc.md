@@ -1,6 +1,6 @@
 # Technical design doc
 
-**Implements:** _none yet — waiting for `design/releases/design-v1.md`_
+**Implements:** _none yet — waiting to build `design/releases/design-v0.html` (first release)_
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
