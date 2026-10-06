@@ -47,7 +47,7 @@
     '<div class="pbar-inner">' +
       '<button type="button" class="ibtn ibtn-main" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
       '<div class="pbar-info">' +
-        '<a class="pbar-title" data-p="title" href="meditations.html"></a>' +
+        '<a class="pbar-title" data-p="title" href="meditations.html"><span class="ptitle-text"></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg></a>' +
         '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב זמני</div>' +
       "</div>" +
       '<div class="pbar-end">' +
@@ -69,7 +69,7 @@
   full.innerHTML =
     '<div class="pfull-bg" aria-hidden="true"><span></span><span></span><span></span></div>' +
     '<div class="pfull-top">' +
-      '<a class="pfull-title" data-p="title" href="meditations.html"></a>' +
+      '<a class="pfull-title" data-p="title" href="meditations.html"><span class="ptitle-text"></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg></a>' +
       '<button type="button" class="ibtn" data-p="collapse" aria-label="יציאה ממסך מלא">' + icon("collapse") + "</button>" +
     "</div>" +
     '<div class="pfull-caption" aria-live="polite"><p></p><p></p></div>' +
@@ -163,7 +163,7 @@
     started = false;
     stanzas = []; caption = -2; setCaption(""); setEnded(false);
     audio.src = AUDIO_DIR + id + ".mp3";
-    each("title", function (a) { a.textContent = MEDITATIONS[id].title; a.href = "meditations.html#" + id; });
+    each("title", function (a) { a.querySelector(".ptitle-text").textContent = MEDITATIONS[id].title; a.href = "meditations.html#" + id; });
     // Share the meditation that is playing now (same text as the page's share buttons)
     var url = new URL("meditations.html#" + id, location.href).href;
     each("share", function (a) { a.href = "https://wa.me/?text=" + encodeURIComponent(MEDITATIONS[id].title + ": רגע של נשימה לפני הבחירות.\n" + url); });
@@ -259,4 +259,8 @@
 
   // Page-level play buttons are re-rendered on every in-place navigation.
   window.onPage(syncButtons);
+  // The title's chevron points down (open the meditation's details) and flips up on the meditations page.
+  window.onPage(function () {
+    document.documentElement.classList.toggle("on-med-page", /meditations\.html$/.test(location.pathname));
+  });
 })();

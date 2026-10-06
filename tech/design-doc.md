@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v0.html` (design-v0, released 2026-10-06), plus the user's answer to questions-for-design #1 and the user's direct design remarks for site v0.2 (see below; to be folded into design-v1, question #6)
-**Tech doc version:** t1.2.6 · **Site version:** v0.2.6 (shown in every page footer; approved by the user 2026-10-06)
+**Tech doc version:** t1.2.7 · **Site version:** v0.2.7 (shown in every page footer; approved by the user 2026-10-06)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -12,7 +12,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 
 | File | Page | Release § |
 |---|---|---|
-| `index.html` | Home: hero, central meditation, three ways, voting plan, circles, the Great Silence, about | §8 "home page structure" |
+| `index.html` | Home: hero (its play button starts the central meditation), three ways, voting-plan teaser, circles, the Great Silence, about | §8 "home page structure" |
 | `meditations.html` | Three sample meditations + three "בקרוב" | §8 v0 pages, §9 |
 | `circles.html` | Sample circles list + "host a circle" | §8 v0 pages |
 | `host-kit.html` | Host kit draft, downloads "בקרוב" | §9 host kit |
@@ -25,7 +25,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | `sign.html` | Printable A4 sign with QR code to the site, marked "טיוטה" | §9 host kit materials (draft, user request) |
 | `host-guide.html` | Printable one-page host guide, marked "טיוטה" | §9 host kit materials (draft, user request) |
 
-Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silence`, `#about`; `#support` on every page.
+Anchors on the home page: `#ways`, `#plan`, `#circles`, `#great-silence`, `#about`; `#support` on every page.
 
 ## Visual system
 - **Colors** (CSS custom properties in `site/styles.css`): `--paper #f7f3ec`, `--ink #2b2925`, `--sage #6f8a72`, `--clay #b9684a`, `--sage-soft #e6ece4`, `--clay-soft`, plus the release's dark-mode set under `prefers-color-scheme: dark`. Darker `--sage-ink` / `--clay-ink` variants are used for text and button fills so they meet WCAG AA contrast.
@@ -104,6 +104,7 @@ Given directly by the user in the build chat, on top of design-v0. Not yet in a 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t1.2.7 | design-v0 + user remarks | 2026-10-06 | Site v0.2.7: home page drops the "המדיטציה המרכזית" box (the hero's play button starts it; the meditations page has the details); the player's title has a chevron (down = open the meditation's details, flips up on the meditations page). |
 | t1.2.6 | design-v0 + user remarks | 2026-10-06 | Site v0.2.6: plan page copy: election day is a day off, so "בין סידורים, קניות וכל ההמולה" instead of mentioning work. |
 | t1.2.5 | design-v0 + user remarks | 2026-10-06 | Site v0.2.5: player end button reads "התוכנית שלי" (accessible name "התוכנית שלי: תוכנית ההצבעה"); larger primary button in full screen. |
 | t1.2.4 | design-v0 + user remarks | 2026-10-06 | Site v0.2.4: voting plan on its own page (`plan.html`, in the nav) with rewritten texts (question #9); home page teaser; end of meditation shows the plan button and support lines together, no delay; the bar's end state replaces title/time until replay or seek; player wording "לתכנן הצבעה". |
