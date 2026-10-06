@@ -1,13 +1,15 @@
-// Meditation player for design-v0: reads a script aloud with the browser's own
-// Hebrew speech voice (Web Speech API) over a quiet pad generated with Web Audio.
-// No audio files, no external service. See tech/design-doc.md ("Meditations").
+// Meditation player for design-v0.
+// With data-audio: plays the pre-rendered recording (ElevenLabs voice + quiet music,
+// mixed in the repo) and shows each stanza as it is spoken, from data-timings.
+// Without it: reads the script aloud with the browser's own Hebrew voice (Web Speech
+// API) over a pad generated with Web Audio. See tech/design-doc.md ("Meditations").
 //
 // Script conventions (design/releases/design-v0-meditations/README.md):
 //   [שקט X שניות]  -> X seconds of silence (music continues)
 //   blank line      -> short natural pause, 2 to 3 seconds
 //   pace            -> very slow, about half of normal speech
 (function () {
-  var players = document.querySelectorAll("[data-meditation]");
+  var players = document.querySelectorAll("[data-meditation], [data-audio]");
   if (!players.length) return;
 
   var synth = window.speechSynthesis;
@@ -258,5 +260,91 @@
   if (synth) synth.getVoices(); // prime the voice list
   window.addEventListener("pagehide", function () { if (synth) synth.cancel(); });
 
-  Array.prototype.forEach.call(players, function (el) { new Player(el); });
+  // ---------- recorded audio player ----------
+  function fmt(t) { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ":" + (t % 60 < 10 ? "0" : "") + (t % 60); }
+
+  function AudioPlayer(root) {
+    var self = this;
+    this.root = root;
+    this.name = root.getAttribute("data-audio").replace(/^.*\/|\.mp3$/g, "");
+    this.stanzas = [];
+    this.started = false;
+    var ui = root.querySelector("[data-player-ui]");
+    ui.innerHTML =
+      '<div class="player-controls">' +
+        '<button type="button" class="btn" data-act="play">▶ להאזנה</button>' +
+        '<button type="button" class="btn secondary" data-act="restart" hidden>להתחיל מחדש</button>' +
+        '<span class="player-time" data-time></span>' +
+      '</div>' +
+      '<input type="range" class="player-seek" min="0" max="100" step="1" value="0" aria-label="מיקום בהקלטה">' +
+      '<p class="player-line pause" aria-live="polite" data-line>מוכנים? אפשר לעצור בכל רגע.</p>';
+    this.audio = new Audio();
+    this.audio.preload = "metadata";
+    this.audio.src = root.getAttribute("data-audio");
+    this.btnPlay = ui.querySelector("[data-act=play]");
+    this.btnRestart = ui.querySelector("[data-act=restart]");
+    this.seek = ui.querySelector(".player-seek");
+    this.timeEl = ui.querySelector("[data-time]");
+    this.lineEl = ui.querySelector("[data-line]");
+    this.btnPlay.addEventListener("click", function () { self.toggle(); });
+    this.btnRestart.addEventListener("click", function () { self.audio.currentTime = 0; self.audio.play(); });
+    this.seek.addEventListener("input", function () {
+      if (self.audio.duration) self.audio.currentTime = self.seek.value / 100 * self.audio.duration;
+    });
+    var a = this.audio;
+    a.addEventListener("loadedmetadata", function () { self.tick(); });
+    a.addEventListener("timeupdate", function () { self.tick(); });
+    a.addEventListener("play", function () {
+      if (active && active !== self) active.pause();
+      active = self;
+      if (!self.started) { self.started = true; window.countEvent("listen-" + self.name); }
+      self.btnPlay.textContent = "❚❚ השהיה";
+      self.btnRestart.hidden = false;
+    });
+    a.addEventListener("pause", function () {
+      if (a.ended) return;
+      self.btnPlay.textContent = "▶ להמשיך";
+      self.lineEl.classList.add("pause");
+      self.lineEl.textContent = "בהשהיה. אפשר לחזור לנשימה.";
+    });
+    a.addEventListener("ended", function () {
+      window.countEvent("listen-complete-" + self.name);
+      self.started = false;
+      self.btnPlay.textContent = "▶ להאזין שוב";
+      self.lineEl.classList.add("pause");
+      self.lineEl.textContent = "סוף המדיטציה. ואם עלה משהו קשה, קווי הסיוע נמצאים בתחתית העמוד.";
+    });
+    a.addEventListener("error", function () {
+      self.lineEl.textContent = "לא הצלחנו לטעון את ההקלטה. אפשר לנסות שוב, או לקרוא את התסריט.";
+    });
+    fetch(root.getAttribute("data-timings")).then(function (r) { return r.json(); }).then(function (j) {
+      self.stanzas = j.stanzas || [];
+      var body = root.querySelector("[data-script-body]");
+      if (body) body.textContent = self.stanzas.map(function (s) { return s.text; }).join("\n\n");
+    }).catch(function () {});
+  }
+  AudioPlayer.prototype.toggle = function () {
+    if (this.audio.paused) { var p = this.audio.play(); if (p && p.catch) p.catch(function () {}); }
+    else this.audio.pause();
+  };
+  AudioPlayer.prototype.pause = function () { this.audio.pause(); };
+  AudioPlayer.prototype.tick = function () {
+    var a = this.audio, t = a.currentTime, d = a.duration || 0;
+    this.timeEl.textContent = fmt(t) + " / " + fmt(d);
+    if (d) this.seek.value = Math.round(t / d * 100);
+    if (a.paused) return;
+    var cur = null;
+    for (var i = 0; i < this.stanzas.length; i++) {
+      if (t >= this.stanzas[i].start - 0.2 && t <= this.stanzas[i].end + 0.6) { cur = this.stanzas[i]; break; }
+    }
+    var text = cur ? cur.text : "· · ·";
+    if (this.lineEl.textContent !== text) {
+      this.lineEl.textContent = text;
+      this.lineEl.classList.toggle("pause", !cur);
+    }
+  };
+
+  Array.prototype.forEach.call(players, function (el) {
+    if (el.hasAttribute("data-audio")) new AudioPlayer(el); else new Player(el);
+  });
 })();

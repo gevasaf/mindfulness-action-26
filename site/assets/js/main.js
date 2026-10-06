@@ -48,7 +48,7 @@
   // "Send on WhatsApp" links: share this page's address (works on any domain)
   Array.prototype.forEach.call(document.querySelectorAll("[data-share-wa]"), function (a) {
     var url = location.href.split("#")[0] + a.getAttribute("data-share-wa");
-    var title = a.closest("[data-meditation]") ? a.closest("[data-meditation]").querySelector("h3").textContent : document.title;
+    var title = a.closest("[data-meditation], [data-audio]") ? a.closest("[data-meditation], [data-audio]").querySelector("h3").textContent : document.title;
     a.href = "https://wa.me/?text=" + encodeURIComponent(title + ": רגע של נשימה לפני הבחירות.\n" + url);
     a.target = "_blank";
     a.rel = "noopener";

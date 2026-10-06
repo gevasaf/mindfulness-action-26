@@ -198,6 +198,9 @@ main { display: block; }
 .player-head h3 { margin: 0; }
 .player-meta { color: var(--muted); font-size: .95rem; margin-bottom: 14px; }
 .player-controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.player-time { color: var(--muted); font-size: .95rem; font-variant-numeric: tabular-nums; }
+.player-seek { width: 100%; margin: 16px 0 10px; accent-color: var(--sage-ink); height: 28px; cursor: pointer; }
+.player-line { white-space: pre-line; }
 .player-progress { width: 100%; height: 6px; border-radius: 3px; background: var(--sage-soft); margin: 16px 0 10px; overflow: hidden; }
 .player-progress span { display: block; height: 100%; width: 0; background: var(--sage); transition: width .4s linear; }
 .player-line { min-height: 3.4em; font-family: var(--serif); font-size: 1.3rem; line-height: 1.6; color: var(--ink); text-align: center; padding: 8px 0; }

@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v0.html` (design-v0, released 2026-10-06), plus the user's answer to questions-for-design #1
-**Tech doc version:** t1
+**Tech doc version:** t1.1
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -20,6 +20,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | `election-day.html` | 27.10: morning circles, "on the way" meditation, polling-place link | §8, §10 |
 | `day-after.html` | 28.10: processing circles regardless of results | §8, §10 |
 | `donate.html` | Explanation only, no payment | §9 donation page |
+| `about.html` | About us: what we do, what we're not, who's behind it, transparency, credits | §8 "מי אנחנו" (expanded into its own page at the user's request) |
 
 Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silence`, `#about`; `#support` on every page.
 
@@ -40,8 +41,9 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 |---|---|---|
 | Draft banner | Sticky note at the top of every page: "טיוטה: האתר עוד לא הושק. התכנים, הקולות והנתונים לדוגמה." | yes |
 | Countdown to 27.10 | `assets/js/main.js`, target 2026-10-27 07:00 Israel time (UTC+2), updates every 30 s; text fallback | yes |
-| Meditations (TTS + music) | `assets/js/player.js`: browser **Web Speech API** with the device's Hebrew voice, rate 0.72; `[שקט X שניות]` → X s silence, blank line → 2.5 s. Music is a soft pad **generated with Web Audio** (no file, no licence). If no Hebrew voice exists, "silent reading" mode shows each line on screen at the script's pace. Live caption of the current line, play/pause/restart, music toggle, script in a `<details>` | yes (interim, see flag F1) |
-| Download / share audio file | "בקרוב" (no audio files exist yet); "send on WhatsApp" shares the page link | flag F1 |
+| Meditations (recorded) | Voice tracks from ElevenLabs (free tier, attributed), generated once from the release scripts. Mixed in the repo with ffmpeg: 3 s music pre-roll, voice, 6 s tail; music bed is the same D-A-E-F♯ pad as the browser version, about 19 dB under the voice and audible in the silences. Output: `site/content/meditations/audio/<name>.mp3` (mono, 80 kbps; 4.3 / 2.0 / 1.2 MB) and `<name>.json` stanza timings (found by silence detection; gaps of 1.5 s or more match the script's stanza breaks exactly). `player.js` `AudioPlayer`: play/pause, restart, accessible seek slider, time, current stanza as a live caption, one player at a time | yes (F1) |
+| Meditations (fallback) | Players without `data-audio` still use the browser's Hebrew voice (Web Speech API) + Web Audio pad | yes |
+| Download / share audio file | "קובץ להורדה" links with Hebrew file names; "send on WhatsApp" shares the page link; host kit links the main meditation as its audio file | yes |
 | Voting plan | `assets/js/plan.js`: three questions (when: slot or exact time; with whom; whom I invite), no question on political views. Outputs a card, WhatsApp share text (`wa.me`), a PNG card drawn on `<canvas>` (Web Share with file, or download), an `.ics` event with alarms 1 h and 18 h before, and a link to the Central Elections Committee site. Nothing stored or sent: no cookies, no localStorage, no network calls | yes |
 | Background video strip | `<video>` sources added by `main.js` when motion and connection allow; poster image otherwise | yes (F2, approved) |
 | Measurement (plans, listens, shares) | GoatCounter script on every page. Page views plus anonymous events from `window.countEvent` (`main.js`): `plan-created`, `plan-whatsapp`, `plan-image`, `plan-calendar`, `listen-<script>`, `listen-complete-<script>`, `share-meditation-whatsapp`. Only the event name is sent, never what people type. A footer line says so | yes (F3, approved) |
@@ -65,8 +67,8 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 | §8 primary action: listen; secondary: voting plan | Hero buttons "להאזנה (7 דקות)" + "להכין תוכנית הצבעה" | done |
 | §7 palette, type, breathing circle, space | CSS tokens, self-hosted fonts, CSS animation | done |
 | §7 video strip | Eased ping-pong loop, no sound, pause button, poster for reduced motion / slow connections, paper-toned overlay | done |
-| §9 / §13 TTS meditations with music | Web Speech API + Web Audio pad | done (interim), F1 |
-| §13 audio: light files, accessible player, download & share | Accessible player; share link; download "בקרוב" | partial, F1 |
+| §9 / §13 TTS meditations with music | ElevenLabs voice + mixed music bed, labelled "קול ממוחשב זמני (ElevenLabs)" | done |
+| §13 audio: light files, accessible player, download & share | 80 kbps mono MP3s, custom accessible player, download links | done |
 | §13 voting plan in browser only, share card + calendar | `plan.js`, no storage | done |
 | §8 polling-place link (CEC) | Link to `https://www.bechirot.gov.il/` | done (see A2) |
 | §13 countdown to 27.10.2026 | `main.js` | done |
@@ -87,5 +89,6 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t1.1 | design-v0 | 2026-10-06 | Wheat-field hero video (eased ping-pong), ElevenLabs recordings with music and live captions, GoatCounter, About page. |
 | t1 | design-v0 | 2026-10-06 | Full v0 prototype: 8 pages, browser TTS meditations with generated music, working voting plan, countdown, self-hosted fonts. Flags F1–F3. F1: stay on browser TTS; F2: wheat video built; F3: GoatCounter built. |
 | t0 | — | 2026-10-06 | Scaffold only |
