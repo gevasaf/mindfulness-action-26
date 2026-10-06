@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.9 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.10 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -101,6 +101,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 21. Titles in the brand font and niqqud on every "נוֹכְחִים" (v1.0.6).
 22. Home page (v1.0.7): voting-plan teaser and "מי מאחורי זה" section removed; "עוד על המיזם" link under "הרעיון"; a paragraph on healing and what was pushed aside ("נדחק הצידה") added to "הרעיון".
 23. The hero's motion button is an icon (v1.0.8): wavy lines for motion on, the same with a slash when paused (play/pause icons are reserved for audio). Its accessible name and tooltip read "לעצור תנועה" / "להפעיל תנועה".
+24. "לפתוח מעגל" (v1.0.10): "באים בלבן" also in the invitation template; closing section asking people to post on social media and to open their own circle.
 
 ## Traceability
 | Design requirement (design-v1 §) | Technical decision | Status |
@@ -128,6 +129,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.10 | design-v1 + user remarks | 2026-10-06 | Site v1.0.10, "לפתוח מעגל": the invitation template adds "אם יש, אפשר לבוא בלבן."; new closing section "אחרי המעגל: להעביר הלאה" (share on social media with the photo rules, invite participants to open their own circle, a suggested post, and a WhatsApp share button for the page). |
 | t2.0.9 | design-v1 + user remark | 2026-10-06 | Site v1.0.9: About, "מי עומד מאחורי זה" rewritten in the user's words (a private initiative, not connected to any nonprofit or party); the first-person note shortened and no longer signed. |
 | t2.0.8 | design-v1 + user remark | 2026-10-06 | Site v1.0.8: the hero's motion on/off button is a 44 px round icon button (wavy lines; slashed when paused), with aria-label and title instead of visible text. |
 | t2.0.7 | design-v1 + user remarks | 2026-10-06 | Site v1.0.7, home page: removed the voting-plan teaser (`#plan`) and the short about (`#about`); "עוד על המיזם" link under "הרעיון"; new paragraph in "הרעיון" on healing and what we pushed aside. |
