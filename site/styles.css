@@ -99,7 +99,10 @@ img { max-width: 100%; height: auto; }
 .site-nav a { color: var(--ink); text-decoration: none; font-size: 1rem; padding: 6px 0; display: inline-block; border-bottom: 2px solid transparent; }
 .site-nav a:hover, .site-nav a[aria-current="page"] { border-bottom-color: var(--sage); }
 @media (max-width: 760px) {
-  .js .menu-toggle { display: inline-flex; align-items: center; gap: 6px; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 999px; padding: 6px 14px; font: inherit; font-size: .95rem; cursor: pointer; min-height: 44px; }
+  .js .menu-toggle { display: inline-grid; place-items: center; width: 44px; height: 44px; padding: 0; background: none; border: 1px solid var(--line); color: var(--ink); border-radius: 50%; cursor: pointer; }
+  .menu-toggle svg { width: 22px; height: 22px; fill: currentColor; grid-area: 1 / 1; }
+  .menu-toggle .ic-x, .menu-toggle[aria-expanded="true"] .ic-menu { display: none; }
+  .menu-toggle[aria-expanded="true"] .ic-x { display: block; }
   .js .site-nav { display: none; width: 100%; }
   .js .site-nav.open { display: block; }
   .site-nav ul { flex-direction: column; gap: 0; }

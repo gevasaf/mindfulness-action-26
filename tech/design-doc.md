@@ -59,7 +59,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 - `lang="he" dir="rtl"`, logical CSS properties (`inset-inline-*`, `padding-inline-*`), skip link, landmarks, one `h1` per page, `aria-current` in nav, visible focus rings, 44–48 px touch targets.
 - `prefers-reduced-motion`: hero drift and breathing animation stop entirely; the stop-motion button covers everyone else.
 - Player: current line in an `aria-live="polite"` region; full script readable as text; works without a voice.
-- Mobile menu collapses behind a toggle only when JS runs; without JS the nav is a plain list.
+- Mobile menu collapses behind a hamburger icon button (accessible name "תפריט", turns into X when open) only when JS runs; without JS the nav is a plain list.
 - The only third-party request is GoatCounter's script and counter; no images other than an SVG icon, fonts preloaded; total page weight well under 300 KB.
 - Verified with Playwright (Chromium) at 1280×900 and 390×844, light and dark: no console errors, no failed requests, no horizontal overflow.
 
@@ -102,7 +102,7 @@ Given directly by the user in the build chat, on top of design-v0. Not yet in a 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
-| t1.2.1 | design-v0 + user remarks | 2026-10-06 | v0.2 approved. Share buttons read "שיתוף" (icon carries WhatsApp); draft banner can be closed for the session; docs refreshed; audio and video tooling committed to `tech/tools/`. |
+| t1.2.1 | design-v0 + user remarks | 2026-10-06 | v0.2 approved. Share buttons read "שיתוף" (icon carries WhatsApp); draft banner can be closed for the session; mobile menu button is a hamburger icon (X when open, accessible name "תפריט"); docs refreshed; audio and video tooling committed to `tech/tools/`. |
 | t1.2 | design-v0 + user remarks | 2026-10-06 | Site v0.2: global bottom player + full-screen overlay with fading captions, in-place navigation so audio continues across pages, WhatsApp icons, draft printable sign (QR) and host guide, version mark in footer, fainter hero video. Removed the browser-TTS fallback (all three meditations are recorded). |
 | t1.1 | design-v0 | 2026-10-06 | Wheat-field hero video (eased ping-pong), ElevenLabs recordings with music and live captions, GoatCounter, About page. |
 | t1 | design-v0 | 2026-10-06 | Full v0 prototype: 8 pages, browser TTS meditations with generated music, working voting plan, countdown, self-hosted fonts. Flags F1–F3. F1: stay on browser TTS; F2: wheat video built; F3: GoatCounter built. |
