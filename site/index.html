@@ -9,10 +9,15 @@
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=1.0.13">
-<script src="assets/js/main.js?v=1.0.13" defer></script>
-<script src="assets/js/plan.js?v=1.0.13" defer></script>
-<script src="assets/js/player.js?v=1.0.13" defer></script>
+<link rel="stylesheet" href="styles.css?v=2.0.0">
+<script src="assets/js/main.js?v=2.0.0" defer></script>
+<script src="assets/js/plan.js?v=2.0.0" defer></script>
+<script src="assets/js/player.js?v=2.0.0" defer></script>
+<script src="assets/js/config.js?v=2.0.0" defer></script>
+<script src="assets/js/backend.js?v=2.0.0" defer></script>
+<script src="assets/js/map.js?v=2.0.0" defer></script>
+<script src="assets/js/circles.js?v=2.0.0" defer></script>
+<script src="assets/js/teachers.js?v=2.0.0" defer></script>
 <script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -26,7 +31,9 @@
         <li><a href="index.html" aria-current="page">ראשי</a></li>
         <li><a href="meditations.html">מדיטציות</a></li>
         <li><a href="plan.html">תוכנית הצבעה</a></li>
+        <li data-backend><a href="circles.html">מעגלים</a></li>
         <li><a href="host-kit.html">לפתוח מעגל</a></li>
+        <li data-backend><a href="teachers.html">למורים ולמורות</a></li>
         <li><a href="election-day.html">יום הבחירות</a></li>
         <li><a href="about.html">על המיזם</a></li>
       </ul>
@@ -74,7 +81,7 @@
     <p>זה גם חלק מהריפוי. הרבה ממה שעבר עלינו בשנים האלה נדחק הצידה, כדי שנוכל להמשיך לתפקד. עצירה קצרה, בעדינות ובקצב שלך, נותנת לזה קצת מקום, במקום להמשיך לשאת אותו בלי לשים לב.</p>
     <p>"נוֹכְחִים" היא הזמנה להחזיר את הנוכחות לחיים שלנו, לפחות לכמה דקות. לעצור, לנשום, ולהתחבר מחדש לעצמנו ולערכים שלנו: מה באמת חשוב לי, ואיזה קול חשוב לי להביא בתקופה הזו.</p>
     <p>מבעד לכל הרעש, אנחנו מאמינים שכל אחד ואחת יכולים להחליט בעצמם, בנאמנות לעצמם. ואז, ב-27 באוקטובר, להגיע לרגע השקט שמאחורי הפרגוד נוֹכְחִים.</p>
-    <p><b>כאן לא אומרים בעד מי להצביע. הבחירה שלך, רק שלך.</b></p>
+    <p><b>אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו. הבחירה שלך, רק שלך.</b></p>
     <p><a href="about.html">עוד על המיזם</a></p>
   </div>
 </section>
@@ -93,10 +100,29 @@
         <p>מתי, עם מי, ולמי מקדישים את הרגע. בסוף מקבלים כרטיס לשיתוף ותזכורת ליומן.</p>
         <div class="card-foot btn-row"><a class="btn secondary" href="plan.html">לתכנן הצבעה</a></div>
       </article>
+      <article class="card" data-backend>
+        <h3>לתרגל יחד במעגל</h3>
+        <p>חצי שעה של נשימה עם אנשים מהשכונה, בגינה או בפארק. להצטרף למעגל במפה, או לפתוח אחד.</p>
+        <div class="card-foot btn-row"><a class="btn secondary" href="circles.html">למעגלים</a></div>
+      </article>
+      <article class="card" data-backend>
+        <h3>למורים ולמורות</h3>
+        <p>להקליט ולהעלות מדיטציה, בקול שלך ומהניסיון שלך.</p>
+        <div class="card-foot btn-row"><a class="btn secondary" href="teachers.html">להעלות מדיטציה</a></div>
+      </article>
     </div>
   </div>
 </section>
 
+<section class="section" id="circles" aria-labelledby="circles-h" data-backend>
+  <div class="inner" id="circles-home">
+    <p class="eyebrow">נושמים יחד, הרחק מהקלפיות</p>
+    <h2 id="circles-h">מעגלי תרגול</h2>
+    <p class="election-count" data-election-count hidden></p>
+    <div class="circle-list" data-list></div>
+    <div class="btn-row" style="margin-top:16px"><a class="btn" href="circles.html">למעגלים</a><a class="btn secondary" href="open-circle.html">לפתוח מעגל</a></div>
+  </div>
+</section>
 </main>
 <section class="section support" id="support" aria-labelledby="support-h">
   <div class="inner">
@@ -114,8 +140,8 @@
 <footer class="site-footer">
   <div class="inner">
     <p><b>נוֹכְחִים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
-    <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">גרסה <bdi dir="ltr">v1.0.13</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.<span data-backend> <a href="privacy.html">פרטיות</a></span></p>
+    <p class="version">גרסה <bdi dir="ltr">v2.0.0</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>

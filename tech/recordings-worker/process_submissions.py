@@ -1,6 +1,6 @@
-"""v2 worker: processes teacher recordings and keeps personal data on schedule.
+"""Recordings worker: processes teacher recordings and keeps personal data on schedule.
 
-Runs every ~10 minutes in GitHub Actions (.github/workflows/worker.yml; stack
+Runs every ~10 minutes in GitHub Actions (.github/workflows/recordings-worker.yml; stack
 F7). Each run:
 
 1. New uploads (status "uploaded"): check the length (3-15 minutes, design-v2

@@ -1,4 +1,4 @@
-name: v2 worker
+name: Recordings worker
 
 # Processes teacher recordings (music mix, transcription, AI rating), publishes
 # what the founder approved, and deletes personal data from 30.11.2026
@@ -12,7 +12,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: v2-worker
+  group: recordings-worker
   cancel-in-progress: false
 
 jobs:
@@ -44,4 +44,4 @@ jobs:
           pip install -q requests anthropic
       - name: Run
         if: steps.gate.outputs.run == 'true'
-        run: python tech/worker/process_submissions.py
+        run: python tech/recordings-worker/process_submissions.py

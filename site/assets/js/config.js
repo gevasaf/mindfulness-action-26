@@ -1,7 +1,7 @@
-// Site configuration for the v2 features (circles, teachers, admin).
+// Where the server is: circles, teacher meditations, admin (design-v2).
 // These values are public by design: the anon key only allows what the
 // database functions allow (see supabase/migrations). Leave them empty and
-// the v2 features stay hidden; see tech/v2-setup.md.
+// those features stay hidden; see tech/backend-setup.md.
 window.SITE_CONFIG = {
   supabaseUrl: "",
   supabaseAnonKey: "",

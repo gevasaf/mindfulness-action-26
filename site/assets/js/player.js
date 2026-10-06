@@ -14,7 +14,7 @@
     "on-the-way-to-vote": { title: "בדרך לקלפי", file: "בדרך-לקלפי.mp3" }
   };
   window.MEDITATIONS = MEDITATIONS;
-  // Teacher meditations (v2) are added at runtime: { title, src, teacher }.
+  // Teacher meditations (design-v2) are added at runtime: { title, src, teacher }.
   // They have no stanza captions and no "computer voice" label.
   window.registerMeditation = function (id, m) { MEDITATIONS[id] = m; };
   var AUDIO_DIR = "content/meditations/audio/";

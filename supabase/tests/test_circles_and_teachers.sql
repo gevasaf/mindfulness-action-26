@@ -1,4 +1,4 @@
--- Tests for the design-v2 migration, on plain Postgres with stub_supabase.sql.
+-- Tests for the circles and teachers migration (design-v2), on plain Postgres with stub_supabase.sql.
 -- Run: tech/tools/supabase/test.sh   (fails on the first broken expectation)
 \set ON_ERROR_STOP 1
 set client_min_messages = notice;

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>לפתוח מעגל באתר · נוֹכְחִים</title>
+<meta name="description" content="פותחים מעגל נשימה של חצי שעה: מסמנים מקום במפה, בוחרים זמן, ומאמתים טלפון. בלי קבוצות, בלי אישור ידני.">
+<meta name="theme-color" content="#f7f3ec">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css?v=2.0.0">
+<script src="assets/js/main.js?v=2.0.0" defer></script>
+<script src="assets/js/plan.js?v=2.0.0" defer></script>
+<script src="assets/js/player.js?v=2.0.0" defer></script>
+<script src="assets/js/config.js?v=2.0.0" defer></script>
+<script src="assets/js/backend.js?v=2.0.0" defer></script>
+<script src="assets/js/map.js?v=2.0.0" defer></script>
+<script src="assets/js/circles.js?v=2.0.0" defer></script>
+<script src="assets/js/teachers.js?v=2.0.0" defer></script>
+<script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
+</head>
+<body>
+<a class="skip" href="#main">דילוג לתוכן</a>
+<header class="site-header">
+  <div class="inner">
+    <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true"></span>נוֹכְחִים</a>
+    <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav" aria-label="תפריט"><svg class="ic-menu" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg><svg class="ic-x" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg></button>
+    <nav class="site-nav" id="site-nav" aria-label="ראשי">
+      <ul>
+        <li><a href="index.html">ראשי</a></li>
+        <li><a href="meditations.html">מדיטציות</a></li>
+        <li><a href="plan.html">תוכנית הצבעה</a></li>
+        <li data-backend><a href="circles.html">מעגלים</a></li>
+        <li><a href="host-kit.html" aria-current="page">לפתוח מעגל</a></li>
+        <li data-backend><a href="teachers.html">למורים ולמורות</a></li>
+        <li><a href="election-day.html">יום הבחירות</a></li>
+        <li><a href="about.html">על המיזם</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<main id="main">
+<section class="page" aria-labelledby="page-h">
+  <div class="inner">
+    <p class="eyebrow"><a href="host-kit.html">ערכה לפתיחת מעגל</a> · צעד 3</p>
+    <h1 id="page-h">לפתוח מעגל באתר</h1>
+    <p class="lede">מעגל של חצי שעה: נשימה, מדיטציה קצרה ושיתוף במילה אחת. לא צריך ניסיון בהנחיה, ולא צריך לפתוח קבוצה. המעגל עולה למפה ולו"ז מיד אחרי אימות הטלפון.</p>
+    <form id="open-circle-form" class="oc-form" novalidate>
+      <h2 class="plan-sub plan-sub-first">מתי</h2>
+      <fieldset class="field when-choices">
+        <legend class="visually-hidden">מתי המעגל</legend>
+        <label class="choice-card is-featured" data-when-choice="election"><input type="radio" name="when" value="election" checked><span><b>מעגל ביום הבחירות, 27.10</b><small>היום שבו הכי מקווים להרבה מעגלים. הבוקר הכי מתאים: נושמים ויוצאים להצביע.</small></span></label>
+        <label class="choice-card" data-when-choice="once"><input type="radio" name="when" value="once"><span><b>חד-פעמי, בתאריך אחר</b></span></label>
+        <label class="choice-card" data-when-choice="weekly"><input type="radio" name="when" value="weekly"><span><b>כל שבוע, עד הבחירות</b><small>המעגל חוזר כל שבוע, עד 27.10 כולל.</small></span></label>
+      </fieldset>
+      <div class="field" data-when="election"><label for="oc-et">שעה<span class="hint">ביום הבחירות: מ-07:00, כשהקלפיות פתוחות.</span></label><select id="oc-et" name="election_time"></select></div>
+      <div class="field-row" data-when="once" hidden>
+        <div class="field"><label for="oc-od">תאריך</label><select id="oc-od" name="once_date"></select></div>
+        <div class="field"><label for="oc-ot">שעה</label><select id="oc-ot" name="once_time"></select></div>
+      </div>
+      <div class="field-row" data-when="weekly" hidden>
+        <div class="field"><label for="oc-wd">יום בשבוע</label><select id="oc-wd" name="weekday"></select></div>
+        <div class="field"><label for="oc-wt">שעה</label><select id="oc-wt" name="weekly_time"></select></div>
+      </div>
+      <p class="hint">כל מעגל נמשך חצי שעה. זה קבוע, ומספיק בדיוק.</p>
+
+      <h2 class="plan-sub">איפה</h2>
+      <div class="callout">ממליצים בחום על מקום ציבורי ופתוח: גינה, פארק, דשא ליד ספרייה. בבית פרטי: על אחריותך, ועדיף לסמן נקודה כללית ולתת את הכתובת המדויקת בתיאום בוואטסאפ. <b>תמיד הרחק מקלפיות.</b></div>
+      <div class="field"><label for="oc-loc">יישוב<span class="hint">להתחיל להקליד ולבחור מהרשימה.</span></label><input id="oc-loc" name="locality" list="oc-localities" autocomplete="off" required><datalist id="oc-localities"></datalist></div>
+      <div class="field"><span class="label" id="oc-map-label">המקום על המפה<span class="hint">ללחוץ על המפה כדי לסמן. אפשר לגרור את הסימון.</span></span>
+        <div class="map oc-map" role="application" aria-labelledby="oc-map-label"></div>
+        <p class="hint" data-pin-note aria-live="polite"></p></div>
+      <label class="far-confirm" data-far hidden><input type="checkbox" name="confirm_far"> <span></span> כן, המקום נכון.</label>
+      <div class="field"><label for="oc-place">שם המקום או ציון דרך<span class="hint">למשל: "הדשא ליד הספרייה".</span></label><input id="oc-place" name="place_name" maxlength="80" required></div>
+
+      <h2 class="plan-sub">על המעגל</h2>
+      <div class="field"><label for="oc-title">כותרת קצרה <small class="count" data-count-for="title"></small></label><input id="oc-title" name="title" maxlength="60" required placeholder="מעגל נשימה בגינה"></div>
+      <div class="field"><label for="oc-desc">תיאור <small class="count" data-count-for="description"></small><span class="hint">למשל: "מעגל נשימה שקט, מתאים גם למי שלא תרגל אף פעם". בלי קישורים ובלי מספרי טלפון.</span></label><textarea id="oc-desc" name="description" maxlength="200" rows="3" required></textarea></div>
+      <div class="field"><label for="oc-name">שם פרטי<span class="hint">לא חובה. מוצג באתר.</span></label><input id="oc-name" name="first_name" maxlength="30" autocomplete="given-name"></div>
+
+      <h2 class="plan-sub">שקיפות והסכמות</h2>
+      <div class="callout warm">מי שירצה להצטרף ילחץ על כפתור שיפתח שיחת וואטסאפ איתך, ולכן יראה את מספר הטלפון שלך. המספר לא מופיע כטקסט באתר. אם לא נוח, אפשר להשתמש במספר נוסף.</div>
+      <fieldset class="field consents"><legend>לסמן את כולן</legend>
+        <label><input type="checkbox" name="c_public"> הבנתי שמומלץ בחום מקום ציבורי, ושבמקום פרטי האחריות עליי.</label>
+        <label><input type="checkbox" name="c_rules"> קראתי את <a href="host-kit.html">כללי המעגלים</a>: בלי מפלגות ומועמדים, בטיחות, והרחק מקלפיות.</label>
+        <label><input type="checkbox" name="c_responsible"> אני אחראי/ת למעגל.</label>
+        <label><input type="checkbox" name="c_phone"> אני מבין/ה שמי שירצה להצטרף יראה את מספר הטלפון שלי.</label>
+        <label><input type="checkbox" name="c_adult"> אני בן/בת 18 ומעלה.</label>
+      </fieldset>
+      <p class="form-msg" data-form-msg role="status" aria-live="polite"></p>
+      <div data-continue><button type="submit" class="btn">להמשיך לאימות טלפון</button></div>
+      <div data-auth hidden></div>
+      <p class="privacy-note">לא נשמרת כתובת דוא"ל. מספר הטלפון משמש לאימות, לכפתור התיאום ולמחיקת המעגל, ונמחק עד 30.11.2026. <a href="privacy.html">פרטיות</a></p>
+    </form>
+    <section id="my-circles" class="my-circles" aria-labelledby="my-h">
+      <h2 id="my-h">המעגלים שלי</h2>
+      <p>פתחת מעגל? כאן אפשר לראות ולמחוק, עם קוד אימות לאותו מספר.</p>
+      <button type="button" class="btn secondary" data-show>להציג את המעגלים שלי</button>
+      <div data-box></div>
+    </section>
+  </div>
+</section>
+</main>
+<section class="section support" id="support" aria-labelledby="support-h">
+  <div class="inner">
+    <h2 id="support-h">אם עלה משהו קשה</h2>
+    <p>מותר לעצור. מותר לבקש עזרה. אפשר לדבר עם מישהו עכשיו, בחינם ובאנונימיות:</p>
+    <ul>
+      <li><b>ער"ן</b>, עזרה ראשונה נפשית, בכל שעה: <a href="tel:1201">1201</a></li>
+      <li><b>נט"ל</b>, קו סיוע לנפגעי טראומה על רקע לאומי: <a href="tel:1800363363">1-800-363-363</a></li>
+      <li><b>סה"ר</b>, סיוע והקשבה ברשת, בצ'אט: <a href="https://sahar.org.il/">sahar.org.il</a></li>
+      <li>במצב חירום: מד"א <a href="tel:101">101</a>, משטרה <a href="tel:100">100</a></li>
+    </ul>
+    <p class="privacy-note">האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע.</p>
+  </div>
+</section>
+<footer class="site-footer">
+  <div class="inner">
+    <p><b>נוֹכְחִים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
+    <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.<span data-backend> <a href="privacy.html">פרטיות</a></span></p>
+    <p class="version">גרסה <bdi dir="ltr">v2.0.0</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+  </div>
+</footer>
+</body>
+</html>

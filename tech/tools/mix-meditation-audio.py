@@ -9,7 +9,7 @@ import subprocess, re, json, sys, pathlib
 sys.path.insert(0, str(pathlib.Path(__file__).parent))
 U = pathlib.Path(sys.argv[1])
 OUT = pathlib.Path("site/content/meditations/audio"); OUT.mkdir(parents=True, exist_ok=True)
-from meditation_mix import PRE, TAIL, duration, mix  # shared with the v2 worker
+from meditation_mix import PRE, TAIL, duration, mix  # shared with the recordings worker
 
 def stanzas(name):
     s = open(f"site/content/meditations/{name}.md", encoding="utf-8").read().split("\n---\n", 1)[1]

@@ -1,7 +1,7 @@
 """The music bed and mix shared by every meditation on the site.
 
 Used by tech/tools/mix-meditation-audio.py (the three computer-voiced
-meditations) and by the v2 worker (teachers who tick "להוסיף מוזיקת רקע",
+meditations) and by the recordings worker (teachers who tick "להוסיף מוזיקת רקע",
 design-v2 §9: the same music and the same settings). Needs ffmpeg."""
 import subprocess
 

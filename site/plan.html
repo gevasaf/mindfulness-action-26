@@ -9,10 +9,15 @@
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=1.0.13">
-<script src="assets/js/main.js?v=1.0.13" defer></script>
-<script src="assets/js/plan.js?v=1.0.13" defer></script>
-<script src="assets/js/player.js?v=1.0.13" defer></script>
+<link rel="stylesheet" href="styles.css?v=2.0.0">
+<script src="assets/js/main.js?v=2.0.0" defer></script>
+<script src="assets/js/plan.js?v=2.0.0" defer></script>
+<script src="assets/js/player.js?v=2.0.0" defer></script>
+<script src="assets/js/config.js?v=2.0.0" defer></script>
+<script src="assets/js/backend.js?v=2.0.0" defer></script>
+<script src="assets/js/map.js?v=2.0.0" defer></script>
+<script src="assets/js/circles.js?v=2.0.0" defer></script>
+<script src="assets/js/teachers.js?v=2.0.0" defer></script>
 <script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -26,7 +31,9 @@
         <li><a href="index.html">ראשי</a></li>
         <li><a href="meditations.html">מדיטציות</a></li>
         <li><a href="plan.html" aria-current="page">תוכנית הצבעה</a></li>
+        <li data-backend><a href="circles.html">מעגלים</a></li>
         <li><a href="host-kit.html">לפתוח מעגל</a></li>
+        <li data-backend><a href="teachers.html">למורים ולמורות</a></li>
         <li><a href="election-day.html">יום הבחירות</a></li>
         <li><a href="about.html">על המיזם</a></li>
       </ul>
@@ -147,8 +154,8 @@
 <footer class="site-footer">
   <div class="inner">
     <p><b>נוֹכְחִים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
-    <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">גרסה <bdi dir="ltr">v1.0.13</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.<span data-backend> <a href="privacy.html">פרטיות</a></span></p>
+    <p class="version">גרסה <bdi dir="ltr">v2.0.0</bdi> · 6.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>
