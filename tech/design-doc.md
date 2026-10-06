@@ -1,7 +1,7 @@
 # Technical design doc
 
-**Implements:** `design/releases/design-v0.html` (design-v0, released 2026-10-06), plus the user's answer to questions-for-design #1
-**Tech doc version:** t1.1
+**Implements:** `design/releases/design-v0.html` (design-v0, released 2026-10-06), plus the user's answer to questions-for-design #1 and the user's direct design remarks for site v0.2 (see below; to be folded into design-v1, question #6)
+**Tech doc version:** t1.2 · **Site version:** v0.2 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -21,6 +21,8 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | `day-after.html` | 28.10: processing circles regardless of results | §8, §10 |
 | `donate.html` | Explanation only, no payment | §9 donation page |
 | `about.html` | About us: what we do, what we're not, who's behind it, transparency, credits | §8 "מי אנחנו" (expanded into its own page at the user's request) |
+| `sign.html` | Printable A4 sign with QR code to the site, marked "טיוטה" | §9 host kit materials (draft, user request) |
+| `host-guide.html` | Printable one-page host guide, marked "טיוטה" | §9 host kit materials (draft, user request) |
 
 Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silence`, `#about`; `#support` on every page.
 
@@ -41,9 +43,12 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 |---|---|---|
 | Draft banner | Sticky note at the top of every page: "טיוטה: האתר עוד לא הושק. התכנים, הקולות והנתונים לדוגמה." | yes |
 | Countdown to 27.10 | `assets/js/main.js`, target 2026-10-27 07:00 Israel time (UTC+2), updates every 30 s; text fallback | yes |
-| Meditations (recorded) | Voice tracks from ElevenLabs (free tier, attributed), generated once from the release scripts. Mixed in the repo with ffmpeg: 3 s music pre-roll, voice, 6 s tail; music bed is the same D-A-E-F♯ pad as the browser version, about 19 dB under the voice and audible in the silences. Output: `site/content/meditations/audio/<name>.mp3` (mono, 80 kbps; 4.3 / 2.0 / 1.2 MB) and `<name>.json` stanza timings (found by silence detection; gaps of 1.5 s or more match the script's stanza breaks exactly). `player.js` `AudioPlayer`: play/pause, restart, accessible seek slider, time, current stanza as a live caption, one player at a time | yes (F1) |
-| Meditations (fallback) | Players without `data-audio` still use the browser's Hebrew voice (Web Speech API) + Web Audio pad | yes |
-| Download / share audio file | "קובץ להורדה" links with Hebrew file names; "send on WhatsApp" shares the page link; host kit links the main meditation as its audio file | yes |
+| Meditations (recordings) | Voice tracks from ElevenLabs (free tier, attributed), generated once from the release scripts. Mixed in the repo with ffmpeg: 3 s music pre-roll, voice, 6 s tail; the music bed is a soft D-A-E-F♯ pad about 19 dB under the voice, audible in the silences. Output: `site/content/meditations/audio/<id>.mp3` (mono, 80 kbps; 4.3 / 2.0 / 1.2 MB) and `<id>.json` stanza timings (silence detection; gaps of 1.5 s or more match the script's stanza breaks exactly) | yes (F1) |
+| Global player (v0.2) | `player.js`: one `<audio>` outside `<main>`. Bottom bar fades in on play and out on close: play/pause, back 15 s, full screen, close (all icons), seek bar, time, title linking to `meditations.html#<id>`. Any `[data-play="<id>"]` button starts/toggles that meditation and shows its state; pages have descriptions + buttons, no embedded players. Full-screen overlay: slow breathing gradient (palette colours, static under reduced motion), stanza captions that cross-fade, big play/pause, Escape closes. Body gets bottom padding while the bar shows so the footer is never covered | yes |
+| In-place navigation (v0.2) | `main.js`: same-site `.html` links fetch the page and swap `<main>` (title, description, nav state), `pushState`/`popstate` for back/forward, focus moves to the new `h1`, GoatCounter page view sent. Page set-up runs through `window.onPage`. Falls back to a normal page load on any error or without JS. Printables (`data-no-swap`, new tab), downloads and external links are untouched | yes (no build step, no library) |
+| Download / share audio file | "להורדה" links with Hebrew file names; WhatsApp buttons (with the WhatsApp icon, Simple Icons, CC0) share `meditations.html#<id>` for meditations or the page anchor otherwise; host kit links the main meditation as its audio file | yes |
+| Printable drafts (v0.2) | `sign.html` and `host-guide.html`, A4 print CSS (`assets/print.css`), diagonal "טיוטה" watermark, "draft" toolbar note, version in the sheet footer. The sign's QR code is generated in the browser for the page's own address (`assets/js/vendor/qrcode.js`, qrcode-generator, MIT) | yes |
+| Version mark (v0.2) | Footer line on every page: "טיוטה · גרסה v0.2 · date · מה השתנה" (links to this changelog). Set in one place in the page generator | yes |
 | Voting plan | `assets/js/plan.js`: three questions (when: slot or exact time; with whom; whom I invite), no question on political views. Outputs a card, WhatsApp share text (`wa.me`), a PNG card drawn on `<canvas>` (Web Share with file, or download), an `.ics` event with alarms 1 h and 18 h before, and a link to the Central Elections Committee site. Nothing stored or sent: no cookies, no localStorage, no network calls | yes |
 | Background video strip | `<video>` sources added by `main.js` when motion and connection allow; poster image otherwise | yes (F2, approved) |
 | Measurement (plans, listens, shares) | GoatCounter script on every page. Page views plus anonymous events from `window.countEvent` (`main.js`): `plan-created`, `plan-whatsapp`, `plan-image`, `plan-calendar`, `listen-<script>`, `listen-complete-<script>`, `share-meditation-whatsapp`. Only the event name is sent, never what people type. A footer line says so | yes (F3, approved) |
@@ -57,6 +62,14 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 - Mobile menu collapses behind a toggle only when JS runs; without JS the nav is a plain list.
 - The only third-party request is GoatCounter's script and counter; no images other than an SVG icon, fonts preloaded; total page weight well under 300 KB.
 - Verified with Playwright (Chromium) at 1280×900 and 390×844, light and dark: no console errors, no failed requests, no horizontal overflow.
+
+## Site v0.2: user design remarks (2026-10-06)
+Given directly by the user in the build chat, on top of design-v0. Not yet in a design release; question #6 asks the design chat to fold them into design-v1.
+1. A single player docked at the bottom, fading in on play and out on stop, that keeps playing across pages. The meditations page shows descriptions with play buttons; every play button on the site drives this player. Full screen shows a gradient animation and fading captions. Icons instead of words. Clicking the title opens that meditation on the meditations page.
+2. WhatsApp links get the WhatsApp icon.
+3. Draft printable sign and host guide, marked as drafts.
+4. A visible version mark.
+5. The hero video is less visible behind the text (stronger paper veil in the text column).
 
 ## Traceability
 | Design requirement (release §) | Technical decision | Status |
@@ -89,6 +102,7 @@ Anchors on the home page: `#listen`, `#ways`, `#plan`, `#circles`, `#great-silen
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t1.2 | design-v0 + user remarks | 2026-10-06 | Site v0.2: global bottom player + full-screen overlay with fading captions, in-place navigation so audio continues across pages, WhatsApp icons, draft printable sign (QR) and host guide, version mark in footer, fainter hero video. Removed the browser-TTS fallback (all three meditations are recorded). |
 | t1.1 | design-v0 | 2026-10-06 | Wheat-field hero video (eased ping-pong), ElevenLabs recordings with music and live captions, GoatCounter, About page. |
 | t1 | design-v0 | 2026-10-06 | Full v0 prototype: 8 pages, browser TTS meditations with generated music, working voting plan, countdown, self-hosted fonts. Flags F1–F3. F1: stay on browser TTS; F2: wheat video built; F3: GoatCounter built. |
 | t0 | — | 2026-10-06 | Scaffold only |

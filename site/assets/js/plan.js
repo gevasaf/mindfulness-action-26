@@ -1,7 +1,7 @@
 // "My voting plan": runs entirely in the browser. What people type is never sent
 // or stored (no cookies, no localStorage). The only network call is an anonymous
 // GoatCounter event name ("plan-created" etc.), never the plan itself. design-v0 §8, §13.
-(function () {
+window.onPage(function () {
   var form = document.getElementById("plan-form");
   if (!form) return;
 
@@ -161,4 +161,4 @@
       }
     });
   });
-})();
+});

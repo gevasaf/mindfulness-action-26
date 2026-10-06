@@ -1,350 +1,230 @@
-// Meditation player for design-v0.
-// With data-audio: plays the pre-rendered recording (ElevenLabs voice + quiet music,
-// mixed in the repo) and shows each stanza as it is spoken, from data-timings.
-// Without it: reads the script aloud with the browser's own Hebrew voice (Web Speech
-// API) over a pad generated with Web Audio. See tech/design-doc.md ("Meditations").
-//
-// Script conventions (design/releases/design-v0-meditations/README.md):
-//   [שקט X שניות]  -> X seconds of silence (music continues)
-//   blank line      -> short natural pause, 2 to 3 seconds
-//   pace            -> very slow, about half of normal speech
+// Global meditation player (site v0.2).
+// One <audio> element lives outside <main>, so with the in-place navigation in
+// main.js it keeps playing from page to page. UI:
+//   - a bottom bar that fades in when playback starts and fades out on close;
+//   - a full-screen overlay (expand icon) with a slow breathing gradient and
+//     captions that fade in and out with each stanza.
+// Any element with data-play="<id>" starts / toggles that meditation.
+// Recordings: ElevenLabs voice + a quiet music bed, mixed in the repo; stanza
+// timings from site/content/meditations/audio/<id>.json. See tech/design-doc.md.
 (function () {
-  var players = document.querySelectorAll("[data-meditation], [data-audio]");
-  if (!players.length) return;
-
-  var synth = window.speechSynthesis;
-  var RATE = 0.72;
-  var BLANK_PAUSE = 2.5;
-  var SECONDS_PER_CHAR = 0.11; // rough estimate at RATE, for the progress bar only
-  var active = null;
-
-  // ---------- script parsing ----------
-  function parse(md) {
-    var lines = md.replace(/\r/g, "").split("\n");
-    var start = lines.indexOf("---");
-    lines = start >= 0 ? lines.slice(start + 1) : lines;
-    var steps = [];
-    var silence = /^\[שקט\s+(\d+(?:\.\d+)?)\s+שניות\]$/;
-    lines.forEach(function (raw) {
-      var line = raw.trim();
-      var m = line.match(silence);
-      var last = steps[steps.length - 1];
-      if (m) {
-        var secs = parseFloat(m[1]);
-        if (last && last.pause) last.pause = Math.max(last.pause, secs); // explicit silence replaces a blank-line pause
-        else steps.push({ pause: secs });
-      } else if (!line) {
-        if (last && !last.pause) steps.push({ pause: BLANK_PAUSE });
-      } else {
-        steps.push({ text: line });
-      }
-    });
-    while (steps.length && steps[steps.length - 1].pause) steps.pop();
-    steps.forEach(function (s) { s.est = s.pause || Math.max(1.5, s.text.length * SECONDS_PER_CHAR); });
-    return steps;
-  }
-
-  // ---------- voice ----------
-  function hebrewVoice() {
-    if (!synth) return null;
-    var voices = synth.getVoices().filter(function (v) { return /^(he|iw)(-|_|$)/i.test(v.lang); });
-    if (!voices.length) return null;
-    var local = voices.filter(function (v) { return v.localService; });
-    return (local[0] || voices[0]);
-  }
-
-  // ---------- background music (generated, no file, no licence question) ----------
-  function Pad() {
-    this.ctx = null; this.master = null; this.nodes = [];
-  }
-  Pad.prototype.start = function () {
-    var AC = window.AudioContext || window.webkitAudioContext;
-    if (!AC) return;
-    if (!this.ctx) this.ctx = new AC();
-    var ctx = this.ctx;
-    if (ctx.state === "suspended") ctx.resume();
-    if (this.master) return;
-    var master = ctx.createGain();
-    master.gain.setValueAtTime(0, ctx.currentTime);
-    master.gain.linearRampToValueAtTime(0.035, ctx.currentTime + 4);
-    var filter = ctx.createBiquadFilter();
-    filter.type = "lowpass"; filter.frequency.value = 900;
-    filter.connect(master); master.connect(ctx.destination);
-    var self = this;
-    // D, A, E, F# : an open, unresolved, calm chord
-    [146.83, 220.0, 329.63, 369.99, 293.66].forEach(function (f, i) {
-      var osc = ctx.createOscillator();
-      osc.type = "sine"; osc.frequency.value = f;
-      osc.detune.value = (i % 2 ? 4 : -4);
-      var g = ctx.createGain(); g.gain.value = 0.18;
-      var lfo = ctx.createOscillator(); lfo.frequency.value = 0.05 + i * 0.023; // slow swell, breath-like
-      var lfoGain = ctx.createGain(); lfoGain.gain.value = 0.12;
-      lfo.connect(lfoGain); lfoGain.connect(g.gain);
-      osc.connect(g); g.connect(filter);
-      osc.start(); lfo.start();
-      self.nodes.push(osc, lfo);
-    });
-    this.master = master;
+  var MEDITATIONS = {
+    "behind-the-curtain": { title: "מאחורי הפרגוד", file: "מאחורי-הפרגוד.mp3" },
+    "clarity-in-the-noise": { title: "בהירות בתוך הרעש", file: "בהירות-בתוך-הרעש.mp3" },
+    "on-the-way-to-vote": { title: "בדרך לקלפי", file: "בדרך-לקלפי.mp3" }
   };
-  Pad.prototype.stop = function () {
-    if (!this.master) return;
-    var ctx = this.ctx, master = this.master, nodes = this.nodes;
-    master.gain.cancelScheduledValues(ctx.currentTime);
-    master.gain.setValueAtTime(master.gain.value, ctx.currentTime);
-    master.gain.linearRampToValueAtTime(0, ctx.currentTime + 2);
-    setTimeout(function () { nodes.forEach(function (n) { try { n.stop(); } catch (e) {} }); master.disconnect(); }, 2200);
-    this.master = null; this.nodes = [];
+  window.MEDITATIONS = MEDITATIONS;
+  var AUDIO_DIR = "content/meditations/audio/";
+
+  var ICON = {
+    play: '<path d="M8 5.5v13l11-6.5z"/>',
+    pause: '<path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/>',
+    expand: '<path d="M4 9V4h5v2H6v3zm11-5h5v5h-2V6h-3zM6 15v3h3v2H4v-5zm12 0h2v5h-5v-2h3z"/>',
+    collapse: '<path d="M9 4v5H4V7h3V4zm6 0h2v3h3v2h-5zM4 15h5v5H7v-3H4zm11 0h5v2h-3v3h-2z"/>',
+    close: '<path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/>',
+    back: '<path d="M12 4a8 8 0 1 1-7.6 10.5l1.9-.6A6 6 0 1 0 12 6v3L7.5 5 12 1z"/><text x="12" y="15.6" font-size="6" text-anchor="middle" font-family="sans-serif" font-weight="700">15</text>'
   };
+  function icon(name) { return '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">' + ICON[name] + "</svg>"; }
 
-  // ---------- player ----------
-  function Player(root) {
-    this.root = root;
-    this.src = root.getAttribute("data-meditation");
-    this.steps = null;
-    this.i = 0;
-    this.state = "idle"; // idle | playing | paused | done
-    this.gen = 0;
-    this.timer = null;
-    this.pad = new Pad();
-    this.build();
-    this.load().catch(function () {}); // small text file; fills the "read the script" panel
-  }
-
-  Player.prototype.build = function () {
-    var ui = this.root.querySelector("[data-player-ui]");
-    ui.innerHTML =
-      '<div class="player-controls">' +
-        '<button type="button" class="btn" data-act="play">▶ להאזנה</button>' +
-        '<button type="button" class="btn secondary" data-act="stop" hidden>לעצור ולהתחיל מחדש</button>' +
-        '<label class="check"><input type="checkbox" data-act="music" checked> מוזיקת רקע</label>' +
-      '</div>' +
-      '<div class="player-progress" aria-hidden="true"><span></span></div>' +
-      '<p class="player-line" aria-live="polite" data-line>מוכנים? אפשר לעצור בכל רגע.</p>' +
-      '<p class="player-note" data-note></p>';
-    this.btnPlay = ui.querySelector("[data-act=play]");
-    this.btnStop = ui.querySelector("[data-act=stop]");
-    this.musicBox = ui.querySelector("[data-act=music]");
-    this.lineEl = ui.querySelector("[data-line]");
-    this.noteEl = ui.querySelector("[data-note]");
-    this.bar = ui.querySelector(".player-progress span");
-    var self = this;
-    this.btnPlay.addEventListener("click", function () { self.toggle(); });
-    this.btnStop.addEventListener("click", function () { self.reset(); });
-    this.musicBox.addEventListener("change", function () {
-      if (self.musicBox.checked && self.state === "playing") self.pad.start(); else self.pad.stop();
-    });
-    if (!synth) this.note("בדפדפן הזה אין הקראה קולית. אפשר להמשיך בהקראה שקטה: המילים יופיעו כאן בקצב המדיטציה, עם המוזיקה.", true);
-  };
-
-  Player.prototype.note = function (txt, warn) {
-    this.noteEl.textContent = txt || "";
-    this.noteEl.classList.toggle("warn", !!warn);
-  };
-
-  Player.prototype.load = function () {
-    var self = this;
-    if (this.steps) return Promise.resolve(this.steps);
-    return fetch(this.src).then(function (r) {
-      if (!r.ok) throw new Error(r.status);
-      return r.text();
-    }).then(function (md) {
-      self.steps = parse(md);
-      self.total = self.steps.reduce(function (a, s) { return a + s.est; }, 0);
-      var body = self.root.querySelector("[data-script-body]");
-      if (body) body.textContent = self.steps.filter(function (s) { return s.text; }).map(function (s) { return s.text; }).join("\n");
-      return self.steps;
-    });
-  };
-
-  Player.prototype.toggle = function () {
-    if (this.state === "playing") return this.pause();
-    if (active && active !== this) active.pause();
-    active = this;
-    var self = this;
-    this.waitVoices().then(function () { self.start(); });
-  };
-
-  // Chrome fills the voice list asynchronously; wait briefly for it on first use.
-  Player.prototype.waitVoices = function () {
-    if (!synth || synth.getVoices().length) return Promise.resolve();
-    return new Promise(function (res) {
-      synth.addEventListener("voiceschanged", res, { once: true });
-      setTimeout(res, 1000);
-    });
-  };
-
-  Player.prototype.start = function () {
-    this.voice = hebrewVoice();
-    if (synth && !this.voice) this.note("לא נמצא קול עברי בדפדפן או במכשיר הזה, ולכן ההקראה שקטה: המילים יופיעו כאן בקצב המדיטציה, עם המוזיקה.", true);
-    var self = this;
-    this.load().then(function () {
-      if (self.state === "idle" || self.state === "done") window.countEvent("listen-" + self.src.replace(/^.*\/|\.md$/g, ""));
-      if (self.state === "done") self.i = 0;
-      self.state = "playing";
-      self.btnPlay.textContent = "❚❚ השהיה";
-      self.btnStop.hidden = false;
-      if (self.musicBox.checked) self.pad.start();
-      self.next();
-    }).catch(function () {
-      self.note("לא הצלחנו לטעון את התסריט. אפשר לנסות שוב.", true);
-    });
-  };
-
-  Player.prototype.pause = function () {
-    this.state = "paused";
-    this.gen++;
-    clearTimeout(this.timer);
-    if (synth) synth.cancel();
-    this.pad.stop();
-    this.btnPlay.textContent = "▶ להמשיך";
-    this.lineEl.classList.add("pause");
-    this.lineEl.textContent = "בהשהיה. אפשר לחזור לנשימה.";
-  };
-
-  Player.prototype.reset = function () {
-    this.pause();
-    this.state = "idle";
-    this.i = 0;
-    this.btnPlay.textContent = "▶ להאזנה";
-    this.btnStop.hidden = true;
-    this.lineEl.textContent = "מוכנים? אפשר לעצור בכל רגע.";
-    this.progress();
-  };
-
-  Player.prototype.progress = function () {
-    if (!this.steps) return;
-    var done = 0;
-    for (var k = 0; k < this.i && k < this.steps.length; k++) done += this.steps[k].est;
-    this.bar.style.width = Math.min(100, (done / this.total) * 100) + "%";
-  };
-
-  Player.prototype.next = function () {
-    var self = this, gen = ++this.gen;
-    this.progress();
-    if (this.i >= this.steps.length) return this.finish();
-    var step = this.steps[this.i];
-    var advance = function () {
-      if (gen !== self.gen || self.state !== "playing") return;
-      self.i++;
-      self.next();
-    };
-    if (step.pause) {
-      this.lineEl.classList.add("pause");
-      this.lineEl.textContent = "· · ·";
-      this.timer = setTimeout(advance, step.pause * 1000);
-      return;
-    }
-    this.lineEl.classList.remove("pause");
-    this.lineEl.textContent = step.text;
-    if (synth && this.voice) {
-      var u = new SpeechSynthesisUtterance(step.text);
-      u.lang = this.voice.lang; u.voice = this.voice; u.rate = RATE; u.pitch = 1; u.volume = 1;
-      u.onend = function () { self.timer = setTimeout(advance, 400); };
-      u.onerror = function () { self.timer = setTimeout(advance, 400); };
-      synth.speak(u);
-    } else {
-      this.timer = setTimeout(advance, step.est * 1000);
-    }
-  };
-
-  Player.prototype.finish = function () {
-    if (this.state !== "done") window.countEvent("listen-complete-" + this.src.replace(/^.*\/|\.md$/g, ""));
-    this.state = "done";
-    this.pad.stop();
-    this.btnPlay.textContent = "▶ להאזין שוב";
-    this.lineEl.classList.add("pause");
-    this.lineEl.textContent = "סוף המדיטציה. ואם עלה משהו קשה, קווי הסיוע נמצאים בתחתית העמוד.";
-    this.bar.style.width = "100%";
-  };
-
-  if (synth) synth.getVoices(); // prime the voice list
-  window.addEventListener("pagehide", function () { if (synth) synth.cancel(); });
-
-  // ---------- recorded audio player ----------
   function fmt(t) { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ":" + (t % 60 < 10 ? "0" : "") + (t % 60); }
 
-  function AudioPlayer(root) {
-    var self = this;
-    this.root = root;
-    this.name = root.getAttribute("data-audio").replace(/^.*\/|\.mp3$/g, "");
-    this.stanzas = [];
-    this.started = false;
-    var ui = root.querySelector("[data-player-ui]");
-    ui.innerHTML =
-      '<div class="player-controls">' +
-        '<button type="button" class="btn" data-act="play">▶ להאזנה</button>' +
-        '<button type="button" class="btn secondary" data-act="restart" hidden>להתחיל מחדש</button>' +
-        '<span class="player-time" data-time></span>' +
-      '</div>' +
-      '<input type="range" class="player-seek" min="0" max="100" step="1" value="0" aria-label="מיקום בהקלטה">' +
-      '<p class="player-line pause" aria-live="polite" data-line>מוכנים? אפשר לעצור בכל רגע.</p>';
-    this.audio = new Audio();
-    this.audio.preload = "metadata";
-    this.audio.src = root.getAttribute("data-audio");
-    this.btnPlay = ui.querySelector("[data-act=play]");
-    this.btnRestart = ui.querySelector("[data-act=restart]");
-    this.seek = ui.querySelector(".player-seek");
-    this.timeEl = ui.querySelector("[data-time]");
-    this.lineEl = ui.querySelector("[data-line]");
-    this.btnPlay.addEventListener("click", function () { self.toggle(); });
-    this.btnRestart.addEventListener("click", function () { self.audio.currentTime = 0; self.audio.play(); });
-    this.seek.addEventListener("input", function () {
-      if (self.audio.duration) self.audio.currentTime = self.seek.value / 100 * self.audio.duration;
-    });
-    var a = this.audio;
-    a.addEventListener("loadedmetadata", function () { self.tick(); });
-    a.addEventListener("timeupdate", function () { self.tick(); });
-    a.addEventListener("play", function () {
-      if (active && active !== self) active.pause();
-      active = self;
-      if (!self.started) { self.started = true; window.countEvent("listen-" + self.name); }
-      self.btnPlay.textContent = "❚❚ השהיה";
-      self.btnRestart.hidden = false;
-    });
-    a.addEventListener("pause", function () {
-      if (a.ended) return;
-      self.btnPlay.textContent = "▶ להמשיך";
-      self.lineEl.classList.add("pause");
-      self.lineEl.textContent = "בהשהיה. אפשר לחזור לנשימה.";
-    });
-    a.addEventListener("ended", function () {
-      window.countEvent("listen-complete-" + self.name);
-      self.started = false;
-      self.btnPlay.textContent = "▶ להאזין שוב";
-      self.lineEl.classList.add("pause");
-      self.lineEl.textContent = "סוף המדיטציה. ואם עלה משהו קשה, קווי הסיוע נמצאים בתחתית העמוד.";
-    });
-    a.addEventListener("error", function () {
-      self.lineEl.textContent = "לא הצלחנו לטעון את ההקלטה. אפשר לנסות שוב, או לקרוא את התסריט.";
-    });
-    fetch(root.getAttribute("data-timings")).then(function (r) { return r.json(); }).then(function (j) {
-      self.stanzas = j.stanzas || [];
-      var body = root.querySelector("[data-script-body]");
-      if (body) body.textContent = self.stanzas.map(function (s) { return s.text; }).join("\n\n");
-    }).catch(function () {});
-  }
-  AudioPlayer.prototype.toggle = function () {
-    if (this.audio.paused) { var p = this.audio.play(); if (p && p.catch) p.catch(function () {}); }
-    else this.audio.pause();
-  };
-  AudioPlayer.prototype.pause = function () { this.audio.pause(); };
-  AudioPlayer.prototype.tick = function () {
-    var a = this.audio, t = a.currentTime, d = a.duration || 0;
-    this.timeEl.textContent = fmt(t) + " / " + fmt(d);
-    if (d) this.seek.value = Math.round(t / d * 100);
-    if (a.paused) return;
-    var cur = null;
-    for (var i = 0; i < this.stanzas.length; i++) {
-      if (t >= this.stanzas[i].start - 0.2 && t <= this.stanzas[i].end + 0.6) { cur = this.stanzas[i]; break; }
-    }
-    var text = cur ? cur.text : "· · ·";
-    if (this.lineEl.textContent !== text) {
-      this.lineEl.textContent = text;
-      this.lineEl.classList.toggle("pause", !cur);
-    }
-  };
+  var audio = new Audio();
+  audio.preload = "none";
+  var current = null;       // meditation id
+  var stanzas = [];
+  var started = false;      // a "listen" was counted for this play-through
+  var caption = -2;
 
-  Array.prototype.forEach.call(players, function (el) {
-    if (el.hasAttribute("data-audio")) new AudioPlayer(el); else new Player(el);
+  // ---------- DOM (outside <main>, survives in-place navigation) ----------
+  var bar = document.createElement("div");
+  bar.className = "pbar";
+  bar.setAttribute("role", "region");
+  bar.setAttribute("aria-label", "נגן מדיטציות");
+  bar.hidden = true;
+  bar.innerHTML =
+    '<input type="range" class="pseek" data-p="seek" min="0" max="1000" step="1" value="0" aria-label="מיקום בהקלטה">' +
+    '<div class="pbar-inner">' +
+      '<button type="button" class="ibtn ibtn-main" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
+      '<div class="pbar-info">' +
+        '<a class="pbar-title" data-p="title" href="meditations.html"></a>' +
+        '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב זמני</div>' +
+      "</div>" +
+      '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
+      '<button type="button" class="ibtn" data-p="expand" aria-label="מסך מלא">' + icon("expand") + "</button>" +
+      '<button type="button" class="ibtn" data-p="close" aria-label="עצירה וסגירת הנגן">' + icon("close") + "</button>" +
+    "</div>";
+
+  var full = document.createElement("div");
+  full.className = "pfull";
+  full.setAttribute("role", "dialog");
+  full.setAttribute("aria-modal", "true");
+  full.setAttribute("aria-label", "מדיטציה במסך מלא");
+  full.hidden = true;
+  full.innerHTML =
+    '<div class="pfull-bg" aria-hidden="true"><span></span><span></span><span></span></div>' +
+    '<div class="pfull-top">' +
+      '<a class="pfull-title" data-p="title" href="meditations.html"></a>' +
+      '<button type="button" class="ibtn" data-p="collapse" aria-label="יציאה ממסך מלא">' + icon("collapse") + "</button>" +
+    "</div>" +
+    '<div class="pfull-caption" aria-live="polite"><p></p><p></p></div>' +
+    '<div class="pfull-controls">' +
+      '<input type="range" class="pseek" data-p="seek" min="0" max="1000" step="1" value="0" aria-label="מיקום בהקלטה">' +
+      '<div class="pfull-row">' +
+        '<bdi class="pfull-time" dir="ltr" data-p="time">0:00</bdi>' +
+        '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
+        '<button type="button" class="ibtn ibtn-main ibtn-big" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
+        '<button type="button" class="ibtn" data-p="close" aria-label="עצירה וסגירת הנגן">' + icon("close") + "</button>" +
+        '<span class="pfull-time pfull-note">קול ממוחשב זמני</span>' +
+      "</div>" +
+    "</div>";
+
+  document.body.appendChild(bar);
+  document.body.appendChild(full);
+
+  function all(sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); }
+  function each(attr, fn) { all('[data-p="' + attr + '"]').forEach(fn); }
+
+  // ---------- state → UI ----------
+  function syncButtons() {
+    var playing = !!current && !audio.paused && !audio.ended;
+    each("toggle", function (b) {
+      b.innerHTML = icon(playing ? "pause" : "play");
+      b.setAttribute("aria-label", playing ? "השהיה" : "נגינה");
+    });
+    all("[data-play]").forEach(function (b) {
+      var mine = b.getAttribute("data-play") === current && playing;
+      b.classList.toggle("is-playing", mine);
+      var ic = b.querySelector(".play-ic");
+      if (ic) ic.innerHTML = icon(mine ? "pause" : "play");
+      b.setAttribute("aria-pressed", mine ? "true" : "false");
+    });
+  }
+
+  function showBar() {
+    if (!bar.hidden && bar.classList.contains("show")) return;
+    bar.hidden = false;
+    document.body.classList.add("has-pbar");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { bar.classList.add("show"); }); });
+  }
+  function hideBar() {
+    bar.classList.remove("show");
+    document.body.classList.remove("has-pbar");
+    setTimeout(function () { if (!bar.classList.contains("show")) bar.hidden = true; }, 500);
+  }
+
+  // Two stacked paragraphs cross-fade: the new stanza fades in as the old fades out.
+  function setCaption(text) {
+    var ps = full.querySelectorAll(".pfull-caption p");
+    var on = full.querySelector(".pfull-caption p.on");
+    if (on && on.textContent === text) return;
+    var next = on === ps[0] ? ps[1] : ps[0];
+    if (on) on.classList.remove("on");
+    next.textContent = text;
+    if (text) next.classList.add("on");
+  }
+
+  function tick() {
+    var t = audio.currentTime, d = audio.duration || 0;
+    each("time", function (el) { el.textContent = fmt(t) + " / " + fmt(d); });
+    each("seek", function (el) { if (d && document.activeElement !== el) el.value = Math.round(t / d * 1000); });
+    if (audio.ended) return;
+    var idx = -1;
+    for (var i = 0; i < stanzas.length; i++) {
+      if (t >= stanzas[i].start - 0.3 && t <= stanzas[i].end + 0.8) { idx = i; break; }
+    }
+    if (idx !== caption) { caption = idx; setCaption(idx >= 0 ? stanzas[idx].text : ""); }
+  }
+
+  // ---------- actions ----------
+  function load(id) {
+    current = id;
+    started = false;
+    stanzas = []; caption = -2; setCaption("");
+    audio.src = AUDIO_DIR + id + ".mp3";
+    each("title", function (a) { a.textContent = MEDITATIONS[id].title; a.href = "meditations.html#" + id; });
+    fetch(AUDIO_DIR + id + ".json").then(function (r) { return r.json(); })
+      .then(function (j) { if (current === id) { stanzas = j.stanzas || []; caption = -2; tick(); } })
+      .catch(function () {});
+  }
+
+  function play(id) {
+    if (id && MEDITATIONS[id] && id !== current) load(id);
+    if (!current) return;
+    if (audio.ended) audio.currentTime = 0;
+    showBar();
+    var p = audio.play();
+    if (p && p.catch) p.catch(function () {});
+  }
+
+  function toggle(id) {
+    if (id && id !== current) return play(id);
+    if (audio.paused || audio.ended) play(); else audio.pause();
+  }
+
+  function stop() {
+    audio.pause();
+    closeFull();
+    hideBar();
+    try { audio.currentTime = 0; } catch (e) {}
+    syncButtons();
+  }
+
+  var lastFocus = null;
+  function openFull() {
+    lastFocus = document.activeElement;
+    full.hidden = false;
+    document.documentElement.classList.add("pfull-open");
+    requestAnimationFrame(function () { requestAnimationFrame(function () { full.classList.add("show"); }); });
+    var c = full.querySelector('[data-p="collapse"]');
+    if (c) c.focus();
+  }
+  function closeFull() {
+    if (full.hidden) return;
+    full.classList.remove("show");
+    document.documentElement.classList.remove("pfull-open");
+    setTimeout(function () { if (!full.classList.contains("show")) full.hidden = true; }, 500);
+    if (lastFocus && lastFocus.focus && document.contains(lastFocus)) lastFocus.focus();
+  }
+
+  window.sitePlayer = { play: play, toggle: toggle, stop: stop, current: function () { return current; }, audio: audio };
+
+  // ---------- events ----------
+  audio.addEventListener("play", function () {
+    if (!started) { started = true; window.countEvent("listen-" + current); }
+    syncButtons();
   });
+  audio.addEventListener("pause", syncButtons);
+  audio.addEventListener("timeupdate", tick);
+  audio.addEventListener("loadedmetadata", tick);
+  audio.addEventListener("ended", function () {
+    window.countEvent("listen-complete-" + current);
+    started = false;
+    setCaption("סוף המדיטציה. ואם עלה משהו קשה, קווי הסיוע נמצאים בתחתית כל עמוד.");
+    syncButtons();
+  });
+
+  document.addEventListener("click", function (e) {
+    var t = e.target.closest ? e.target.closest("[data-play], [data-p]") : null;
+    if (!t) return;
+    if (t.hasAttribute("data-play")) { e.preventDefault(); toggle(t.getAttribute("data-play")); return; }
+    switch (t.getAttribute("data-p")) {
+      case "toggle": toggle(); break;
+      case "back": audio.currentTime = Math.max(0, audio.currentTime - 15); break;
+      case "expand": openFull(); break;
+      case "collapse": closeFull(); break;
+      case "close": stop(); break;
+      case "title": closeFull(); break; // the link itself navigates (in place, via main.js)
+    }
+  });
+  document.addEventListener("input", function (e) {
+    if (e.target.getAttribute && e.target.getAttribute("data-p") === "seek" && audio.duration) {
+      audio.currentTime = e.target.value / 1000 * audio.duration;
+    }
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !full.hidden) closeFull();
+  });
+
+  // Page-level play buttons are re-rendered on every in-place navigation.
+  window.onPage(syncButtons);
 })();

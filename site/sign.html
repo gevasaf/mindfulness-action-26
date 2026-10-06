@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שלט להדפסה (טיוטה) · נוכחים</title>
+<meta name="description" content="שלט להדפסה למעגל נוכחות. טיוטה.">
+<link rel="icon" href="assets/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/print.css">
+<style>
+  .sign { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0; }
+  .sign .mark { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #6f8a72; background: #e6ece4; margin: 6mm 0 4mm; }
+  .sign .brand { font-weight: 700; color: #4f6852; font-size: 22px; margin: 0; }
+  .sign h1 { font-size: 84px; margin: 8mm 0 4mm; line-height: 1.1; }
+  .sign .lead { font-size: 26px; line-height: 1.5; max-width: 150mm; margin: 0 0 4mm; }
+  .sign .soft { font-size: 20px; color: #625d55; margin: 0 0 10mm; }
+  .fill { display: flex; gap: 12mm; font-size: 22px; margin: 0 0 12mm; }
+  .fill span { display: inline-block; min-width: 45mm; border-bottom: 2px solid #2b2925; margin-inline-start: 3mm; }
+  .qr-wrap { display: flex; align-items: center; gap: 8mm; margin: 0 0 10mm; text-align: start; }
+  .qr svg { width: 42mm; height: 42mm; display: block; }
+  .qr-wrap p { font-size: 18px; max-width: 70mm; margin: 0; }
+  .neutral { font-size: 18px; background: #f4e4dc; border-radius: 10px; padding: 4mm 6mm; margin: 0; }
+</style>
+</head>
+<body>
+<div class="toolbar"><span class="draft-note">טיוטה לשלט להדפסה: הנוסח והעיצוב עוד ישתנו.</span><span><button class="btn secondary" type="button" onclick="window.print()">להדפסה</button> <a href="host-kit.html">לערכת המארח/ת</a></span></div>
+<main class="sheet sign" id="main">
+  <div class="mark" aria-hidden="true"></div>
+  <p class="brand">נוכחים</p>
+  <h1>עוצרים לרגע</h1>
+  <p class="lead">כאן מתקיים מעגל נוכחות: כמה דקות של נשימה ושקט, יחד.</p>
+  <p class="soft">כל מי שגר כאן מוזמן/ת לשבת איתנו. לא צריך ניסיון.</p>
+  <div class="fill"><div>מתי:<span></span></div><div>עד:<span></span></div></div>
+  <div class="qr-wrap">
+    <div class="qr" id="qr" role="img" aria-label="קוד QR לאתר"></div>
+    <p>מדיטציות קצרות, מעגלים נוספים ותוכנית הצבעה אישית:<br><b id="qr-url"></b></p>
+  </div>
+  <p class="neutral">אנחנו לא אומרים בעד מי להצביע, ולא שואלים.</p>
+  <div class="sheet-foot"><span>טיוטה · גרסה v0.2</span><span>לפני שבוחרים, נושמים.</span></div>
+</main>
+<script src="assets/js/vendor/qrcode.js"></script>
+<script>
+  // QR points at the site's home page, wherever it is hosted.
+  (function () {
+    var url = new URL("./", location.href).href;
+    var q = qrcode(0, "M"); q.addData(url); q.make();
+    document.getElementById("qr").innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
+    document.getElementById("qr-url").textContent = url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+  })();
+</script>
+</body>
+</html>

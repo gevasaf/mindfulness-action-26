@@ -9,6 +9,8 @@
 | Deploy | GitHub Actions (`.github/workflows/pages.yml`) | Every push to `main` that touches `site/` gets deployed. |
 | Language/direction | Hebrew, `lang="he" dir="rtl"` | The movement's audience. |
 | Fonts | **Self-hosted** Assistant + Frank Ruhl Libre (woff2, SIL OFL) in `site/assets/fonts/` | No third-party requests; fast. |
+| Navigation (v0.2) | Vanilla JS in-place navigation (swap `<main>`, History API) | Lets the meditation player keep playing across pages. No framework, no build step; plain page loads without JS. |
+| Third-party code | `site/assets/js/vendor/qrcode.js` (qrcode-generator, MIT), self-hosted | QR on the printable sign. |
 | Audio (v0) | Pre-rendered MP3s in `site/content/meditations/audio/` (ElevenLabs voice + generated music, mono 80 kbps) with stanza timing JSON; browser TTS fallback | Shareable files, same voice everywhere. See F1. |
 
 ### One-time setup (repo owner)
@@ -46,5 +48,6 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 | Date | Change | Reason | Approved by user |
 |---|---|---|---|
 | 2026-10-06 | Initial stack: static HTML/CSS/JS on GitHub Pages | Simplest start | yes |
+| 2026-10-06 | In-place navigation (vanilla JS) and a self-hosted QR library | Site v0.2: player continues across pages; printable sign | yes |
 | 2026-10-06 | GoatCounter analytics (hosted, free non-commercial, no cookies) | F3, measurement for design-v0 §13 | yes |
 | 2026-10-06 | Self-hosted fonts; browser-only TTS and generated music for v0 | design-v0, no new service or dependency | within current stack |
