@@ -17,15 +17,15 @@ This chat turns released design versions into a technical design doc and then in
 
 Never edit anything under `design/`.
 
-## Non-partisan test (before every push)
-The movement is civic, not partisan, and the repo is public. Everything you push (site text, Hebrew copy, code comments, meta and Open Graph tags, alt text, file names, commit messages, tech docs) must first pass the non-partisan test in `CLAUDE.md`. The goal is to avoid bias as fully and as neutrally as possible. If a design release itself seems to fail the test, don't build that part: raise it in `tech/questions-for-design.md`.
+## Non-partisan test (before every commit)
+The movement is civic, not partisan, and the repo is public. Everything you commit (site text, Hebrew copy, code comments, meta and Open Graph tags, alt text, file names, commit messages, PR descriptions, tech docs) must first pass the non-partisan test in `CLAUDE.md`. Check before each commit, not only before pushing: history is permanent. Keep partisan remarks from chat out of files. If something slips through, fix it openly in a new commit; never rewrite history to hide it. The goal is to avoid bias as fully and as neutrally as possible. If a design release itself seems to fail the test, don't build that part: raise it in `tech/questions-for-design.md`.
 
 ## Start of chat
 1. Read `ITERATIONS.md`, `tech/stack.md` and `tech/design-doc.md`.
 2. Find the newest row with status `ready-to-build` (or `building`). If there is none, tell the user there is no new design release, and ask whether this chat is for fixes or tech work on the current version.
 
 ## Implementing design-vN
-1. **See what changed.** Take the last release that is `live` (call it vM) and run `diff -u design/releases/design-vM.html design/releases/design-vN.html`, then read vN's CHANGELOG entry. For the first iteration, read all of v1.
+1. **See what changed.** Take the last release that is `live` (call it vM) and run `diff -u design/releases/design-vM.html design/releases/design-vN.html`, then read vN's CHANGELOG entry. For the first release (design-v0), read all of it.
 2. **Set the row to `building`** in `ITERATIONS.md`.
 3. **Update `tech/design-doc.md`.** Set "Implements: design-vN". For each design requirement that changed, record the technical decision in the traceability table. Add an entry to the doc's changelog.
 4. **Check the stack.** Compare every new or changed requirement against `tech/stack.md`. If something can't be done well on the current stack:

@@ -15,9 +15,9 @@ A grassroots movement and its website. Work is split between **two kinds of chat
 3. Read the role doc **in full** and follow it for the rest of the chat.
 4. Stay in that role. If the user asks for something that belongs to the other role, say so in one line and suggest they take it to a chat for that role. If they insist, do it, but keep to the file ownership rules below.
 
-## Non-partisan test (applies to everything pushed)
+## Non-partisan test (applies to every commit)
 
-The movement is civic, not partisan, and **this repository is public**. Anything pushed to the repo (design docs, notes, tech docs, site text, code comments, meta tags, alt text, commit messages) must pass a non-partisan test before it is pushed. The goal is to avoid bias as fully and as neutrally as possible. Reasons: the law (the Party Financing Law rules on bodies active in elections), and trust (the audience recognizes manipulation and stops trusting).
+The movement is civic, not partisan, and **this repository is public**. Anything committed to the repo (design docs, notes, brainstorms, drafts, tech docs, site text, code comments, meta tags, alt text, commit messages, PR titles and descriptions) must pass a non-partisan test **before it is committed**. Once pushed, a commit is public and stays in the history, so run the test at commit time, not at push time. A "draft" or "just notes" is not an exception. The goal is to avoid bias as fully and as neutrally as possible. Reasons: the law (the Party Financing Law rules on bodies active in elections), and trust (the audience recognizes manipulation and stops trusting).
 
 Before every push, check that the change:
 1. Names no parties, candidates, blocs, "coalition" or "opposition", and doesn't hint at whom to vote for.
@@ -27,7 +27,11 @@ Before every push, check that the change:
 5. Contains no strategy for targeting voters by their political views, and collects no data about them.
 6. **The neighbor test:** would someone with different political views from ours feel at home reading it, and share it?
 
-If anything fails, rewrite it before pushing. Strategic thinking that can't pass the test stays out of the repo. The full rules are in the "neutrality" section of `design/philosophy.html`.
+If anything fails, rewrite it before committing. The full rules are in the "neutrality" section of `design/philosophy.html`.
+
+**What the user says in chat stays in chat.** The user may share personal political views, guesses about how some group votes, or strategic thoughts that can't pass the test. That's fine in conversation, but it never goes into a file or a commit message. If the user asks to record something that fails the test, say so, suggest a neutral wording, and record only that.
+
+**We are transparent.** If a problematic commit slips through anyway, fix it openly with a new commit that explains the fix. Don't rewrite history (no amend, rebase or force-push to hide it), and don't delete it. Everything we publish, including drafts, is public by choice: we have nothing to hide; something can be public before it is promoted.
 
 ## Who owns which files
 
