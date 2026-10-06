@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>פילוסופיית העיצוב</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;600;700&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f7f3ec;
+    --card: #fffdf9;
+    --ink: #2b2925;
+    --muted: #6b665d;
+    --line: #e2dbcf;
+    --sage: #6f8a72;
+    --sage-soft: #e6ece4;
+    --clay: #b9684a;
+    --clay-soft: #f4e4dc;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #1c1b19;
+      --card: #252421;
+      --ink: #ece7de;
+      --muted: #a8a196;
+      --line: #3a3833;
+      --sage: #9db79f;
+      --sage-soft: #2c3530;
+      --clay: #e0947a;
+      --clay-soft: #3b2c26;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #1c1b19;
+    --card: #252421;
+    --ink: #ece7de;
+    --muted: #a8a196;
+    --line: #3a3833;
+    --sage: #9db79f;
+    --sage-soft: #2c3530;
+    --clay: #e0947a;
+    --clay-soft: #3b2c26;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Assistant", system-ui, sans-serif;
+    font-size: 18px;
+    line-height: 1.7;
+  }
+  main { max-width: 820px; margin: 0 auto; padding: 48px 16px 96px; }
+  h1, h2, h3 { font-family: "Frank Ruhl Libre", serif; line-height: 1.3; }
+  h1 { font-size: 2.4rem; margin: 0 0 8px; }
+  h2 { font-size: 1.7rem; margin: 64px 0 16px; padding-top: 16px; border-top: 1px solid var(--line); }
+  h3 { font-size: 1.25rem; margin: 32px 0 8px; }
+  p, li { max-width: 68ch; }
+  a { color: var(--clay); }
+  .lede { font-size: 1.2rem; color: var(--muted); }
+  .meta { font-size: 0.95rem; color: var(--muted); }
+  .status { display: inline-block; background: var(--sage-soft); color: var(--sage); border-radius: 999px; padding: 2px 12px; font-size: 0.9rem; font-weight: 600; }
+  nav.toc { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 24px; margin: 32px 0; }
+  nav.toc ol { margin: 0; padding-inline-start: 20px; columns: 2; column-gap: 32px; }
+  @media (max-width: 600px) { nav.toc ol { columns: 1; } }
+  .callout { background: var(--card); border-inline-start: 4px solid var(--sage); border-radius: 8px; padding: 16px 20px; margin: 24px 0; }
+  .callout.warn { border-color: var(--clay); background: var(--clay-soft); }
+  .quote { font-family: "Frank Ruhl Libre", serif; font-size: 1.5rem; line-height: 1.5; margin: 24px 0; color: var(--ink); }
+  table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.95rem; }
+  th, td { text-align: right; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+  th { color: var(--muted); font-weight: 600; }
+  .table-wrap { overflow-x: auto; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin: 16px 0; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; }
+  .card h3 { margin-top: 0; }
+  .card p { margin: 0; }
+  .words { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 600px) { .words { grid-template-columns: 1fr; } }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; padding: 0; list-style: none; }
+  .chips li { background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 2px 12px; }
+  .swatches { display: flex; flex-wrap: wrap; gap: 12px; }
+  .swatch { width: 120px; }
+  .swatch span { display: block; height: 56px; border-radius: 8px; border: 1px solid var(--line); margin-bottom: 4px; }
+  .swatch small { color: var(--muted); }
+
+  /* תרשים: מסע המבקר */
+  .flow { display: flex; flex-direction: column; align-items: center; gap: 8px; margin: 24px 0; }
+  .flow .step { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 12px 20px; text-align: center; max-width: 360px; width: 100%; }
+  .flow .step b { display: block; font-family: "Frank Ruhl Libre", serif; font-size: 1.1rem; }
+  .flow .step small { color: var(--muted); }
+  .flow .arrow { color: var(--muted); font-size: 1.2rem; line-height: 1; }
+  .flow .branch { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; width: 100%; }
+  @media (max-width: 600px) { .flow .branch { grid-template-columns: 1fr; } }
+  .flow .branch .step { max-width: none; border-color: var(--sage); }
+  .flow .step.core { border: 2px solid var(--clay); }
+
+  /* תרשים: ציר זמן */
+  .timeline { list-style: none; padding: 0; margin: 24px 0; border-inline-start: 2px solid var(--line); }
+  .timeline li { position: relative; padding: 0 24px 24px 0; padding-inline-start: 24px; padding-inline-end: 0; max-width: none; }
+  .timeline li::before { content: ""; position: absolute; inset-inline-start: -8px; top: 8px; width: 14px; height: 14px; border-radius: 50%; background: var(--paper); border: 2px solid var(--sage); }
+  .timeline li.peak::before { background: var(--clay); border-color: var(--clay); }
+  .timeline .when { font-weight: 700; }
+  .timeline .what { color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+
+<header>
+  <p class="meta">מסמך חי · עודכן 6.10.2026 · <span class="status">טיוטה לקראת design-v1</span></p>
+  <h1>פילוסופיית העיצוב</h1>
+  <p class="lede">שם עבודה: <b>נוכחים</b>. תנועה אזרחית של מיינדפולנס לקראת הבחירות לכנסת ב-27 באוקטובר 2026.</p>
+  <div class="callout warn">
+    <b>המאגר ציבורי.</b> כל מילה כאן גלויה לכולם. גם המסמכים הפנימיים עומדים בכללי הניטרליות (סעיף 5).
+  </div>
+</header>
+
+<nav class="toc" aria-label="תוכן העניינים">
+  <ol>
+    <li><a href="#vision">חזון</a></li>
+    <li><a href="#goals">מטרות ומדדי הצלחה</a></li>
+    <li><a href="#values">ערכים</a></li>
+    <li><a href="#audience">קהל</a></li>
+    <li><a href="#neutrality">ניטרליות ובקרת תוכן</a></li>
+    <li><a href="#voice">קול וטון</a></li>
+    <li><a href="#visual">שפה חזותית</a></li>
+    <li><a href="#ux">חוויית משתמש ומבנה</a></li>
+    <li><a href="#content">תוכן: המדיטציות</a></li>
+    <li><a href="#timeline">ציר זמן</a></li>
+    <li><a href="#not">מה אנחנו לא</a></li>
+    <li><a href="#open">שאלות פתוחות</a></li>
+    <li><a href="#build">הערות לצוות הבנייה</a></li>
+  </ol>
+</nav>
+
+<section id="vision">
+  <h2>1. חזון</h2>
+  <p class="quote">ארבע שנים עברו עלינו. ב-27 באוקטובר יש רגע אחד, שקט, מאחורי הפרגוד. אנחנו רוצים שכל אחד ואחת יגיעו אליו נוכחים.</p>
+  <p>ארבע השנים האחרונות היו מהקשות שידעה החברה הישראלית: מחלוקות עמוקות, ה-7 באוקטובר, מלחמה, חטופים, אובדן ופחד. רבים מאיתנו נשאו את זה בגוף ולא עיכלו. העייפות הזו מרחיקה אנשים מהמרחב הציבורי, ובסוף גם מהקלפי.</p>
+  <p>אנחנו מאמינים שעצירה היא לא בריחה, אלא תנאי לפעולה. מי שעוצר/ת, נושם/ת ומקשיב/ה לעצמו/ה, יודע/ת טוב יותר מה חשוב לו/ה, ומגיע/ה לבחירה מתוך בהירות ולא מתוך רעש, פחד או ייאוש.</p>
+  <p><b>השינוי שאנחנו רוצים לראות:</b> יותר אנשים מגיעים להצביע, ויותר אנשים מצביעים מתוך נוכחות. את ההחלטה בעד מי להצביע אנחנו משאירים לכל אחד ואחת.</p>
+  <p><b>הרגע המרכזי, "מאחורי הפרגוד":</b> ברגע שמאחורי הפרגוד מתנקז הכול: איפה היינו בכל אחת מהשנים האלה, מה קרה לאנשים הקרובים לנו, מה אנחנו מאחלים להם ולעצמנו. ארבע שנים שהרגישו כמו נצח נדחסות לרגע אחד של בחירה. סביב הרגע הזה בנויים התנועה, המדיטציה המרכזית והמסע כולו.</p>
+</section>
+
+<section id="goals">
+  <h2>2. מטרות ומדדי הצלחה</h2>
+  <p>את שיעור ההצבעה עצמו אי אפשר לייחס לנו, ולכן נמדוד את מה שבשליטתנו. היעדים הם הערכה ראשונה, ונכייל אותם אחרי השבוע הראשון.</p>
+
+  <h3>מדד הצפון</h3>
+  <div class="callout"><b>מספר תוכניות ההצבעה שאנשים הכינו ושיתפו.</b> זה המדד הקרוב ביותר להצבעה בפועל. מחקרים מראים שתכנון קונקרטי (מתי, איך, עם מי) מעלה את הסיכוי להגיע לקלפי.</div>
+
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>תחום</th><th>מדד</th><th>יעד עד 27.10</th><th>למה זה חשוב</th></tr></thead>
+    <tbody>
+      <tr><td>פעולה</td><td>תוכניות הצבעה שהוכנו</td><td>10,000</td><td>מדד הצפון</td></tr>
+      <tr><td>פעולה</td><td>מארחים ומארחות של מעגלים</td><td>150</td><td>ליבת הרשת המבוזרת של מתנדבים מקומיים</td></tr>
+      <tr><td>פעולה</td><td>מעגלים שהתקיימו בפועל</td><td>300</td><td>נוכחות פיזית במרחב הציבורי</td></tr>
+      <tr><td>פעולה</td><td>משתתפים במעגלים</td><td>5,000</td><td>מפגש אמיתי בין אנשים</td></tr>
+      <tr><td>נראות</td><td>מקומות ב"שקט הגדול" (24.10)</td><td>50 יישובים</td><td>תמונה לאומית אחת</td></tr>
+      <tr><td>נראות</td><td>סיקור בתקשורת ארצית</td><td>3 כתבות לפחות</td><td>הגעה מעבר לקהילה</td></tr>
+      <tr><td>חשיפה</td><td>האזנות למדיטציה המרכזית</td><td>25,000</td><td>התוכן עובר הלאה</td></tr>
+      <tr><td>חשיפה</td><td>מצטרפים לערוץ הוואטסאפ</td><td>10,000</td><td>ערוץ ישיר לשלושת השבועות</td></tr>
+      <tr><td>חשיפה</td><td>ארגונים ומורים שמפיצים</td><td>10</td><td>הקהילה כערוץ הפצה</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h3>קווים אדומים (מדדי איכות)</h3>
+  <ul>
+    <li><b>אפס</b> תכנים שנכשלו בבדיקת הניטרליות ופורסמו (סעיף 5).</li>
+    <li><b>אפס</b> אירועי אלימות במעגלים שלנו. כל אירוע מתועד ונלמד.</li>
+    <li>כל מדיטציה עברה בדיקה של מורה ומבקר/ת חיצוני/ת לפני פרסום.</li>
+  </ul>
+
+  <h3>אחרי הבחירות</h3>
+  <p>מעגלי "היום שאחרי" ב-28.10 מתקיימים בלי קשר לתוצאות. הצלחה ארוכת טווח היא קהילה שממשיכה להיפגש.</p>
+</section>
+
+<section id="values">
+  <h2>3. ערכים</h2>
+  <div class="cards">
+    <div class="card"><h3>נוכחות לפני פעולה</h3><p>קודם עוצרים ונושמים, ורק אחר כך פועלים. בכל עמוד יש רגע של שקט לפני הקריאה לפעולה.</p></div>
+    <div class="card"><h3>כבוד לבחירה</h3><p>אנחנו מזמינים לבחור, לא אומרים בעד מי. אדם מכל עמדה פוליטית ירגיש כאן בבית.</p></div>
+    <div class="card"><h3>כנות</h3><p>בלי מניפולציה, בלי הפחדה ובלי דחיפות מלאכותית. אנחנו שקופים לגבי מי אנחנו ומי עומד מאחורינו.</p></div>
+    <div class="card"><h3>עדינות</h3><p>רבים מאיתנו נושאים טראומה. אף פעם לא מכריחים להיזכר. תמיד אפשר לפקוח עיניים, לעצור ולבקש עזרה.</p></div>
+    <div class="card"><h3>יחד</h3><p>המעגל הוא הצורה שלנו. אנשים יושבים זה לצד זה, גם כשהם חושבים אחרת.</p></div>
+    <div class="card"><h3>פשטות</h3><p>הכי מעט צעדים בין "שמעתי" ל"עשיתי". כל דבר עובד מהטלפון, בדקה.</p></div>
+  </div>
+</section>
+
+<section id="audience">
+  <h2>4. קהל</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>קהל</th><th>מה הם מרגישים כשהם מגיעים</th><th>מה אנחנו רוצים שיעשו</th></tr></thead>
+    <tbody>
+      <tr><td><b>הציבור הרחב העייף</b> (הקהל המרכזי)</td><td>מותשים, מוצפים, אולי ציניים. "מה זה כבר משנה".</td><td>להאזין לשבע דקות, להכין תוכנית הצבעה, להגיע למעגל.</td></tr>
+      <tr><td><b>קהילת המיינדפולנס</b>: מתרגלים, מורים, ארגונים</td><td>רוצים לעזור אבל נזהרים מפוליטיקה. רגישים למניפולציה.</td><td>להפיץ, לארח מעגל, להנחות.</td></tr>
+      <tr><td><b>מצביעים חדשים</b> (כ-550 אלף)</td><td>פעם ראשונה, לא בטוחים שהקול שלהם שווה משהו.</td><td>להבין את המשקל של הרגע, ולתכנן הגעה.</td></tr>
+      <tr><td><b>עוברים ושבים</b> ליד מעגל</td><td>סקרנות או חשדנות.</td><td>לעצור לרגע, לשתף בפינת ההקשבה, לקחת קישור.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <p>קהילת המיינדפולנס היא בעיקר <b>ערוץ ההפצה וכוח המתנדבים</b>. היעד הוא הציבור כולו.</p>
+</section>
+
+<section id="neutrality">
+  <h2>5. ניטרליות ובקרת תוכן</h2>
+  <p>זה העיקרון שהכי קל לשבור בלי לשים לב, ולכן הוא מקבל סעיף משלו. הוא חשוב משתי סיבות: משפטית (חוק מימון מפלגות, "גוף פעיל בבחירות"), ומפני שהקהל שלנו מזהה מניפולציה מיד ומפסיק לסמוך.</p>
+  <h3>כללים לכל טקסט, הקלטה, תמונה ופוסט</h3>
+  <ol>
+    <li>לא מזכירים מפלגות, מועמדים, גושים, "קואליציה" או "אופוזיציה".</li>
+    <li>לא אומרים "הם" ו"אנחנו" במובן פוליטי. "אנחנו" הוא כל מי שגר כאן.</li>
+    <li>אירועי ארבע השנים מוזכרים כחוויה משותפת (כאב, פחד, אובדן, תקווה), בלי להאשים ובלי לקבוע מי אחראי.</li>
+    <li>לא מתארים עתיד מפחיד שקשור לתוצאה מסוימת. לא אומרים "זו ההזדמנות האחרונה".</li>
+    <li>בכל קריאה לפעולה משתמשים בפעלים אזרחיים: לעצור, להרגיש, לבחור, להצביע.</li>
+    <li>לא אוספים ולא שואלים מה אנשים מצביעים.</li>
+    <li>לא מתקיימת שום פעילות בתוך מתחם הקלפי או סמוך אליו.</li>
+  </ol>
+  <h3>מבחן השכן</h3>
+  <div class="callout">לפני פרסום, אדם עם עמדות פוליטיות שונות משלנו קורא או מאזין ועונה על שאלה אחת: <b>"האם הייתי מרגיש/ה בבית ומשתף/ת את זה עם חברים?"</b> אם התשובה היא לא, משכתבים.</div>
+  <p>תהליך: כל תוכן עובר שני בודקים, אחד מהם מחוץ לצוות. כל מדיטציה עוברת גם מורה מוסמך/ת, בדגש על רגישות לטראומה.</p>
+</section>
+
+<section id="voice">
+  <h2>6. קול וטון</h2>
+  <p>חם, שקט, ישיר ואנושי. כמו חבר/ה שמניח/ה יד על הכתף, ולא כמו קמפיין. משפטים קצרים. פונים בלשון רבים או בפנייה כפולה (את/ה).</p>
+  <div class="words">
+    <div>
+      <h3>מילים שכן</h3>
+      <ul class="chips"><li>לעצור</li><li>לנשום</li><li>נוכחות</li><li>לבחור</li><li>להקשיב</li><li>יחד</li><li>מעגל</li><li>רגע</li><li>בהירות</li><li>לעכל</li><li>הקול שלך</li></ul>
+    </div>
+    <div>
+      <h3>מילים שלא</h3>
+      <ul class="chips"><li>חייבים</li><li>להציל</li><li>הם</li><li>מאבק</li><li>הפיכה</li><li>ימין / שמאל</li><li>ההזדמנות האחרונה</li><li>אסון</li><li>שמות מפלגות ומועמדים</li></ul>
+    </div>
+  </div>
+  <p><b>דוגמה:</b> "ארבע שנים עברו עלינו. לפני שבוחרים, נושמים." ולא: "אם לא נצביע, נאבד הכול."</p>
+</section>
+
+<section id="visual">
+  <h2>7. שפה חזותית</h2>
+  <p><b>תחושה:</b> בוקר שקט. נייר, אדמה, נשימה, הרבה אוויר בין הדברים.</p>
+  <p><b>צבעים:</b> חמים וטבעיים. נמנעים בכוונה מצבעים שמזוהים עם מפלגות או עם מחאות ומאבקים: כחול-לבן בשימוש מחאתי, צהוב, כתום, שחור-אדום וכדומה.</p>
+  <div class="swatches">
+    <div class="swatch"><span style="background:#f7f3ec"></span>נייר<br><small>#f7f3ec</small></div>
+    <div class="swatch"><span style="background:#2b2925"></span>פחם חם<br><small>#2b2925</small></div>
+    <div class="swatch"><span style="background:#6f8a72"></span>מרווה<br><small>#6f8a72</small></div>
+    <div class="swatch"><span style="background:#b9684a"></span>טרקוטה<br><small>#b9684a</small></div>
+    <div class="swatch"><span style="background:#e6ece4"></span>מרווה בהירה<br><small>#e6ece4</small></div>
+  </div>
+  <p><b>טיפוגרפיה:</b> כותרות בפונט סריפי עברי רך (כיוון: Frank Ruhl Libre), וגוף טקסט בפונט נקי וקריא (כיוון: Assistant). הכיוונים יכולים להשתנות בבנייה.</p>
+  <p><b>סמל:</b> מעגל שמתרחב ומתכווץ לאט, כמו נשימה. הוא גם מעגל של אנשים וגם עיגול שמסמנים בפתק. אנימציה איטית מאוד, ושקטה לגמרי למי שביקש לצמצם תנועה.</p>
+  <p><b>דימויים:</b> ידיים, אור בוקר, אנשים במעגל מצולמים מאחור או מרחוק (בלי פנים מזוהות), שמיים פתוחים. בלי דגלים, בלי שלטים, בלי צילומי מחאות.</p>
+  <p><b>מרחב:</b> הרבה שוליים ומעט אלמנטים בכל מסך. אם יש ספק, מורידים.</p>
+</section>
+
+<section id="ux">
+  <h2>8. חוויית משתמש ומבנה</h2>
+  <h3>היקף design-v1: עמוד ראשי אחד</h3>
+  <p>מתחילים בעמוד אחד שעובד מצוין בטלפון. ערכת המארחים המלאה וספריית המדיטציות יגיעו בגרסאות הבאות.</p>
+
+  <h3>מסע המבקר</h3>
+  <div class="flow" role="img" aria-label="מסע המבקר: מגיעים מקישור, עוצרים לנשימה, מאזינים למדיטציה המרכזית, ובוחרים אחת משלוש דרכים: לתרגל, להצטרף או לארח מעגל, להכין תוכנית הצבעה. בסוף משתפים.">
+    <div class="step"><b>מגיעים</b><small>מקישור בוואטסאפ, מחבר/ה או מארגון</small></div>
+    <div class="arrow">↓</div>
+    <div class="step"><b>עוצרים</b><small>מסך פתיחה שקט: נשימה אחת, ספירה לאחור לבחירות</small></div>
+    <div class="arrow">↓</div>
+    <div class="step core"><b>מאזינים: "מאחורי הפרגוד"</b><small>המדיטציה המרכזית, כ-7 דקות</small></div>
+    <div class="arrow">↓</div>
+    <div class="branch">
+      <div class="step"><b>לתרגל</b><small>הצטרפות לערוץ ולמסע היומי</small></div>
+      <div class="step"><b>להצטרף או לארח מעגל</b><small>קבוצות וואטסאפ וערכה</small></div>
+      <div class="step"><b>להכין תוכנית הצבעה</b><small>מתי, עם מי, את מי מזמינים</small></div>
+    </div>
+    <div class="arrow">↓</div>
+    <div class="step"><b>משתפים</b><small>שולחים לשלושה אנשים</small></div>
+  </div>
+
+  <h3>מבנה העמוד הראשי, מלמעלה למטה</h3>
+  <ol>
+    <li><b>פתיחה:</b> כותרת ("לפני שבוחרים, נושמים"), משפט חזון אחד, מעגל הנשימה, ספירה לאחור עד 27.10, וכפתור ראשי: "להאזנה (7 דקות)".</li>
+    <li><b>"מאחורי הפרגוד":</b> נגן המדיטציה המרכזית ותיאור קצר. עד שההקלטה מוכנה: "בקרוב", עם הזמנה להצטרף לערוץ.</li>
+    <li><b>שלוש דרכים להיות נוכחים:</b> שלושה כרטיסים (לתרגל, מעגל, תוכנית הצבעה).</li>
+    <li><b>תוכנית ההצבעה שלי:</b> שלוש שאלות קצרות (מתי אני הולך/ת, עם מי, את מי אני מזמין/ה). התוצאה היא כרטיס יפה לשיתוף ותזכורת ליומן, וקישור לבדיקת מקום הקלפי באתר ועדת הבחירות המרכזית. בלי שאלה על עמדה פוליטית.</li>
+    <li><b>מעגלים:</b> רשימת מעגלים קרובים (עיר, מקום, שעה, קישור לקבוצה), והזמנה: "רוצה לארח? הצטרפו לקבוצת המארחים".</li>
+    <li><b>השקט הגדול, מוצאי שבת 24.10:</b> מה זה ואיפה. הרשימה תתעדכן.</li>
+    <li><b>מי אנחנו:</b> שתי פסקאות, הצהרת ניטרליות ("אנחנו לא אומרים בעד מי להצביע") וקשר.</li>
+    <li><b>תמיכה:</b> משפט עדין, למשל "אם עלה משהו קשה", עם קווי סיוע רגשי.</li>
+  </ol>
+  <p><b>הפעולה המרכזית:</b> להאזין למדיטציה. <b>הפעולה המשנית החשובה:</b> להכין תוכנית הצבעה.</p>
+
+  <h3>גרסאות הבאות</h3>
+  <ul>
+    <li><b>v2:</b> ערכת מארח/ת דיגיטלית (תסריט מעגל, אודיו, שלט להדפסה, כללי בטיחות ואי-אלימות, מה עושים מול פרובוקציה, פינת הקשבה).</li>
+    <li><b>v3:</b> ספריית המדיטציות המלאה, המסע היומי, עמוד ליום הבחירות ועמוד ל"היום שאחרי".</li>
+  </ul>
+</section>
+
+<section id="content">
+  <h2>9. תוכן: המדיטציות</h2>
+  <p>מעט, קצר ובקולות של מורים ומורות. כל מדיטציה ניתנת להאזנה ולשיתוף כקובץ בוואטסאפ.</p>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>שם</th><th>אורך</th><th>מתי</th><th>תמצית</th></tr></thead>
+    <tbody>
+      <tr><td><b>מאחורי הפרגוד</b> (הליבה)</td><td>כ-7 דק'</td><td>v1</td><td>מדמיינים את הרגע שמאחורי הפרגוד. חוזרים בעדינות שנה אחר שנה: איפה הייתי, מה קרה לקרובים לי, מה אני מאחל/ת להם. הכול מתנקז לרגע אחד, והבחירה היא שלך.</td></tr>
+      <tr><td>לעכל</td><td>כ-10 דק'</td><td>v3</td><td>לתת מקום למה שעבר עלינו, בלי לנתח ובלי למהר.</td></tr>
+      <tr><td>בהירות בתוך הרעש</td><td>כ-5 דק'</td><td>v3</td><td>לפני שגוללים בחדשות: לשים לב מה התוכן עושה לגוף.</td></tr>
+      <tr><td>מה חשוב לי</td><td>כ-7 דק'</td><td>v3</td><td>ערכים, לא מפלגות. מה אני רוצה לעולם של הילדים שלי.</td></tr>
+      <tr><td>בדרך לקלפי</td><td>כ-3 דק'</td><td>יום הבחירות</td><td>להליכה או לתור בקלפי.</td></tr>
+      <tr><td>היום שאחרי</td><td>כ-10 דק'</td><td>28.10</td><td>לעכל את התוצאה, תהיה אשר תהיה. לחזור אחד לשנייה.</td></tr>
+    </tbody>
+  </table>
+  </div>
+  <div class="callout warn"><b>רגישות לטראומה:</b> "מאחורי הפרגוד" נוגעת בזיכרונות קשים. היא מזכירה בפתיחה ובאמצע שמותר לפקוח עיניים, להפסיק ולחזור לנשימה. היא לא מבקשת לשחזר אירועים ספציפיים, ומסתיימת בעיגון בגוף ובהווה. בסוף מופיעים קווי סיוע.</div>
+</section>
+
+<section id="timeline">
+  <h2>10. ציר זמן</h2>
+  <ol class="timeline">
+    <li><span class="when">6 עד 12.10: הקמה.</span> <span class="what">העמוד הראשי עולה, ערוץ הוואטסאפ נפתח, המדיטציה המרכזית מוקלטת, וקבוצת המארחים הראשונה מתגבשת.</span></li>
+    <li><span class="when">13 עד 19.10: התפשטות.</span> <span class="what">המעגלים הראשונים, ערכת המארח/ת, גיוס ארגונים ומורים, הפצה.</span></li>
+    <li><span class="when">20 עד 26.10: שיא.</span> <span class="what">דחיפה לתוכניות הצבעה, ספריית המדיטציות, הכנה לשקט הגדול.</span></li>
+    <li class="peak"><span class="when">מוצאי שבת, 24.10: השקט הגדול.</span> <span class="what">שקט משותף בעשרות יישובים באותה שעה.</span></li>
+    <li class="peak"><span class="when">שלישי, 27.10: יום הבחירות.</span> <span class="what">מעגלי בוקר בפארקים, הרחק מהקלפיות ("נושמים ויוצאים להצביע"), ומדיטציה לדרך לקלפי.</span></li>
+    <li><span class="when">רביעי, 28.10: היום שאחרי.</span> <span class="what">מעגלי עיבוד, בלי קשר לתוצאות.</span></li>
+  </ol>
+</section>
+
+<section id="not">
+  <h2>11. מה אנחנו לא</h2>
+  <ul>
+    <li>לא מפלגה, לא קמפיין ולא שלוחה של אף מפלגה.</li>
+    <li>לא אומרים לאף אחד בעד מי להצביע.</li>
+    <li>לא תנועת מחאה. אנחנו לא נגד אף אחד.</li>
+    <li>לא טיפול. אנחנו מפנים לאנשי מקצוע ולקווי סיוע.</li>
+    <li>לא אוספים מידע על עמדות פוליטיות.</li>
+    <li>לא פועלים ליד קלפיות.</li>
+    <li>לא משתמשים בפחד כדי להניע.</li>
+  </ul>
+</section>
+
+<section id="open">
+  <h2>12. שאלות פתוחות</h2>
+  <div class="table-wrap">
+  <table>
+    <thead><tr><th>שאלה</th><th>חוסם את v1?</th><th>הנחת עבודה</th></tr></thead>
+    <tbody>
+      <tr><td>שם התנועה. אפשרויות: "נוכחים", "נשימה לפני הפתק", "רגע מאחורי הפרגוד"</td><td>לא</td><td>שם עבודה: "נוכחים"</td></tr>
+      <tr><td>מי הפנים של התנועה (מורים ומורות)</td><td>לא</td><td>בינתיים בלי פנים, וטקסט "מי אנחנו" כללי</td></tr>
+      <tr><td>מי מקליט/ה את "מאחורי הפרגוד"</td><td>לא</td><td>"בקרוב" והפניה לערוץ</td></tr>
+      <tr><td>עמותה שותפה וערוצי הפצה</td><td>לא</td><td>מתחילים בלי עמותה ובלי כסף</td></tr>
+      <tr><td>בדיקה משפטית (גוף פעיל בבחירות)</td><td>לא ל-v1, כן לפני כל גיוס כסף או פרסום ממומן</td><td>אין גיוס כסף ב-v1</td></tr>
+      <tr><td>תרומות</td><td>לא</td><td>נדחות לגרסה מאוחרת</td></tr>
+      <tr><td>דומיין</td><td>לא</td><td>כתובת ברירת המחדל של GitHub Pages</td></tr>
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="build">
+  <h2>13. הערות לצוות הבנייה</h2>
+  <p>מה ולמה. האיך הוא שלכם. דברים שאולי דורשים יכולת מעבר לאתר סטטי:</p>
+  <ul>
+    <li><b>תוכנית הצבעה:</b> צריכה לעבוד כולה בדפדפן, בלי לשמור מידע אישי בשום מקום. התוצרים: כרטיס לשיתוף בוואטסאפ ותזכורת ליומן.</li>
+    <li><b>מדידה:</b> כדי לספור תוכניות הצבעה, האזנות ושיתופים צריך מדידה שומרת פרטיות, בלי עוגיות מעקב ובלי פרופיל אישי. זה עשוי לדרוש שירות חיצוני.</li>
+    <li><b>רשימת המעגלים:</b> ב-v1 הצוות מעדכן אותה ידנית. הרשמה עצמית של מארחים או מפה חיה יידרשו בהמשך, וזה כנראה מחייב שינוי טכנולוגי.</li>
+    <li><b>אודיו:</b> קבצים קלים, נגן נגיש, ואפשרות להוריד ולשתף.</li>
+    <li><b>ספירה לאחור</b> עד 27.10.2026.</li>
+    <li><b>תרומות:</b> לא ב-v1.</li>
+    <li><b>ניטרליות גם בקוד:</b> בלי מטא-תגיות, תיאורי שיתוף או טקסט חלופי שמפרים את סעיף 5.</li>
+  </ul>
+</section>
+
+</main>
+</body>
+</html>

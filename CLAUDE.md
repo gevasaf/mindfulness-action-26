@@ -15,11 +15,25 @@ A grassroots movement and its website. Work is split between **two kinds of chat
 3. Read the role doc **in full** and follow it for the rest of the chat.
 4. Stay in that role. If the user asks for something that belongs to the other role, say so in one line and suggest they take it to a chat for that role. If they insist, do it, but keep to the file ownership rules below.
 
+## Non-partisan test (applies to everything pushed)
+
+The movement is civic, not partisan, and **this repository is public**. Anything pushed to the repo (design docs, notes, tech docs, site text, code comments, meta tags, alt text, commit messages) must pass a non-partisan test before it is pushed. The goal is to avoid bias as fully and as neutrally as possible. Reasons: the law (the Party Financing Law rules on bodies active in elections), and trust (the audience recognizes manipulation and stops trusting).
+
+Before every push, check that the change:
+1. Names no parties, candidates, blocs, "coalition" or "opposition", and doesn't hint at whom to vote for.
+2. Uses no political "us vs. them". "We" means everyone who lives here.
+3. Describes the events of recent years as shared experience, without blame or assigning responsibility.
+4. Doesn't use fear, or an imagined future tied to a particular election result, to move people.
+5. Contains no strategy for targeting voters by their political views, and collects no data about them.
+6. **The neighbor test:** would someone with different political views from ours feel at home reading it, and share it?
+
+If anything fails, rewrite it before pushing. Strategic thinking that can't pass the test stays out of the repo. The full rules are in the "neutrality" section of `design/philosophy.html`.
+
 ## Who owns which files
 
 | Path | Owner | Notes |
 |---|---|---|
-| `design/` | design | Hebrew. `philosophy.md` is the living draft; `releases/` holds frozen versions. |
+| `design/` | design | Hebrew. `philosophy.html` is the living draft; `releases/` holds frozen versions. |
 | `tech/` | build | `design-doc.md`, `stack.md`; `questions-for-design.md` (written in Hebrew) is how build asks design questions. |
 | `site/` | build | The website, deployed to GitHub Pages. |
 | `.github/` | build | The deploy workflow. |
@@ -31,8 +45,8 @@ A grassroots movement and its website. Work is split between **two kinds of chat
 ```
  design chat                                     build chat
  ───────────                                     ──────────
- ideate in philosophy.md / notes/
- release → design/releases/design-vN.md
+ ideate in philosophy.html / notes/
+ release → design/releases/design-vN.html
           + CHANGELOG.md + ITERATIONS.md row  ──▶ read the latest release (diff it against
                                                   the last one already built)
                                                   update tech/design-doc.md (+ stack.md flags)
@@ -42,7 +56,7 @@ A grassroots movement and its website. Work is split between **two kinds of chat
  keep iterating toward design-v(N+1)
 ```
 
-- Build works **only** from the files in `design/releases/`, never from the draft `philosophy.md`, so design can keep iterating while a release is being built.
+- Build works **only** from the files in `design/releases/`, never from the draft `philosophy.html`, so design can keep iterating while a release is being built.
 - Each release is a full snapshot. Build gets "what changed" by diffing the newest release against the last one it implemented.
 - Work only reaches the other role through `main`. Each chat may run on its own branch, so when a release, or a build of one, is finished, get it merged to `main`: push directly if the user says to, otherwise open a PR.
 
