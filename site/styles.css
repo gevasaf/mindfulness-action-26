@@ -305,7 +305,7 @@ html.pfull-open, html.pfull-open body { overflow: hidden; }
 .pfull.ended .pfull-end { display: flex; flex-direction: column; align-items: center; gap: 16px; padding: 0 24px 24px; text-align: center; }
 .pfull-end a[data-p="help"] { color: var(--clay-ink); font-weight: 600; }
 .pfull-plan { display: none; }
-.pfull.show-plan .pfull-plan { display: inline-flex; }
+.pfull.show-plan .pfull-plan { display: inline-flex; min-height: 56px; padding: 12px 34px; font-size: 1.2rem; box-shadow: 0 6px 22px rgb(79 104 82 / 28%); }
 .pfull { grid-template-rows: auto 1fr auto auto; }
 
 /* Voting plan page */

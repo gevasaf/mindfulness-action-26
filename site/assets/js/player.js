@@ -51,7 +51,7 @@
         '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב זמני</div>' +
       "</div>" +
       '<div class="pbar-end">' +
-        '<a class="btn pbar-plan" data-p="plan" href="plan.html">לתכנן הצבעה</a>' +
+        '<a class="btn pbar-plan" data-p="plan" href="plan.html" aria-label="התוכנית שלי: תוכנית ההצבעה">התוכנית שלי</a>' +
         '<a class="pbar-help" href="#support" data-p="help" title="אם עלה משהו קשה, אפשר לדבר עם מישהו">קווי סיוע</a>' +
       "</div>" +
       '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
@@ -74,7 +74,7 @@
     "</div>" +
     '<div class="pfull-caption" aria-live="polite"><p></p><p></p></div>' +
     '<div class="pfull-end">' +
-      '<a class="btn secondary pfull-plan" data-p="plan" href="plan.html">כשמתאים: לתכנן את ההצבעה</a>' +
+      '<a class="btn pfull-plan" data-p="plan" href="plan.html" aria-label="התוכנית שלי: תוכנית ההצבעה">התוכנית שלי</a>' +
       '<a href="#support" data-p="help">אם עלה משהו קשה, אפשר לדבר עם מישהו: קווי סיוע</a>' +
     "</div>" +
     '<div class="pfull-controls">' +
