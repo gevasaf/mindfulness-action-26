@@ -1,7 +1,7 @@
 # Technical design doc
 
 **Implements:** `design/releases/design-v1.html` (design-v1, released 2026-10-06: public launch, no server)
-**Tech doc version:** t2.0 · **Site version:** v1.0.6 (shown in every page footer; waiting for the user's test and notes)
+**Tech doc version:** t2.0 · **Site version:** v1.0.7 (shown in every page footer; waiting for the user's test and notes)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -12,7 +12,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 
 | File | Page | Release § |
 |---|---|---|
-| `index.html` | Home: hero (its play button starts the central meditation), "the idea" (`#idea`), two ways (listen, plan), voting-plan teaser, short about | §8 "home page structure", §10 "הרעיון" |
+| `index.html` | Home: hero (its play button starts the central meditation), "the idea" (`#idea`, with a healing paragraph and an "עוד על המיזם" link, v1.0.7), two ways (listen, plan). The voting-plan teaser and the short about section were removed in v1.0.7 (user request) | §8 "home page structure", §10 "הרעיון" |
 | `meditations.html` | Three meditations, labelled "קול ממוחשב (AI)" | §8, §9 "בעמוד המדיטציות", §10 |
 | `plan.html` | Voting plan; dedications include "לארץ הזאת" | §8, §10 "הקדשות" |
 | `host-kit.html` | "לפתוח מעגל" (v1.0.4; was "ערכת מארח/ת"; file name kept so links still work): detailed kit (release `design-v1-content/host-kit.md`), see A7 | §8, §10 "ערכת מארח/ת מפורטת" |
@@ -24,7 +24,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 
 Removed in site v1.0 (design-v1 §8): `circles.html`, `journey.html`, `day-after.html`, `donate.html`.
 
-Anchors on the home page: `#idea`, `#ways`, `#plan`, `#about`; `#support` on every page.
+Anchors on the home page: `#idea`, `#ways`; `#support` on every page.
 
 ## Visual system
 - **Colors** (CSS custom properties in `site/styles.css`): `--paper #f7f3ec`, `--ink #2b2925`, `--sage #6f8a72`, `--clay #b9684a`, `--sage-soft #e6ece4`, `--clay-soft`, plus the release's dark-mode set under `prefers-color-scheme: dark`. Darker `--sage-ink` / `--clay-ink` variants are used for text and button fills so they meet WCAG AA contrast.
@@ -99,13 +99,14 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 19. "We" (v1.0.3): no organizational "we"; impersonal voice for the project, a signed first-person note from the founder on the About page, "על המיזם" instead of "מי אנחנו" (see Content).
 20. No "host" (v1.0.4): "מארח/ת" becomes "לפתוח מעגל" / "ערכה לפתיחת מעגל"; the printable sign leads with "לפני שבוחרים, נושמים" and names the elections.
 21. Titles in the brand font and niqqud on every "נוֹכְחִים" (v1.0.6).
+22. Home page (v1.0.7): voting-plan teaser and "מי מאחורי זה" section removed; "עוד על המיזם" link under "הרעיון"; a paragraph on healing and what was pushed aside ("נדחק הצידה") added to "הרעיון".
 
 ## Traceability
 | Design requirement (design-v1 §) | Technical decision | Status |
 |---|---|---|
 | §8 no draft banner, no "דוגמה" / "בקרוב" labels; v2 features simply absent | Banner markup, CSS and JS removed; tags removed; no placeholders for v2 | done |
 | §8 / §9 computer-voice label stays | "קול ממוחשב (AI)" on each meditation card, the election-day card and the player (bar and full screen) | done |
-| §8 home page structure | Hero (as before) · "הרעיון" (§10 text verbatim) · "דרכים להיות נוכחים" with listen + plan (circles and teachers are v2) · plan teaser · short about with link · support | done |
+| §8 home page structure | Hero (as before) · "הרעיון" (§10 text, plus a healing paragraph and an "עוד על המיזם" link, v1.0.7) · "דרכים להיות נוכחים" with listen + plan (circles and teachers are v2) · support. Plan teaser and short about removed at the user's request (v1.0.7) | done (adapted) |
 | §8 all site v0.2–v0.2.7 remarks adopted | Kept as built; version mark without "טיוטה" | done |
 | §8 removed: sample circles, Great Silence, daily journey, day-after page, donations, "בקרוב" meditations | Pages deleted, home sections and nav items removed, links updated; `404.html` catches old links | done |
 | §10 / §14 "לארץ הזאת" in dedications | Added to the fixed list in `plan.html` | done |
@@ -126,6 +127,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.0.7 | design-v1 + user remarks | 2026-10-06 | Site v1.0.7, home page: removed the voting-plan teaser (`#plan`) and the short about (`#about`); "עוד על המיזם" link under "הרעיון"; new paragraph in "הרעיון" on healing and what we pushed aside. |
 | t2.0.6 | design-v1 + user remarks | 2026-10-06 | Site v1.0.6: all titles (h1–h3, player titles, plan PNG title) in M PLUS Rounded 1c, with its Latin subset added; "נוֹכְחִים" with niqqud everywhere on the site (33 places). |
 | t2.0.5 | design-v1 + user remarks | 2026-10-06 | Site v1.0.5 (fix): cache-busting `?v=` on all CSS/JS references, so new HTML never runs with cached old CSS/JS (the user saw an off-centre breathing label, no echo and no logo breath after v1.0.2). The logo breath also starts on touch. |
 | t2.0.4 | design-v1 + user decisions | 2026-10-06 | Site v1.0.4: "מארח/ת" replaced across the site ("לפתוח מעגל" in the nav and page title, "ערכה לפתיחת מעגל" in links, "דף הנחיה למעגל"); the sign's headline is "לפני שבוחרים, נושמים" with "מעגל נשימה לקראת הבחירות לכנסת · 27.10"; question #13. |
