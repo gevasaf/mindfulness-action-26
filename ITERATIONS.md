@@ -14,3 +14,4 @@ Statuses: `ready-to-build` → `building` → `live`
 | 1 | design-v1 | 2026-10-06 | | | ready-to-build | Public launch. Stage A today (drop draft marks and removed pages); stage B (teacher uploads, circles map) needs a stack change, flag first |
 | 2 | design-v2 | 2026-10-06 | | | ready-to-build | Small update to v1: circles via phone verification and direct WhatsApp (no groups), no emails stored, election day as the circles' peak day, About names the founder. Stage A of v1 unchanged |
 | 3 | design-v3 | 2026-10-06 | | | ready-to-build | Small update to stage B: circles publish without manual approval (phone verification, max 2 new per number per day, automatic sanity checks, reports hide after 3); teachers cannot self-remove, phones never public |
+| 4 | design-v4 | 2026-10-06 | | | ready-to-build | Small update to stage B: fixed 30-minute circles, inputs constrained to allowed ranges in the UI, polling-distance check removed |
