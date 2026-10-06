@@ -1,1 +1,1 @@
-20261006.pmtiles (maxzoom 14)
+20261006.pmtiles (maxzoom 13)
