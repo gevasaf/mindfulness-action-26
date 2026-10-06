@@ -14,7 +14,7 @@ internet access; the build sandbox does not. Outputs, under site/assets/map/:
 The vector tiles (region.pmtiles) are extracted by the workflow itself with
 the pmtiles CLI. Coordinates are WGS84.
 """
-import io, json, sys, time, unicodedata, urllib.parse, urllib.request, zipfile
+import io, json, os, sys, time, unicodedata, urllib.parse, urllib.request, zipfile
 
 BBOX = (34.15, 29.40, 35.95, 33.40)  # west, south, east, north: a plain rectangle, not a border
 OUT = "site/assets/map/"
@@ -118,6 +118,7 @@ def land():
 
 
 if __name__ == "__main__":
+    os.makedirs(OUT, exist_ok=True)
     what = sys.argv[1:] or ["localities", "land"]
     if "land" in what:
         land()
