@@ -4,7 +4,8 @@
 //   - a bottom bar that fades in when playback starts and fades out on close;
 //   - a full-screen overlay (expand icon) with a slow breathing gradient and
 //     captions that fade in and out with each stanza.
-// Any element with data-play="<id>" starts / toggles that meditation.
+// Any element with data-play="<id>" starts / toggles that meditation, and so does a link to
+// meditations.html#<id> (v1.1.9).
 // Recordings: ElevenLabs voice + a quiet music bed, mixed in the repo; stanza
 // timings from site/content/meditations/audio/<id>.json. See tech/design-doc.md.
 (function () {
@@ -256,6 +257,16 @@
   document.addEventListener("keydown", function (e) {
     if (e.key === "Escape" && !full.hidden) closeFull();
   });
+
+  // A link to a meditation (meditations.html#<id>, e.g. a shared WhatsApp link) also starts it.
+  // Browsers may block sound that starts without a tap; then the bar opens ready, one tap from playing.
+  function playFromHash() {
+    if (!/meditations\.html$/.test(location.pathname)) return;
+    var id = decodeURIComponent(location.hash.slice(1));
+    if (MEDITATIONS[id] && id !== current) play(id);
+  }
+  window.onPage(playFromHash);
+  window.addEventListener("hashchange", playFromHash);
 
   // Page-level play buttons are re-rendered on every in-place navigation.
   window.onPage(syncButtons);

@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.8 · **Site version:** v1.1.8 (shown in every page footer)
+**Tech doc version:** t2.1.9 · **Site version:** v1.1.9 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.9 | design-v1.1 + user request | 2026-10-07 | Site v1.1.9: a link to `meditations.html#<id>` (shared links included) also starts that meditation (`playFromHash` in `player.js`, on load, in-place navigation and `hashchange`; skipped when it is already the current one). When the browser blocks autoplay, the bar opens with the meditation loaded and paused, one tap from playing. Tested with both autoplay policies. |
 | t2.1.8 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.8: the kit's "שיתוף העמוד" button sits under all six parts, not next to "להעתיק את הפוסט". |
 | t2.1.7 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.7: the sign's "מתי" and "איפה" are two full-width lines (160 mm, 14 mm high, 26 px labels) with room to write by hand; still one A4 page with or without the group QR. |
 | t2.1.6 | design-v1.1 + user remarks | 2026-10-07 | Site v1.1.6. Fix: on the printed sign the site address wrapped after its hyphen inside Hebrew text and read as "mindfulnessaction-26"; it is now one left-to-right line (`bdi dir=ltr`, `nowrap`), and the kit's address spans are `dir=ltr` too. Kit PDF is clickable: links to other pages point at the public site (not `file://`), the table of contents and in-kit links stay internal, and the sign is joined with pypdf (pdfunite dropped the internal links). Footer on every PDF page, the sign included: site address and page number. |
