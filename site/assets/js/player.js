@@ -227,6 +227,7 @@
   audio.addEventListener("loadedmetadata", tick);
   audio.addEventListener("ended", function () {
     window.countEvent("listen-complete-" + current);
+    window.rememberMeditation(current);
     started = false;
     setCaption("סוף המדיטציה.\nלאט, לחזור לחדר, לגוף, לנשימה.");
     setEnded(true);

@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.22 · **Site version:** v1.1.22 (shown in every page footer)
+**Tech doc version:** t2.1.23 · **Site version:** v1.1.23 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -76,7 +76,7 @@ Anchors on the home page: `#idea`, `#ways`; `#support` on every page.
 | Version mark | Footer line on every page: "גרסה v1.0 · date · מה השתנה" (links to this changelog), no "טיוטה" since v1.0 (design-v1 §8). Also in the printables' sheet footers | yes |
 | Voting plan | `assets/js/plan.js`, all fields optional: when (slot or exact time), **where** (v0.2.3; goes only into the calendar's LOCATION, never onto the shared card or text, since a polling place reveals where someone lives), with whom, whom I invite, **whom I dedicate the moment behind the curtain to** (v0.2.3; a fixed list, not free text, so a card shared under our name can't carry a slogan: my children, my family, people close to me, in memory of those we lost, my neighbours including those who think differently, the future of all of us, myself), and a **meditation for the way** (v0.2.3; its link goes into the calendar description and URL, and the 1-hour alarm names it). No question on political views. Outputs a card, WhatsApp share text, a PNG card (grows with the number of rows), an `.ics` event (RFC 5545 line folding) with alarms 1 h and 18 h before, a link to the Central Elections Committee and an "invite someone else to plan" link. **No wa.me link in the calendar**: an encoded Hebrew WhatsApp URL is several hundred characters of %D7… in the event notes, looks broken in calendar apps and is out of place in a personal reminder; the short "#plan" invite link does the same job cleanly. Nothing stored or sent: no cookies, no localStorage, no network calls | yes |
 | Background video strip | `<video>` sources added by `main.js` when motion and connection allow; poster image otherwise | yes (F2, approved) |
-| Measurement (plans, listens, shares, kit) | GoatCounter script on every page, printables included (v1.1.0). Page views plus anonymous events from `window.countEvent` (`main.js`): `plan-created`, `plan-whatsapp`, `plan-image`, `plan-calendar`, `listen-<script>`, `listen-complete-<script>`, `share-meditation-whatsapp`; v1.1.0: `kit-pdf`, `group-image`, `kit-copy-<id>`, `sign-print`, `sign-print-group`, `guide-print`, and sign QR visits via `utm_source=sign`. Only the event name is sent, never what people type. A footer line says so | yes (F3, approved) |
+| Measurement (plans, listens, shares, kit) | GoatCounter script on every page, printables included (v1.1.0). Page views plus anonymous events from `window.countEvent` (`main.js`): `plan-created`, `plan-whatsapp`, `plan-image`, `plan-calendar`, `listen-<script>`, `listen-complete-<script>`, `share-meditation-whatsapp`; v1.1.0: `kit-pdf`, `group-image`, `kit-copy-<id>`, `sign-print`, `sign-print-group`, `guide-print`, and sign QR visits via `utm_source=sign`. v1.1.23: actions (`plan-created`, `plan-whatsapp`, `plan-calendar`, `plan-image`, `kit-pdf`, `group-image`, `sign-print`, `sign-print-group`, `guide-print`) are also counted as `<action>-after-<meditation id>` when that meditation was heard to the end on this device in the last 3 hours (see "Which recordings move people to act"). Only the event name is sent, never what people type. A footer line says so | yes (F3, approved) |
 
 ## Accessibility & performance
 - `lang="he" dir="rtl"`, logical CSS properties (`inset-inline-*`, `padding-inline-*`), skip link, landmarks, one `h1` per page, `aria-current` in nav, visible focus rings, 44–48 px touch targets.
@@ -150,9 +150,31 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 - **A2:** the polling-place link points to the Central Elections Committee home page; the exact lookup URL for the 26th Knesset could not be verified from the build environment. Check before promoting.
 - **A4** (question #3): support lines are ERAN 1201, NATAL 1-800-363-363, SAHAR (online chat), plus 101/100 for emergencies.
 
+## Which recordings move people to act (v1.1.23)
+When teachers' recordings arrive, each gets its own id, and the existing events then measure it with no code change. To compare recordings:
+
+| Event | Meaning |
+|---|---|
+| `listen-<id>` | started listening |
+| `listen-complete-<id>` | heard to the end |
+| `plan-from-player-<id>` | "לתכנן הצבעה" on the player's end screen (a click, not a finished plan) |
+| `share-whatsapp-player-<id>` | shared from the player |
+| `<action>-after-<id>` | an action (plan created or shared, kit PDF, group image, sign or guide printed) within 3 hours of hearing `<id>` to the end |
+
+**How it works:** on `ended`, `player.js` calls `window.rememberMeditation(id)`, which stores `{id, time}` under `nkh-last-meditation` in `localStorage`. It is never sent; only event names leave the device. `window.countAction(name)` (`main.js`) counts `name` as before and, inside the 3-hour window, also `name-after-<id>`. `localStorage` rather than `sessionStorage` because printables open in a new tab; `sign.html` and `host-guide.html` read the same key inline (they don't load `main.js`). The last completed meditation gets the credit. Without storage (private mode, blocked) only the plain event is counted.
+
+**Read it as rates, not totals:** completion rate = `listen-complete-<id>` / `listen-<id>`; action rate = (`plan-created-after-<id>` + `plan-from-player-<id>` + shares + kit and prints after `<id>`) / `listen-<id>`. Caveats:
+1. **Position:** the recording shown first on the meditations page and home gets more listens. Rotate the order every few days, or allow for it when reading.
+2. **Length:** long recordings are completed less often. Compare recordings of similar length.
+3. **Small numbers:** with tens of listens, a few points of difference is noise. Wait for roughly 100 listens per recording before concluding.
+4. **Ad blockers** hide part of the audience; it affects all recordings alike, so the comparison holds.
+5. **Off-site listening** (a downloaded MP3 passed on in WhatsApp) is not measured.
+6. **Not the only criterion:** promote by completion rate and action rate together with the founder's judgment, so the measure doesn't reward pressure (design §5, voice). The ranking stays internal and is not shown to teachers or on the site.
+
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.23 | design-v1.1 + user request | 2026-10-07 | Site v1.1.23: actions are also counted as `<action>-after-<meditation id>` when a meditation was heard to the end on this device in the last 3 hours (`localStorage`, never sent), to tell which recordings move people to act; existing events unchanged. New section "Which recordings move people to act" with how to read it and its caveats. |
 | t2.1.22 | design-v1.1 + user decisions | 2026-10-07 | Site v1.1.22: meditations updated. New recordings (ElevenLabs, same voice; voice tracks made outside the repo and mixed here with `mix-meditation-audio.py`, which now mixes only the ids given): `clarity-in-the-noise` rewritten (≈4 min, 16 stanzas), `arrive-present` "להגיע נוֹכְחִים" (≈5 min, 19 stanzas) replacing `on-the-way-to-vote` (audio, JSON and site script removed; the design script stays as history), and `my-community` "הקהילה שלי" (≈4.4 min, 17 stanzas). Updated everywhere they are named: meditations page (cards, descriptions, script panels, "קול ממוחשב (AI)" tags), player list, plan page options and "before you go" link, plan.js minutes, election-day page ("מדיטציה לפני היציאה"), kit (election-day part), home card text, countdown caption. Old links to `#on-the-way-to-vote` scroll to and open `arrive-present` (anchor kept, alias in `player.js`). Sign: with a group link, a WhatsApp symbol and "סורקים ומצטרפים לקבוצת הוואטסאפ של המעגל" by the group QR. |
 | t2.1.21 | design-v1.1 + user request | 2026-10-07 | Site v1.1.21: home hero lede breaks onto a new line after "מאחורי הפרגוד." (`<br>`). |
 | t2.1.20 | design-v1.1 + user request | 2026-10-07 | Site v1.1.20: contact form topics (required radio chips: teacher wanting to record, circle question or story, incident report, removal request, other), each with a one-line hint; the email subject names the topic; `?topic=<key>` preselects one. For "מורה: להקליט מדיטציה" the reply field becomes required and its hint changes. Meditations page: a callout for teachers who want to record, linking to `about.html?topic=meditation#contact`. Tested with the API mocked (preselect, required reply, subject sent). |
