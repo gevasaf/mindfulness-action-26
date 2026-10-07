@@ -1,5 +1,5 @@
 /* Printables (sign, host guide): A4, also readable on screen. */
-@import url("../styles.css?v=1.1.5");
+@import url("../styles.css?v=1.1.6");
 body { background: #e9e4da; }
 .sheet { position: relative; width: 210mm; min-height: 297mm; margin: 24px auto; padding: 18mm 18mm 16mm; background: #fffdf9; color: #2b2925; box-shadow: 0 2px 18px rgb(0 0 0 / 12%); overflow: hidden; }
 .sheet-foot { position: absolute; bottom: 9mm; inset-inline: 18mm; display: flex; justify-content: space-between; font-size: 11px; color: #6b665d; border-top: 1px solid #e2dbcf; padding-top: 6px; }

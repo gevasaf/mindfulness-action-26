@@ -7,7 +7,7 @@
 <meta name="description" content="שלט להדפסה למעגל נשימה של חצי שעה לקראת הבחירות, עם קוד QR לאתר, ואם רוצים גם לקבוצת הוואטסאפ של המעגל.">
 <script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/print.css?v=1.1.5">
+<link rel="stylesheet" href="assets/print.css?v=1.1.6">
 <style>
   .sign { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0; }
   .sign .mark { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #6f8a72; background: #e6ece4; margin: 6mm 0 4mm; }
@@ -20,7 +20,9 @@
   .fill span { display: inline-block; min-width: 45mm; border-bottom: 2px solid #2b2925; margin-inline-start: 3mm; }
   .qr-wrap { display: flex; align-items: center; gap: 8mm; margin: 0 0 10mm; text-align: start; }
   .qr svg { width: 42mm; height: 42mm; display: block; }
-  .qr-wrap p { font-size: 18px; max-width: 70mm; margin: 0; }
+  .qr-wrap p { font-size: 18px; max-width: 95mm; margin: 0; }
+  /* The address stays on one line, left to right: wrapped after its hyphen inside Hebrew text it read as "mindfulnessaction-26". */
+  .qr-url { display: inline-block; font-weight: 700; font-size: 15px; white-space: nowrap; direction: ltr; }
   .qrs { display: flex; align-items: center; justify-content: center; gap: 12mm; margin: 0 0 10mm; }
   .qrs[hidden], .qr-wrap[hidden] { display: none; }
   .qr-group { display: flex; align-items: center; gap: 6mm; text-align: start; }
@@ -58,7 +60,7 @@
   <div class="fill"><div>מתי:<span></span></div><div>איפה:<span></span></div></div>
   <div class="qr-wrap" id="qr-site-only">
     <div class="qr" id="qr" role="img" aria-label="קוד QR לאתר"></div>
-    <p>מדיטציות קצרות ותוכנית הצבעה אישית:<br><b class="qr-url"></b></p>
+    <p>מדיטציות קצרות ותוכנית הצבעה אישית:<br><bdi class="qr-url" dir="ltr"></bdi></p>
   </div>
   <div class="qrs" id="qr-both" hidden>
     <div class="qr-group">
@@ -71,7 +73,7 @@
     </div>
   </div>
   <p class="neutral">אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
-  <div class="sheet-foot"><span>גרסה v1.1.5</span><span>נוֹכְחִים · מעגל עצמאי, באחריות מי שפתח/ה אותו</span></div>
+  <div class="sheet-foot"><span>גרסה v1.1.6</span><span>נוֹכְחִים · מעגל עצמאי, באחריות מי שפתח/ה אותו</span></div>
 </main>
 <script src="assets/js/vendor/qrcode.js"></script>
 <script>
