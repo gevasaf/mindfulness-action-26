@@ -18,7 +18,7 @@
     } catch (e) {}
   };
 
-  // ---------- breathing: one clock, one circle on screen (v1.1.14, v1.1.14) ----------
+  // ---------- breathing: one clock, one circle on screen (v1.1.15, v1.1.15) ----------
   // Every breathing circle reads the same clock (Date.now() modulo 10 s), so they never drift apart.
   // Each circle has a weight w (0 = resting, 1 = breathing) that eases over 1 s whenever it is turned
   // on or off, so nothing jumps: the circle moves between its resting state (half-way between its

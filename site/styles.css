@@ -78,13 +78,13 @@ img { max-width: 100%; height: auto; }
 .skip:focus { top: 8px; }
 
 /* Header & nav */
-/* The header stays at the top while scrolling (v1.1.14); anchors land below it. */
+/* The header stays at the top while scrolling (v1.1.15); anchors land below it. */
 .site-header { position: sticky; top: 0; z-index: 50; border-bottom: 1px solid var(--line); background: var(--paper); }
 html { scroll-padding-top: 72px; }
 .site-header .inner { max-width: 1080px; margin: 0 auto; padding: 12px 16px; display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
 .brand { font-family: var(--brand-font); font-weight: 700; font-size: 1.5rem; color: var(--ink); text-decoration: none; display: inline-flex; align-items: center; gap: 10px; }
 /* Logo circle: the fill is ::after and a white echo is ::before (painted first, so it stays behind).
-   Breathing is driven by main.js from one shared clock (v1.1.14): it sets --ms (circle scale),
+   Breathing is driven by main.js from one shared clock (v1.1.15): it sets --ms (circle scale),
    --es / --eo (echo scale / opacity) on .brand. The defaults are the resting state. */
 .brand-mark { position: relative; width: 26px; height: 26px; transform: scale(var(--ms, 1.175)); }
 .brand-mark::before, .brand-mark::after { content: ""; position: absolute; inset: 0; border-radius: 50%; }
@@ -183,7 +183,7 @@ main { display: block; }
 
 /* Breathing circle (design-v0 §7: 5s in, 5s out) */
 .breath-wrap { display: grid; place-items: center; margin: 8px auto 24px; width: 180px; height: 180px; position: relative; }
-/* Driven by main.js from the shared breathing clock (v1.1.14): --bs (circle scale), --es / --eo (echo),
+/* Driven by main.js from the shared breathing clock (v1.1.15): --bs (circle scale), --es / --eo (echo),
    --la / --lb (the two labels' opacity), set on .breath-wrap. The defaults are the resting state. */
 .breath { width: 120px; height: 120px; border-radius: 50%; border: 2px solid var(--sage); background: color-mix(in srgb, var(--sage-soft) 80%, transparent); transform: scale(var(--bs, 1.01)); }
 /* White echo behind the circle: grows past it on the in-breath, fading from half to fully transparent. */
@@ -392,7 +392,7 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
 .hashtag { white-space: nowrap; }
 
-/* Kit parts (v1.1.14): six foldable parts; closed, their titles read as the table of contents */
+/* Kit parts (v1.1.15): six foldable parts; closed, their titles read as the table of contents */
 .parts-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 36px; }
 .parts-head h2 { margin: 0; }
 .btn-link { background: none; border: 0; padding: 8px 4px; min-height: 44px; font: inherit; color: var(--sage-ink); text-decoration: underline; cursor: pointer; }
@@ -468,7 +468,7 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 }
 .share-page { margin-top: 28px; }
 
-/* Contact form (About, v1.1.14): Web3Forms, no address on the page */
+/* Contact form (About, v1.1.15): Web3Forms, no address on the page */
 .contact-form { margin-top: 16px; max-width: 560px; }
 .field textarea { resize: vertical; line-height: 1.6; }
 .contact-form .hp { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; opacity: 0; }

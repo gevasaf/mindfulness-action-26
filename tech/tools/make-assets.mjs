@@ -4,6 +4,7 @@
 //   site/host-kit.html + site/sign.html -> site/assets/kit.pdf            (the circle kit with its table of contents,
 //                                                                          page numbers, and the sign as an appendix)
 //   tech/tools/group-image.html       -> site/assets/group-image.png        (suggested WhatsApp group photo, 640×640)
+//   tech/tools/share-image.html       -> site/assets/share.jpg              (link preview image, Open Graph, 1200×630)
 //
 // Run from the repo root after changing any source:  node tech/tools/make-assets.mjs
 // Needs the `playwright` npm package and a Chromium it can find (PLAYWRIGHT_BROWSERS_PATH), Python with Pillow
@@ -96,6 +97,12 @@ await page.screenshot({ path: "site/assets/group-image.png" });
 // Shrink: the image is flat colours, so a 32-colour palette PNG looks the same at a fraction of the size.
 execFileSync("python3", ["-c", "import sys;from PIL import Image;im=Image.open(sys.argv[1]).convert('RGB').quantize(32);im.save(sys.argv[1],optimize=True)", "site/assets/group-image.png"]);
 console.log("wrote site/assets/group-image.png");
+
+// 4. Link preview image (Open Graph), JPEG because of the photo behind it
+await open("tech/tools/share-image.html");
+await page.setViewportSize({ width: 1200, height: 630 });
+await page.screenshot({ path: "site/assets/share.jpg", type: "jpeg", quality: 82 });
+console.log("wrote site/assets/share.jpg");
 
 await browser.close();
 rmSync(tmp, { recursive: true, force: true });
