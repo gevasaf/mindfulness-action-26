@@ -13,6 +13,7 @@
   .top { display: flex; align-items: center; gap: 10px; margin-bottom: 6mm; }
   .mark { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #6f8a72; background: #e6ece4; }
   .brand { font-family: var(--brand-font); font-weight: 700; color: #4f6852; font-size: 20px; }
+  .tagline { font-family: var(--brand-font); font-weight: 700; color: #625d55; font-size: 15px; padding-inline-start: 10px; border-inline-start: 1px solid #c9c1b3; }
   h1 { font-family: var(--brand-font); font-size: 34px; line-height: 1.15; margin: 0 0 2mm; color: #2b2925; }
   .sub { font-size: 18px; color: #4f6852; font-weight: 700; margin: 0 0 6mm; }
   h2 { font-family: var(--brand-font); font-size: 18px; color: #4f6852; margin: 5mm 0 1.5mm; break-after: avoid; }
@@ -22,6 +23,7 @@
   .note { background: #e6ece4; border-inline-start: 4px solid #6f8a72; border-radius: 8px; padding: 3mm 5mm; margin: 3mm 0; }
   .warm { background: #f4e4dc; border-color: #b9684a; }
   .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 8mm; }
+  .today { color: #4f6852; font-weight: 600; }
   .foot { margin-top: 8mm; padding-top: 3mm; border-top: 1px solid #e2dbcf; font-size: 12.5px; color: #625d55; }
   @media print {
     @page { size: A4; margin: 14mm 0 14mm; }
@@ -35,18 +37,20 @@
 </head>
 <body>
 <main class="doc">
-  <div class="top"><span class="mark" aria-hidden="true"></span><span class="brand">נוֹכְחִים</span></div>
+  <div class="top"><span class="mark" aria-hidden="true"></span><span class="brand">נוֹכְחִים</span><span class="tagline">לפני שבוחרים, נושמים</span></div>
   <h1>להביא את הקול שלך</h1>
   <p class="sub">קול קורא למורים ולמורות למיינדפולנס ולמדיטציה</p>
 
+  <p class="today">הקול הקורא הזה יוצא ב-7 באוקטובר 2026, שלוש שנים אחרי. רבים מאיתנו עדיין נושאים את היום ההוא ואת כל מה שבא אחריו. אנחנו עדיין מחלימים, כל אחד ואחת בקצב שלו, וגם יחד.</p>
   <p>ב-27 באוקטובר יש רגע אחד, שקט, מאחורי הפרגוד. "נוֹכְחִים" מזמין כל מי שגר כאן להגיע אליו נוכחים: לעצור, לעכל את השנים האחרונות, להתחבר לעצמם ולערכים שלהם, ולבחור מתוך בהירות.</p>
   <p>אנחנו מחפשים מספר קטן של מדיטציות מעולות, בקולות של מורים ומורות. בקול שלך, מהניסיון שלך. <b>כל המורים והמורות תורמים בהתנדבות</b>, וההקלטות פתוחות לכולם, בחינם.</p>
 
+  <h2>מה אנחנו מחפשים</h2>
+  <p class="note">מדיטציות לרגע הזה בדיוק: השבועות שלפני הבחירות. תרגול שעוזר לאנשים לעצור, לעכל את מה שעבר עליהם, להתחבר למה שחשוב להם באמת, ולהגיע להחלטה בנאמנות לעצמם. לא אומרים בעד מי, ולא מכוונים לשום תשובה. רק עוזרים לכל אחד ואחת לשמוע את הקול שלהם מבעד לרעש.</p>
   <div class="cols">
     <section>
-      <h2>מה אנחנו מחפשים</h2>
+      <h2>איך</h2>
       <ul>
-        <li><b>תרגול שעוזר לעצור.</b> לנשום, להרגיש, לעכל, להתחבר למה שחשוב.</li>
         <li><b>אישי.</b> לא תסריט כללי. מה שהיית אומר/ת לחבר/ה קרוב/ה בשבועות האלה.</li>
         <li><b>קצר.</b> 3 עד 15 דקות.</li>
         <li><b>אפשר יותר מאחת.</b> נשמח למגוון: לבוקר, ללילה, לדרך, לרגעי הצפה.</li>
@@ -106,7 +110,7 @@
       <li><b>שם התרגול,</b> ותיאור קצר: עד שני משפטים, למי ולמתי הוא מתאים.</li>
       <li><b>אם רוצים מוזיקת רקע,</b> לכתוב "להוסיף מוזיקה".</li>
     </ul>
-    <p class="note warm">שולחים <b>בתשובה למי ששלח/ה לך את ההודעה הזו</b>. רצוי עד 20.10, כדי שיהיה זמן להפיץ לפני הבחירות. מדיטציה ל"היום שאחרי": עד 26.10.</p>
+    <p class="note warm">שולחים <b>בתשובה למי ששלח/ה לך את ההודעה הזו</b>. <br><b>מתי:</b> אם מתאים לך, כבר היום. הבחירות קרובות, וכל יום שמדיטציה נמצאת באתר היא מגיעה לעוד אנשים. ובלי לחץ: הקלטה רגועה מחר עדיפה על הקלטה ממהרת היום. מדיטציה ל"היום שאחרי": עד 26.10.</p>
   </section>
 
   <section>

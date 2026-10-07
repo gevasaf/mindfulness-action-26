@@ -398,6 +398,16 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
 .hashtag { white-space: nowrap; }
 
+/* Brand line with the tagline, printed at the top of the kit (the header is hidden there in print) */
+.print-brand { display: none; }
+@media print {
+  body:has(.print-brand) .site-header { display: none; }
+  .print-brand { display: flex; align-items: center; gap: 10px; margin: 0 0 6mm; font-family: var(--brand-font); color: var(--sage-ink); }
+  .print-brand b { font-size: 20px; }
+  .print-brand span:last-child { font-weight: 700; font-size: 15px; color: var(--muted); padding-inline-start: 10px; border-inline-start: 1px solid var(--line); }
+  .print-brand .pb-mark { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--sage); background: var(--sage-soft); display: inline-block; }
+}
+
 /* Print (and the kit PDF, tech/tools/make-assets.mjs): content only, light colours, A4.
    Site pages only: the printables (sign, guide) have their own sheet layout in print.css. */
 @media print {
@@ -409,6 +419,7 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
   .site-header .inner { padding: 0 0 4mm; }
   .page, .section { padding: 0 !important; }
   .page .inner, .section .inner, .site-header .inner, .site-footer .inner { max-width: none; padding: 0; }
+  .prose p, .prose li { max-width: none; }
   .prose h1 { font-size: 26px; }
   .prose h2 { font-size: 17px; margin-top: 7mm !important; break-after: avoid; }
   .steps > li, .say-box, .callout, .prose li, .support li { break-inside: avoid; }
