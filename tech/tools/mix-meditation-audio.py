@@ -1,7 +1,9 @@
 """Mix meditation voice tracks with a quiet music bed and write stanza timings.
 
-Usage (from the repo root):  python3 tech/tools/mix-meditation-audio.py <voice-dir>
+Usage (from the repo root):  python3 tech/tools/mix-meditation-audio.py <voice-dir> [<id> ...]
 <voice-dir> holds <id>.voice.mp3 files (any prefix before the id is fine).
+With ids, only those meditations are mixed; without, every <id>.voice.mp3 in <voice-dir>
+that has a script in site/content/meditations/<id>.md.
 Writes site/content/meditations/audio/<id>.mp3 and <id>.json. Needs ffmpeg.
 Stanza timings come from silence detection: gaps of 1.5 s or more must match
 the script's stanza breaks (blank lines / [שקט] markers), or the script stops."""
@@ -24,7 +26,10 @@ def stanzas(name):
     if cur: out.append("\n".join(cur))
     return out
 
-for name in ["behind-the-curtain", "clarity-in-the-noise", "on-the-way-to-vote"]:
+names = sys.argv[2:] or sorted({m.group(1) for f in U.glob("*.voice.mp3")
+                                 for m in [re.search(r"([a-z0-9-]+)\.voice\.mp3$", f.name)]
+                                 if m and pathlib.Path(f"site/content/meditations/{m.group(1)}.md").exists()})
+for name in names:
     src = next(U.glob(f"*{name}.voice.mp3"))
     dur = float(subprocess.check_output(["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "csv=p=0", src]))
     log = subprocess.run(["ffmpeg", "-v", "info", "-i", src, "-af", "silencedetect=n=-45dB:d=1.5", "-f", "null", "-"], capture_output=True, text=True).stderr
