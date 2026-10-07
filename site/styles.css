@@ -398,7 +398,7 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
 .hashtag { white-space: nowrap; }
 
-/* Kit parts (v1.1.6): six foldable parts; closed, their titles read as the table of contents */
+/* Kit parts (v1.1.7): six foldable parts; closed, their titles read as the table of contents */
 .parts-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 36px; }
 .parts-head h2 { margin: 0; }
 .btn-link { background: none; border: 0; padding: 8px 4px; min-height: 44px; font: inherit; color: var(--sage-ink); text-decoration: underline; cursor: pointer; }
