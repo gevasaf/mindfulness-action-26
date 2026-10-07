@@ -3,7 +3,7 @@
 //   - in-place navigation: site links swap <main> instead of reloading, so the
 //     meditation player (player.js, outside <main>) keeps playing across pages.
 //     Without JS, or if a fetch fails, links are ordinary page loads;
-//   - logo breath on hover, mobile menu, countdown, WhatsApp share links, hero video, motion pause.
+//   - one breathing circle on screen (logo or hero), mobile menu, countdown, WhatsApp share links, hero video, motion pause.
 (function () {
   document.documentElement.classList.add("js");
 
@@ -18,15 +18,44 @@
     } catch (e) {}
   };
 
-  // ---------- logo: one full breath on hover, focus or touch (header is static, bind once) ----------
-  var mark = document.querySelector(".brand-mark");
+  // ---------- one breathing circle on screen (v1.1.13) ----------
+  // The logo breathes in a loop only while the home page's breathing circle is out of view, so
+  // there is always exactly one breath on screen; none when motion is stopped or reduced.
+  // Every breath follows one clock (Date.now() modulo 10 s), so handing over looks continuous.
   var brand = document.querySelector(".brand");
-  if (mark && brand) {
-    var breathe = function () { brand.classList.add("breathing"); };
-    brand.addEventListener("mouseenter", breathe);
-    brand.addEventListener("focus", breathe);
-    brand.addEventListener("touchstart", breathe, { passive: true }); // phones have no hover
-    mark.addEventListener("animationend", function (e) { if (e.target === mark) brand.classList.remove("breathing"); });
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var motionStopped = false;
+  try { motionStopped = sessionStorage.getItem("motion-stopped") === "1"; } catch (e) {}
+  var heroBreathVisible = false, heroObserver = null;
+  function phase() { return -(Date.now() % 10000) + "ms"; }
+  function updateLogo() {
+    if (!brand) return;
+    var loop = !reduceMotion && !motionStopped && !heroBreathVisible;
+    if (loop === brand.classList.contains("looping")) return;
+    if (loop) brand.style.setProperty("--logo-phase", phase());
+    brand.classList.toggle("looping", loop);
+  }
+  window.setMotionStopped = function (on) {
+    motionStopped = on;
+    try { sessionStorage.setItem("motion-stopped", on ? "1" : "0"); } catch (e) {}
+    updateLogo();
+  };
+  window.isMotionStopped = function () { return motionStopped; };
+  function watchHeroBreath() {
+    if (heroObserver) { heroObserver.disconnect(); heroObserver = null; }
+    var wrap = document.querySelector(".breath-wrap");
+    heroBreathVisible = !!wrap;
+    if (wrap) {
+      document.documentElement.style.setProperty("--breath-phase", phase());
+      if ("IntersectionObserver" in window) {
+        heroObserver = new IntersectionObserver(function (entries) {
+          heroBreathVisible = entries[entries.length - 1].isIntersecting;
+          updateLogo();
+        });
+        heroObserver.observe(wrap);
+      }
+    }
+    updateLogo();
   }
 
   // ---------- mobile menu (header is static, bind once) ----------
@@ -240,7 +269,8 @@
     var conn = navigator.connection || {};
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     var slow = conn.saveData || /(^|-)2g$/.test(conn.effectiveType || "");
-    if (video && !reduce && !slow) {
+    var startVideo = function () {
+      if (!video || reduce || slow || video.currentSrc) return;
       [["webm", "video/webm"], ["mp4", "video/mp4"]].forEach(function (s) {
         var src = document.createElement("source");
         src.src = video.getAttribute("data-" + s[0]);
@@ -251,19 +281,29 @@
       video.load();
       var p = video.play();
       if (p && p.catch) p.catch(function () {});
-    }
-    // Pause / resume the hero's slow motion (design-v0 §7: visible stop button)
+    };
+    if (!window.isMotionStopped()) startVideo();
+    // Pause / resume the hero's slow motion (design-v0 §7: visible stop button).
+    // The choice holds for the visit (sessionStorage) and also stops the logo's breath.
     var motionBtn = document.querySelector(".motion-toggle");
     var hero = document.querySelector(".hero");
     if (motionBtn && hero) {
-      motionBtn.addEventListener("click", function () {
-        var paused = hero.classList.toggle("paused");
-        if (video && video.currentSrc) { if (paused) video.pause(); else video.play(); }
+      var setPaused = function (paused) {
+        hero.classList.toggle("paused", paused);
+        if (video && video.currentSrc) { if (paused) video.pause(); else { var q = video.play(); if (q && q.catch) q.catch(function () {}); } }
+        else if (!paused) startVideo();
         var label = paused ? "להפעיל תנועה" : "לעצור תנועה";
         motionBtn.setAttribute("aria-label", label);
         motionBtn.title = label;
+      };
+      if (window.isMotionStopped()) setPaused(true);
+      motionBtn.addEventListener("click", function () {
+        var paused = !hero.classList.contains("paused");
+        setPaused(paused);
+        window.setMotionStopped(paused);
       });
     }
+    watchHeroBreath();
   });
 
   // Contact form (About): sent to Web3Forms, which emails the founder. Nothing is stored on the site.
