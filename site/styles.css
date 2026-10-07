@@ -400,6 +400,11 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .memorial .flame { fill: #e2a24f; }
 .memorial .wick { fill: var(--ink); }
 .memorial .body { fill: #fffdf9; stroke: var(--line); }
+.memorial { position: relative; padding-inline-end: 52px; padding-inline-start: 52px; }
+.memorial-close { position: absolute; inset-inline-end: 6px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 0; border-radius: 50%; color: var(--muted); cursor: pointer; }
+.memorial-close:hover { color: var(--ink); background: var(--sage-soft); }
+.memorial-close:focus-visible { outline: 3px solid var(--sage); outline-offset: 1px; }
+.memorial-close svg { width: 18px; height: 18px; fill: currentColor; }
 @media print { .memorial { display: none; } }
 
 /* Kit parts (v1.1.4): six foldable parts; closed, their titles read as the table of contents */
