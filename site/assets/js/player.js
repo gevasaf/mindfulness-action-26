@@ -5,7 +5,7 @@
 //   - a full-screen overlay (expand icon) with a slow breathing gradient and
 //     captions that fade in and out with each stanza.
 // Any element with data-play="<id>" starts / toggles that meditation, and so does a link to
-// meditations.html#<id> (v1.1.9).
+// meditations.html#<id> (v1.1.10).
 // Recordings: ElevenLabs voice + a quiet music bed, mixed in the repo; stanza
 // timings from site/content/meditations/audio/<id>.json. See tech/design-doc.md.
 (function () {

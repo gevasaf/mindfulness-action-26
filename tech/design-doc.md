@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.9 · **Site version:** v1.1.9 (shown in every page footer)
+**Tech doc version:** t2.1.10 · **Site version:** v1.1.10 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -146,13 +146,14 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 - **A1** (questions-for-design #1, answered): the draft banner wording and public deploy follow the user's answer, not the release's "internal, do not publish" text.
 - **A7** (design-v1, question #10, superseded by design-v1.1: circles are never opened on the site): the release's host kit has a step "לפתוח את המעגל באתר" (map, phone verification, delete), which is v2. In v1 the kit shows three steps (place, time, invite): "סימון במפה" for a private home reads "לפרסם נקודה כללית", and the invitation template ends "לתיאום: לכתוב לי בוואטסאפ" instead of a link to the circle's page. The rest of the kit is verbatim. When v2 is built the fourth step comes back.
 - **A9** (design-v2, question #16): where design-v2 contradicts or omits a later user decision (remarks 23–29, table "Open against design-v2"), the build follows the user's decision and the live site.
-- **A8** (design-v1): the release says removal requests reach the founder "through the contact details on the About page" but gives no contact details beyond the GitHub profile, so the About page offers contact through the GitHub profile. Waiting for the user to choose another channel if wanted.
+- **A8** (design-v1, resolved 2026-10-07: contact form, F14): the release says removal requests reach the founder "through the contact details on the About page" but gives no contact details beyond the GitHub profile, so the About page offers contact through the GitHub profile. Waiting for the user to choose another channel if wanted.
 - **A2:** the polling-place link points to the Central Elections Committee home page; the exact lookup URL for the 26th Knesset could not be verified from the build environment. Check before promoting.
 - **A4** (question #3): support lines are ERAN 1201, NATAL 1-800-363-363, SAHAR (online chat), plus 101/100 for emergencies.
 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.10 | design-v1.1 + user decision | 2026-10-07 | Site v1.1.10: contact form on the About page (`#contact`, F14 Web3Forms): message (required), name and a way to reply (optional), hidden access key, subject and honeypot; `main.js` sends it with `fetch` and shows the result inline (`role=status`), and counts `contact-sent`; without JS the form posts directly. Replaces "contact through the GitHub profile" (A8). The kit's incident line links to the form. Tested with the API mocked (success and failure). |
 | t2.1.9 | design-v1.1 + user request | 2026-10-07 | Site v1.1.9: a link to `meditations.html#<id>` (shared links included) also starts that meditation (`playFromHash` in `player.js`, on load, in-place navigation and `hashchange`; skipped when it is already the current one). When the browser blocks autoplay, the bar opens with the meditation loaded and paused, one tap from playing. Tested with both autoplay policies. |
 | t2.1.8 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.8: the kit's "שיתוף העמוד" button sits under all six parts, not next to "להעתיק את הפוסט". |
 | t2.1.7 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.7: the sign's "מתי" and "איפה" are two full-width lines (160 mm, 14 mm high, 26 px labels) with room to write by hand; still one A4 page with or without the group QR. |

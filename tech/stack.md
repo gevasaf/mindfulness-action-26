@@ -58,11 +58,13 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 | **F10. Page of social posts by hashtag** | Automatic collection needs a server and platform API access (Instagram: business account, app review, server-side token; X: paid API; TikTok and Facebook: no public hashtag search). Embeds load the platforms' tracking scripts. Manual curation would stay static. | **Dropped** (user, 2026-10-07): technically problematic, and unclear and unattractive as a page. |
 | **F11. Link that creates a WhatsApp group** for a circle | Not possible: WhatsApp links can open a chat or share text, not create a group (group creation exists only in the business API). | Kit gives steps plus copy buttons and a group image. |
 | **F12. Circle group QR on the sign** | Generated in the browser with the existing self-hosted QR library; the link is never stored or sent. | Built (fits the stack). |
+| **F14. Contact form** (no phone or email on the site) | (a) **Web3Forms**: an HTML form on the About page posts to their API, which emails the founder; the address stays hidden (only a public access key is in the page); free up to 250 messages/month; honeypot field against spam. (b) Google Forms link: no code, but visitors leave the site for Google. (c) Tally: similar to (b). | **(a) Web3Forms** (user, 2026-10-07). The page says the message goes only to the founder via Web3Forms and is not stored on the site. |
 | **F13. Measurement without registration** | Existing GoatCounter: anonymous events for kit PDF, prints and copies; `utm_source=sign` on the sign's QR. Posts with the hashtag counted by hand, no data about who posts. | Built (within F3). |
 
 ## Stack change log
 | Date | Change | Reason | Approved by user |
 |---|---|---|---|
+| 2026-10-07 | Web3Forms contact form on the About page (F14) | contact without publishing a phone or email | yes |
 | 2026-10-07 | `tech/tools/make-assets.mjs` (Playwright, Pillow) renders the kit PDF, the teachers' call PDF and the circle group image; GoatCounter also on the printables | design-v1.1 | within current stack |
 | 2026-10-07 | Server stack (F4–F9) shelved, never deployed | design-v2 dropped | yes |
 | 2026-10-06 | Supabase (DB, storage, phone OTP, RLS, edge functions), Twilio Verify SMS, Cloudflare Turnstile, GitHub Actions worker (ffmpeg mix, ElevenLabs Scribe, Claude Opus 5.5), self-hosted MapLibre + Protomaps tiles | design-v2 (F4–F9) | yes |

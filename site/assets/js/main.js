@@ -266,6 +266,36 @@
     }
   });
 
+  // Contact form (About): sent to Web3Forms, which emails the founder. Nothing is stored on the site.
+  // Without JS the form posts directly and Web3Forms shows its own confirmation page.
+  window.onPage(function contactForm() {
+    var form = document.querySelector("[data-contact-form]");
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = "1";
+    var status = form.querySelector(".form-status");
+    var btn = form.querySelector('button[type="submit"]');
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      if (!window.fetch) { form.submit(); return; }
+      status.className = "form-status"; status.textContent = "שולחים…";
+      btn.disabled = true;
+      fetch(form.action, { method: "POST", body: new FormData(form), headers: { Accept: "application/json" } })
+        .then(function (r) { return r.json().then(function (d) { return r.ok && d.success; }); })
+        .then(function (ok) {
+          if (!ok) throw new Error("send");
+          form.reset();
+          status.className = "form-status ok";
+          status.textContent = "תודה, ההודעה נשלחה.";
+          window.countEvent("contact-sent");
+        })
+        .catch(function () {
+          status.className = "form-status err";
+          status.textContent = "משהו לא הצליח. אפשר לנסות שוב בעוד רגע.";
+        })
+        .then(function () { btn.disabled = false; });
+    });
+  });
+
   // Print shows every folded part.
   window.addEventListener("beforeprint", function () {
     Array.prototype.forEach.call(document.querySelectorAll("details.part"), function (d) { d.open = true; });

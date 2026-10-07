@@ -342,11 +342,11 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .field { margin-bottom: 18px; border: 0; padding: 0; }
 .field > label, .field legend { display: block; font-weight: 600; margin-bottom: 6px; }
 .field .hint { display: block; font-weight: 400; color: var(--muted); font-size: .9rem; }
-.field input[type="text"], .field input[type="time"], .field select {
+.field input[type="text"], .field input[type="time"], .field select, .field textarea {
   width: 100%; min-height: 48px; font: inherit; color: var(--ink); background: var(--card);
   border: 1px solid var(--line); border-radius: 12px; padding: 8px 14px;
 }
-.field input:focus-visible, .field select:focus-visible { outline: 3px solid var(--sage); outline-offset: 1px; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 3px solid var(--sage); outline-offset: 1px; }
 .choices { display: flex; flex-wrap: wrap; gap: 8px; }
 .choices label { display: inline-flex; align-items: center; gap: 6px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; min-height: 44px; }
 .choices input { accent-color: var(--sage-ink); }
@@ -398,7 +398,7 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
 .hashtag { white-space: nowrap; }
 
-/* Kit parts (v1.1.9): six foldable parts; closed, their titles read as the table of contents */
+/* Kit parts (v1.1.10): six foldable parts; closed, their titles read as the table of contents */
 .parts-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 36px; }
 .parts-head h2 { margin: 0; }
 .btn-link { background: none; border: 0; padding: 8px 4px; min-height: 44px; font: inherit; color: var(--sage-ink); text-decoration: underline; cursor: pointer; }
@@ -473,3 +473,11 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
   .prose a, .support a, .site-footer a { color: inherit; text-decoration: none; }
 }
 .share-page { margin-top: 28px; }
+
+/* Contact form (About, v1.1.10): Web3Forms, no address on the page */
+.contact-form { margin-top: 16px; max-width: 560px; }
+.field textarea { resize: vertical; line-height: 1.6; }
+.contact-form .hp { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; opacity: 0; }
+.form-status { margin: 12px 0 0; font-weight: 600; }
+.form-status.ok { color: var(--sage-ink); }
+.form-status.err { color: var(--clay-ink); }
