@@ -21,10 +21,10 @@
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=1.1.19">
-<script src="assets/js/main.js?v=1.1.19" defer></script>
-<script src="assets/js/plan.js?v=1.1.19" defer></script>
-<script src="assets/js/player.js?v=1.1.19" defer></script>
+<link rel="stylesheet" href="styles.css?v=1.1.20">
+<script src="assets/js/main.js?v=1.1.20" defer></script>
+<script src="assets/js/plan.js?v=1.1.20" defer></script>
+<script src="assets/js/player.js?v=1.1.20" defer></script>
 <script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -99,12 +99,26 @@
     </ul>
 
     <h2 id="contact" style="margin-top:40px">יצירת קשר</h2>
-    <p>שאלה, בקשה, דיווח על אירוע חריג במעגל, או בקשה להסיר משהו מהאתר: אפשר לכתוב כאן. ההודעה נשלחת ליוזם בלבד ולא נשמרת באתר.</p>
+    <p>אפשר לכתוב כאן. ההודעה נשלחת ליוזם בלבד ולא נשמרת באתר.</p>
     <form class="contact-form" action="https://api.web3forms.com/submit" method="POST" data-contact-form>
       <input type="hidden" name="access_key" value="2cf10053-da04-41b5-a470-8bcc8319ad89">
       <input type="hidden" name="subject" value="פנייה מאתר נוֹכְחִים">
       <input type="hidden" name="from_name" value="אתר נוֹכְחִים">
       <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <fieldset class="field">
+        <legend>במה מדובר?</legend>
+        <div class="choices">
+          <label><input type="radio" name="topic" value="מורה: להקליט מדיטציה" data-topic="meditation" required> מורה: להקליט מדיטציה</label>
+          <label><input type="radio" name="topic" value="מעגל: שאלה או סיפור" data-topic="circle"> מעגל: שאלה או סיפור</label>
+          <label><input type="radio" name="topic" value="דיווח על אירוע חריג במעגל" data-topic="incident"> דיווח על אירוע חריג במעגל</label>
+          <label><input type="radio" name="topic" value="בקשה להסיר תוכן" data-topic="remove"> בקשה להסיר תוכן</label>
+          <label><input type="radio" name="topic" value="משהו אחר" data-topic="other"> משהו אחר</label>
+        </div>
+        <p class="topic-hint hint" data-for="meditation" hidden>למורים ולמורות למדיטציה ולמיינדפולנס שרוצים להקליט מדיטציה. כמה מילים על עצמך, ודרך לחזור אליך (חובה כאן). בתשובה יישלח אליך קובץ עם כל הפרטים: מה מחפשים, כללי אצבע, ואיך מקליטים טוב בטלפון.</p>
+        <p class="topic-hint hint" data-for="circle" hidden>שאלה לפני שפותחים מעגל, או סיפור קצר על מעגל שהתקיים. בלי שמות של משתתפים.</p>
+        <p class="topic-hint hint" data-for="incident" hidden>מה קרה, איפה ומתי, בלי שמות. במצב חירום: משטרה <a href="tel:100">100</a>, מד"א <a href="tel:101">101</a>.</p>
+        <p class="topic-hint hint" data-for="remove" hidden>מה להסיר (למשל מדיטציה או תמונה), ולמה, אם רוצים לספר.</p>
+      </fieldset>
       <div class="field">
         <label for="c-message">ההודעה</label>
         <textarea id="c-message" name="message" rows="5" required maxlength="3000"></textarea>
@@ -114,7 +128,7 @@
         <input id="c-name" type="text" name="name" autocomplete="name" maxlength="80">
       </div>
       <div class="field">
-        <label for="c-reply">איך לחזור אליך <span class="hint">(לא חובה: טלפון או מייל, רק אם רוצים תשובה)</span></label>
+        <label for="c-reply">איך לחזור אליך <span class="hint" data-reply-hint>(לא חובה: טלפון או מייל, רק אם רוצים תשובה)</span></label>
         <input id="c-reply" type="text" name="reply_to_contact" maxlength="120" dir="auto">
       </div>
       <p class="privacy-note">בבקשה לא לכתוב כאן מידע אישי רגיש או עמדות פוליטיות. ההודעה עוברת דרך השירות Web3Forms ומגיעה במייל ליוזם.</p>
@@ -141,7 +155,7 @@
   <div class="inner">
     <p><b>נוֹכְחִים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
     <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">גרסה <bdi dir="ltr">v1.1.19</bdi> · 7.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p class="version">גרסה <bdi dir="ltr">v1.1.20</bdi> · 7.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>

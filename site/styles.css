@@ -489,5 +489,7 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 .field textarea { resize: vertical; line-height: 1.6; }
 .contact-form .hp { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; opacity: 0; }
 .form-status { margin: 12px 0 0; font-weight: 600; }
+.topic-hint { margin: 10px 0 0; }
 .form-status.ok { color: var(--sage-ink); }
 .form-status.err { color: var(--clay-ink); }
+.suggest-med { margin-top: 32px; }

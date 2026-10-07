@@ -384,6 +384,28 @@
     form.dataset.bound = "1";
     var status = form.querySelector(".form-status");
     var btn = form.querySelector('button[type="submit"]');
+    // Topics: a short hint under the chosen one; the email subject names it;
+    // a link can preselect one (about.html?topic=meditation#contact).
+    var subject = form.querySelector('input[name="subject"]');
+    var baseSubject = subject.value;
+    var syncTopic = function () {
+      var chosen = form.querySelector('input[name="topic"]:checked');
+      Array.prototype.forEach.call(form.querySelectorAll(".topic-hint"), function (h) {
+        h.hidden = !chosen || h.getAttribute("data-for") !== chosen.getAttribute("data-topic");
+      });
+      subject.value = chosen ? baseSubject + ": " + chosen.value : baseSubject;
+      // A teacher who wants to record needs a way back, to receive the call (PDF).
+      var reply = form.querySelector('input[name="reply_to_contact"]');
+      var need = !!chosen && chosen.getAttribute("data-topic") === "meditation";
+      if (reply) reply.required = need;
+      var replyHint = form.querySelector("[data-reply-hint]");
+      if (replyHint) replyHint.textContent = need ? "(טלפון או מייל, כדי לשלוח אליך את הפרטים)" : "(לא חובה: טלפון או מייל, רק אם רוצים תשובה)";
+    };
+    var pre = (location.search.match(/[?&]topic=([a-z]+)/) || [])[1];
+    var preInput = pre && form.querySelector('input[data-topic="' + pre + '"]');
+    if (preInput) preInput.checked = true;
+    form.addEventListener("change", syncTopic);
+    syncTopic();
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!window.fetch) { form.submit(); return; }
@@ -394,6 +416,7 @@
         .then(function (ok) {
           if (!ok) throw new Error("send");
           form.reset();
+          syncTopic();
           status.className = "form-status ok";
           status.textContent = "תודה, ההודעה נשלחה.";
           window.countEvent("contact-sent");
