@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.1 · **Site version:** v1.1.1 (shown in every page footer)
+**Tech doc version:** t2.1.2 · **Site version:** v1.1.2 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.2 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.2: the kit's group section just says "זה לוקח שתי דקות" (the note that WhatsApp has no link that creates a group stays in the docs, not on the page). |
 | t2.1.1 | design-v1.1 + user remarks | 2026-10-07 | Site v1.1.1: the kit's print/PDF opens with the brand line "נוֹכְחִים · לפני שבוחרים, נושמים" (`.print-brand`, print only; the site header is hidden in print on that page); print text runs full width. Teachers' call: same tagline, an opening line on 7 October and healing, a clearer "what we're looking for" (this moment before the elections, deciding with integrity), and a gentle "today if it suits you" instead of a date. |
 | t2.1 | design-v1.1 | 2026-10-07 | Site v1.1.0, "community without a server": kit rewritten around decentralised circles (independence, invite channels, circle WhatsApp group with copy buttons and group image, photographer, hashtag `#לפני_שבוחרים_נושמים`), kit PDF, sign with optional group QR and `utm_source=sign`, guide mirrors and its A4 print layout fixed, home "לתרגל יחד" card, About section on volunteer teachers and independent circles, new anonymous events. `tech/tools/make-assets.mjs` renders the kit PDF, the teachers' call PDF and the group image. |
 | t2.0.15 | design-v1 | 2026-10-06 | v1 approved by the user at site v1.0.13. Next: design-v2 (server features, flagged in stack.md before building). |
