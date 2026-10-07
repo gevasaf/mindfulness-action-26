@@ -398,7 +398,7 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
 .hashtag { white-space: nowrap; }
 
-/* Kit parts (v1.1.10): six foldable parts; closed, their titles read as the table of contents */
+/* Kit parts (v1.1.11): six foldable parts; closed, their titles read as the table of contents */
 .parts-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 36px; }
 .parts-head h2 { margin: 0; }
 .btn-link { background: none; border: 0; padding: 8px 4px; min-height: 44px; font: inherit; color: var(--sage-ink); text-decoration: underline; cursor: pointer; }
@@ -474,7 +474,7 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 }
 .share-page { margin-top: 28px; }
 
-/* Contact form (About, v1.1.10): Web3Forms, no address on the page */
+/* Contact form (About, v1.1.11): Web3Forms, no address on the page */
 .contact-form { margin-top: 16px; max-width: 560px; }
 .field textarea { resize: vertical; line-height: 1.6; }
 .contact-form .hp { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; opacity: 0; }

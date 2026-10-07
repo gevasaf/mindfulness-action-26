@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.10 · **Site version:** v1.1.10 (shown in every page footer)
+**Tech doc version:** t2.1.11 · **Site version:** v1.1.11 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.11 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.11: About, "מי עומד מאחורי זה": the GitHub profile link after the founder's name becomes "יצירת קשר", linking to the contact form (`#contact`). |
 | t2.1.10 | design-v1.1 + user decision | 2026-10-07 | Site v1.1.10: contact form on the About page (`#contact`, F14 Web3Forms): message (required), name and a way to reply (optional), hidden access key, subject and honeypot; `main.js` sends it with `fetch` and shows the result inline (`role=status`), and counts `contact-sent`; without JS the form posts directly. Replaces "contact through the GitHub profile" (A8). The kit's incident line links to the form. Tested with the API mocked (success and failure). |
 | t2.1.9 | design-v1.1 + user request | 2026-10-07 | Site v1.1.9: a link to `meditations.html#<id>` (shared links included) also starts that meditation (`playFromHash` in `player.js`, on load, in-place navigation and `hashchange`; skipped when it is already the current one). When the browser blocks autoplay, the bar opens with the meditation loaded and paused, one tap from playing. Tested with both autoplay policies. |
 | t2.1.8 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.8: the kit's "שיתוף העמוד" button sits under all six parts, not next to "להעתיק את הפוסט". |
