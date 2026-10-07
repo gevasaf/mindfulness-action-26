@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.11 · **Site version:** v1.1.11 (shown in every page footer)
+**Tech doc version:** t2.1.12 · **Site version:** v1.1.12 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -45,7 +45,7 @@ Anchors on the home page: `#idea`, `#ways`; `#support` on every page.
 - **Type:** Frank Ruhl Libre (headings, 500/700) and Assistant (body, 400/600/700), **self-hosted** woff2 (Hebrew + Latin subsets, ~140 KB total, SIL OFL, licences in `site/assets/fonts/`). Chosen over Google Fonts so the site makes no third-party requests.
 - **Breathing circle:** CSS animation, 5 s in / 5 s out, with "שאיפה / נשיפה" labels. Since v1.0.2 a white echo circle (`.breath-echo`) sits behind it: on the in-breath it grows past the circle (scale .72 → 1.75) while fading from 50% opacity to 0, then waits through the out-breath. Paused by the stop-motion button, hidden under reduced motion.
 - **Logo breath (v1.0.2):** hovering, focusing or touching (phones, v1.0.5) the logo runs one breath of the header circle (10 s, scale 1 → 1.35 → 1) with the same white echo (scale 1 → 1.5, fading 50% → 0). `main.js` adds `.breathing` to `.brand` and removes it on `animationend`, so the loop always completes and can run again. The circle's fill is `::after` and the echo `::before`, so the echo stays behind and centred. Off under reduced motion.
-- **Hero video strip:** Pexels clip "Golden wheat field swaying in the breeze" by †reny aleksa (credited in the hero). Colour muted toward sand/sage (the source is saturated yellow-orange, which §7 avoids). The clip doesn't loop, so it is pre-rendered as a ping-pong (forward, then reversed) whose speed eases to zero at each turn over 1.8 s: 30 s loop, 960×540, WebM VP9 + MP4 H.264, ~2 MB each, in `site/assets/video/`. A poster still shows first; the video loads only without reduced motion, data saver or 2G. The motion button (wavy-lines icon, slashed when paused, v1.0.8) pauses it. The gradient stays underneath as a fallback.
+- **Hero video strip:** Pexels clip "Golden wheat field swaying in the breeze" by †reny aleksa (credited on the About page, "תודות"; since v1.1.12 no longer in the hero). Colour muted toward sand/sage (the source is saturated yellow-orange, which §7 avoids). The clip doesn't loop, so it is pre-rendered as a ping-pong (forward, then reversed) whose speed eases to zero at each turn over 1.8 s: 30 s loop, 960×540, WebM VP9 + MP4 H.264, ~2 MB each, in `site/assets/video/`. A poster still shows first; the video loads only without reduced motion, data saver or 2G. The motion button (wavy-lines icon, slashed when paused, v1.0.8) pauses it. The gradient stays underneath as a fallback.
 - **Labels:** only `.tag-tts` "קול ממוחשב (AI)" remains (on every computer-voiced recording, and in the player). The "בקרוב" / "דוגמה" tags and the draft banner were removed in site v1.0.
 
 ## Content
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.12 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.12: the video credit is only in About's "תודות", no longer on the home page hero. |
 | t2.1.11 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.11: About, "מי עומד מאחורי זה": the GitHub profile link after the founder's name becomes "יצירת קשר", linking to the contact form (`#contact`). |
 | t2.1.10 | design-v1.1 + user decision | 2026-10-07 | Site v1.1.10: contact form on the About page (`#contact`, F14 Web3Forms): message (required), name and a way to reply (optional), hidden access key, subject and honeypot; `main.js` sends it with `fetch` and shows the result inline (`role=status`), and counts `contact-sent`; without JS the form posts directly. Replaces "contact through the GitHub profile" (A8). The kit's incident line links to the form. Tested with the API mocked (success and failure). |
 | t2.1.9 | design-v1.1 + user request | 2026-10-07 | Site v1.1.9: a link to `meditations.html#<id>` (shared links included) also starts that meditation (`playFromHash` in `player.js`, on load, in-place navigation and `hashchange`; skipped when it is already the current one). When the browser blocks autoplay, the bar opens with the meditation loaded and paused, one tap from playing. Tested with both autoplay policies. |

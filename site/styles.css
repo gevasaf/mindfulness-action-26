@@ -165,8 +165,6 @@ main { display: block; }
 /* paper-toned layer over the video so text stays readable (design-v0 §7) */
 .hero::after { content: ""; position: absolute; inset: 0; z-index: -1; background:
   radial-gradient(60% 75% at 50% 48%, color-mix(in srgb, var(--paper) 93%, transparent) 0%, color-mix(in srgb, var(--paper) 86%, transparent) 55%, color-mix(in srgb, var(--paper) 70%, transparent) 100%); }
-.hero-credit { position: absolute; bottom: 14px; inset-inline-start: 16px; margin: 0; font-size: .78rem; color: var(--muted); }
-.hero-credit a { color: inherit; }
 @keyframes drift { from { transform: translate3d(-3%, -2%, 0) scale(1); } to { transform: translate3d(3%, 2%, 0) scale(1.08); } }
 .hero .inner { max-width: 720px; }
 .hero h1 { margin-bottom: 12px; }
@@ -398,7 +396,7 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
 .hashtag { white-space: nowrap; }
 
-/* Kit parts (v1.1.11): six foldable parts; closed, their titles read as the table of contents */
+/* Kit parts (v1.1.12): six foldable parts; closed, their titles read as the table of contents */
 .parts-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 36px; }
 .parts-head h2 { margin: 0; }
 .btn-link { background: none; border: 0; padding: 8px 4px; min-height: 44px; font: inherit; color: var(--sage-ink); text-decoration: underline; cursor: pointer; }
@@ -474,7 +472,7 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 }
 .share-page { margin-top: 28px; }
 
-/* Contact form (About, v1.1.11): Web3Forms, no address on the page */
+/* Contact form (About, v1.1.12): Web3Forms, no address on the page */
 .contact-form { margin-top: 16px; max-width: 560px; }
 .field textarea { resize: vertical; line-height: 1.6; }
 .contact-form .hp { position: absolute; inset-inline-start: -9999px; width: 1px; height: 1px; opacity: 0; }
