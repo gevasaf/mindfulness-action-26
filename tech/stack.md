@@ -1,6 +1,6 @@
 # Tech stack
 
-## Current stack (initial, iteration 0)
+## Current stack
 
 | Layer | Choice | Why |
 |---|---|---|
@@ -38,6 +38,8 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 
 ## Flagged features (pending user decision)
 
+> F4–F9 were approved for design-v2, but that direction was **dropped on 2026-10-07**. None of it is on `main`; the built code is on the `archive/v2` branch. A new design that needs a server must be flagged again.
+
 | Design version | Feature | Options considered | Recommendation | User decision |
 |---|---|---|---|---|
 | design-v0 | **F1. Hebrew TTS audio files** (download/share as a WhatsApp file, same voice on every device) | (a) Keep browser TTS (built): free, no service, but voice quality varies by device and some devices have no Hebrew voice (then the words show on screen). (b) Pre-render MP3s with a cloud TTS (Google, Azure, ElevenLabs): consistent voice and downloadable files, but needs an account, a licence check for publishing synthetic audio, and maybe cost. (c) Skip to human recordings for v1, as the design plans. | (a) for v0, then (c). Only take (b) if the team needs shareable files before teachers record. | **(b) built** (2026-10-06): ElevenLabs free tier, attributed ("קול ממוחשב זמני (ElevenLabs)" + About page). Voice tracks generated once outside the repo with a one-time key (since revoked), mixed here with a generated music bed. The browser-TTS fallback was removed in site v0.2. |
@@ -53,6 +55,7 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 ## Stack change log
 | Date | Change | Reason | Approved by user |
 |---|---|---|---|
+| 2026-10-07 | Server stack (F4–F9) shelved, never deployed | design-v2 dropped | yes |
 | 2026-10-06 | Supabase (DB, storage, phone OTP, RLS, edge functions), Twilio Verify SMS, Cloudflare Turnstile, GitHub Actions worker (ffmpeg mix, ElevenLabs Scribe, Claude Opus 5.5), self-hosted MapLibre + Protomaps tiles | design-v2 (F4–F9) | yes |
 | 2026-10-06 | Initial stack: static HTML/CSS/JS on GitHub Pages | Simplest start | yes |
 | 2026-10-06 | In-place navigation (vanilla JS) and a self-hosted QR library | Site v0.2: player continues across pages; printable sign | yes |

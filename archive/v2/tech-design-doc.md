@@ -1,13 +1,14 @@
 # Technical design doc
 
-**Implements:** design-v1 (public launch, no server), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs are in `archive/v2/`.
-
-> Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.0.15 · **Site version:** v1.0.13 (shown in every page footer), **approved by the user 2026-10-06**
+**Implements:** `design/releases/design-v2.html` (design-v2: teachers and circles, with a server), **in progress** on branch `claude/dreamy-volta-a7p8uy`, not live yet. Live: design-v1, site v1.0.13, approved by the user 2026-10-06.
+**Tech doc version:** t3.0 · **Site version:** v2.0.0 on the branch (goes live once the backend is set up: [`backend-setup.md`](backend-setup.md))
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
 design-v1 is the public launch, with everything that works as a static site: home page with the new "the idea" section, the three meditations (computer voice, labelled "קול ממוחשב (AI)"), the voting plan, election day, About (Assaf Geva, a private volunteer; no nonprofit, no donations) and the detailed host kit with its printable sign and guide. The draft banner, the "דוגמה" / "בקרוב" labels and the removed pages (circles list, daily journey, day after, donate, Great Silence) are gone. Everything marked v2 in the release (teacher uploads, circles map, phone verification) is not built and does not appear on the site. The site v0.2 to v0.2.7 changes are adopted by the release as built (§8).
+
+### design-v2 (in progress)
+The community features of design-v2 §9, on a backend next to the static site (stack F4–F9, approved by the user): **teachers upload meditations** (phone code, automatic checks, AI rating, the founder approves every one), and **practice circles** (phone code, opened without manual approval after server-side sanity checks, a quiet map and a schedule, "לתאם בוואטסאפ" straight to whoever opened the circle, reports, election day as the peak). Everything that needs the server is marked `data-backend` and stays hidden until `site/assets/js/config.js` points at it, so the live v1 site is unaffected until the switch. All of it is built and tested locally (database tests, a local stand-in for the Supabase APIs, browser runs of every flow); what's left is the user's account setup (`backend-setup.md`), a test against the real services, and the merge.
 
 ## Information architecture
 Flat, static pages in `site/`, one shared header (brand + nav) and footer (support lines + neutrality line).
@@ -22,11 +23,30 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | `about.html` | Who's behind it (Assaf Geva, GitHub link), what we do, what we're not, transparency, credits | §10 "מי אנחנו", §14 |
 | `sign.html` | Printable A4 sign (v1.0.4): headline "לפני שבוחרים, נושמים", "מעגל נשימה לקראת הבחירות לכנסת · 27.10", when/where lines to fill in, QR to the site | §10 host kit "חומרים" |
 | `host-guide.html` | Printable one-page guide; mirrors `host-kit.html` (keep them in step, v1.0.11): 30-minute flow, rules, roles, safety, election day, support lines | §10 host kit "חומרים" |
+| `circles.html` | **(design-v2)** Practice circles: election-day counter, filters (locality, day), map and schedule views, circle cards | §9 ב, ג |
+| `circle.html?id=` | **(design-v2)** One circle: its card, a small map, "למחוק את המעגל" (phone code for the same number). The link people share | §9 ב, ג |
+| `open-circle.html` | **(design-v2)** Open a circle: when (election day first), where (locality from the list + a pin on the map), texts, consents, phone code; "המעגלים שלי" | §9 ב |
+| `teachers.html` | **(design-v2)** For teachers: the `teachers.md` text and the upload form | §9 א |
+| `privacy.html` | **(design-v2)** What is collected, who sees what, which services, when it's deleted (build's text, A11) | §9 "פרטיות", §14 |
+| `admin.html` | **(design-v2)** The founder's review page: recordings (both versions, transcript, AI rating, approve/reject, tags, remove) and circles (reports, hide/show, delete). `noindex`, not linked | §9, §14 |
 | `404.html` | Not-found page (GitHub Pages serves it for any missing path, e.g. old links to removed pages), `noindex` | build choice |
 
 Removed in site v1.0 (design-v1 §8): `circles.html`, `journey.html`, `day-after.html`, `donate.html`.
 
-Anchors on the home page: `#idea`, `#ways`; `#support` on every page.
+Anchors on the home page: `#idea`, `#ways`, `#circles` (design-v2); `#support` on every page.
+
+## Backend (design-v2)
+| Part | Where | What it does |
+|---|---|---|
+| Database | `supabase/migrations/…_circles_and_teachers.sql` | Tables with row-level security on and no policies: the browser reaches data only through functions that never return phone numbers. Circle checks (dates until 27.10, 06:00–21:30 on the quarter hour, 07:00 on election day, the map rectangle, not in the sea, near the locality as a warning, no links or phone numbers, duplicates, 2 new circles per number per day), reports (3 separate reporters hide a circle), the WhatsApp link built only on request, teacher submissions, admin functions (`is_admin()` by phone), `purge_personal_data()`. Storage buckets `submissions` (private; each user writes only to their own folder; the founder can read) and `media` (public) |
+| Map data | `supabase/migrations/…_map_data.sql` (generated by `tech/tools/supabase/make_seed.py`) | The CBS list of localities (all 1,316; 1,229 with coordinates) and the land outline |
+| Edge functions | `supabase/functions/create-circle`, `report-circle` | create-circle: verified phone session → the database checks → a Claude Opus 5.5 text check (party or candidate names, voting advice, us-vs-them, offensive words, promotion; structured output, low effort, server-side fallback) → save. If the AI check can't run, the circle goes up marked `needs_review` (A13). report-circle: Turnstile + salted hash of the IP |
+| Recordings worker | `tech/recordings-worker/process_submissions.py`, `.github/workflows/recordings-worker.yml` | Every 10 minutes: length check (3–15 min), the published version (mono 80 kbps; the site's music bed if asked, via the shared `tech/tools/meditation_mix.py`), ElevenLabs Scribe transcript, Claude rating (relevance, violations quoted, suggested tags, summary); publishes what the founder approved; from 30.11.2026 deletes personal data and sign-in accounts |
+| Front end | `site/assets/js/backend.js`, `map.js`, `circles.js`, `teachers.js`, `admin.js`, `config.js` | `backend.js`: Supabase client, phone sign-in (one sign-in for every page, kept in this browser so the same phone gets no new SMS; "מחובר/ת עם … · להתנתק"), Turnstile, Hebrew messages, dates, calendar files. `map.js`: MapLibre + PMTiles (`assets/map/region.pmtiles`, zoom ≤ 13) with the Protomaps style recoloured to the palette, **without boundaries, country names or region names**, text-only labels, Hebrew with the local name (RTL plugin, Noto Sans glyphs for Latin, Hebrew, Arabic, Greek, Cyrillic). Vendored: maplibre-gl 5.24, pmtiles 4.5, @protomaps/basemaps 5.7, mapbox-gl-rtl-text 0.3, supabase-js 2.117 |
+| Map data build | `.github/workflows/map-data.yml`, `tech/tools/map/build_map_data.py` | Runs in Actions (the build sandbox can't reach the sources): Protomaps extract of the rectangle, CBS localities joined with OSM coordinates, Natural Earth land (buffered ~300 m) |
+| Tests | `tech/tools/supabase/test.sh` (50 checks), `tech/tools/supabase/mock_server.py` | Database rules on plain Postgres; a local stand-in for the Supabase APIs for browser runs of every flow |
+
+Player: teacher recordings are registered at runtime (`window.registerMeditation`) with their own URL; they have no captions and no "קול ממוחשב (AI)" label. Measurement adds `circle-open`, `circle-whatsapp`, `circle-calendar`, `circle-share`, `circle-report`, `meditation-upload` (§14).
 
 ## Visual system
 - **Colors** (CSS custom properties in `site/styles.css`): `--paper #f7f3ec`, `--ink #2b2925`, `--sage #6f8a72`, `--clay #b9684a`, `--sage-soft #e6ece4`, `--clay-soft`, plus the release's dark-mode set under `prefers-color-scheme: dark`. Darker `--sage-ink` / `--clay-ink` variants are used for text and button fills so they meet WCAG AA contrast.
@@ -49,7 +69,7 @@ Anchors on the home page: `#idea`, `#ways`; `#support` on every page.
 - **No "host" (site v1.0.4, user decision):** a circle isn't hosting guests, so "מארח/ת" is gone. The person who starts a circle "פותח/ת מעגל" (the release's own audience term); the page is "לפתוח מעגל" and the kit "ערכה לפתיחת מעגל". Roles inside the circle stay "מנחה/ה" and "מלווה".
   - The nav item and page title "מי אנחנו" became "על המיזם"; the home page section is "מי מאחורי זה".
 - Page copy is hand-written HTML in `site/*.html`, taken from the release text. Header, footer (with the version line) and support section are identical on every page; the HTML files are the source, so when editing them, change all seven pages (including `404.html`) (`sign.html` and `host-guide.html` are standalone). Bump the version in every footer and in the printables' sheet footers, **and in the `?v=` cache-busting query on every `styles.css`, `print.css` (including its `@import`) and `assets/js/*.js` reference.** GitHub Pages lets browsers cache CSS/JS for about 10 minutes; without the query, new HTML can meet old CSS (seen in v1.0.2: the echo element pushed the breathing circle off its label, and the logo did nothing).
-- Meditation scripts are copied verbatim from `design/content/meditations/` to `site/content/meditations/` (the deploy only ships `site/`); the same text is embedded in each meditation's "לקריאת התסריט" panel. Recordings and stanza timings are in `site/content/meditations/audio/`, made with `tech/tools/mix-meditation-audio.py`. The hero video loop is made with `tech/tools/video-pingpong.py`.
+- Meditation scripts are copied verbatim from `design/releases/design-v0-meditations/` to `site/content/meditations/` (the deploy only ships `site/`); the same text is embedded in each meditation's "לקריאת התסריט" panel. Recordings and stanza timings are in `site/content/meditations/audio/`, made with `tech/tools/mix-meditation-audio.py`. The hero video loop is made with `tech/tools/video-pingpong.py`.
 - Sample circles, journey days and Great Silence details are placeholders marked "דוגמה" / "בקרוב".
 
 ## Interactions & features
@@ -109,7 +129,19 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 26. The printable guide mirrors the "לפתוח מעגל" page: "אחרי המעגל: להעביר הלאה", and the closing step invites people to open their own circle (v1.0.11).
 27. Formal disclaimer in the support section: "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע." (v1.0.12).
 28. The neutrality promise speaks in "we": "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו." (footer on every page, the sign, the guide; v1.0.13).
-29. Niqqud on every "נוֹכְחִים" on the site, running text and tab titles included: confirmed by the user on 6.10, after design-v2 §7 said otherwise.
+29. Niqqud on every "נוֹכְחִים" on the site, running text and tab titles included: confirmed by the user on 6.10, after design-v2 §7 said otherwise (see "Open against design-v2").
+
+### Open against design-v2 (raised as questions-for-design #16; resolved, design-v2 adopted all of it)
+design-v2 (updated 6.10, answers to #10–#14) adopted remarks 17–22 but contradicts or omits later user decisions. **Until design fixes the release, the v2 build keeps the live site's wording and behaviour wherever they differ (assumption A9).**
+
+| design-v2 says | User decision (live) | Remark |
+|---|---|---|
+| §7: the name has niqqud only as a mark; running text and the tab title without | Niqqud on every "נוֹכְחִים" | 29 |
+| §6 "we" rule: "כאן לא אומרים בעד מי להצביע, ולא שואלים"; a *signed* note on the About page | "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו."; the note is unsigned, in the user's words | 28, 25 |
+| §12: "לא טיפול. אנחנו מפנים לאנשי מקצוע ולקווי סיוע." | "האתר אינו מהווה טיפול או תחליף לטיפול מקצועי. במידת הצורך, יש לפנות לאנשי מקצוע או לקווי הסיוע." | 27 |
+| §1, §10, §13 About: "כאדם פרטי ובשמו המלא. אין עמותה, אין מפלגה, אין תרומות ואין מימון" | "כיוזמה פרטית, וללא קשר לכל עמותה או מפלגה" (no funding is still stated elsewhere on the page) | 25 |
+| `design-v2-content/host-kit.md`: "אנחנו מציעים לבוא בלבן" (against its own "we" rule); invitation without "בלבן"; no closing section | "מציעים לבוא בלבן"; "אם יש, אפשר לבוא בלבן." in the invitation; "אחרי המעגל: להעביר הלאה" | 19, 24 |
+| (missing) | The guide mirrors the kit; the motion button is an icon | 26, 23 |
 
 ## Traceability
 | Design requirement (design-v1 §) | Technical decision | Status |
@@ -125,12 +157,37 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 | §10 election day page unchanged; countdown wording approved (q. #7) | Only the "המחשה" tag removed and a host-kit link added | done |
 | §7 visual language unchanged | No change | done |
 | §5 / §13 neutrality in code and meta | All new copy, meta descriptions and the 404 page checked against the non-partisan test | done |
-| §9, §14 v2 (server) features | Not built in v1; to be flagged before design-v2 is built | v2 |
+| §9, §14 v2 (server) features | Not built in v1; flagged (F4–F9) and approved, then built for design-v2 (below) | see below |
+
+| Design requirement (design-v2 §) | Technical decision | Status |
+|---|---|---|
+| §9 א teachers page and form, consents, thank-you screen | `teachers.html` (teachers.md text, A12), `teachers.js`: photo resized in the browser, length checked before upload, files into the user's own private folder, `submit_meditation` | built, tested locally |
+| §9 א background music option, same music and settings | Shared `meditation_mix.py`; worker mixes; original kept private; music sample on the form | built, tested locally |
+| §9 א / §5 three layers: automatic filter, AI rating, manual approval | Storage type and size limits + length check; Claude rating; nothing public before `admin_review_submission` + worker publish | built, tested locally (AI with a real key at go-live) |
+| §9 א teacher meditations on the meditations page, filter by length and setting | `list_meditations`, filters; settings tags chosen by the founder (A10) | built, tested locally |
+| §9 ב open a circle: phone code, fixed 30 min, once or weekly until 27.10, 2 per number per day, no manual approval | `open-circle.html`, `create-circle`, `create_circle_as` | built, tested locally |
+| §9 ב sanity checks; the interface doesn't allow out-of-range input | Only valid dates and times offered; pin checked against the rectangle and the sea in the browser; the same rules in the database | built, tested |
+| §9 ב neutrality: a rectangle, not a border | `in_map_rect`; the map draws no boundary lines and no country or region names | built |
+| §9 ב delete with a code to the same number | `circle.html`, `delete_my_circle`, "המעגלים שלי" | built, tested locally |
+| §9 ב reports: 3 separate reports hide a circle until checked; opener not told | `report-circle` + `report_circle_as`; admin hide/show/delete | built, tested |
+| §9 election day as the peak: first option, filter, own marker, counter | Featured first choice; `?day=election` filter; clay markers; `election_day_circle_count` on home and circles | built, tested locally |
+| §9 ג map and schedule, filters, card, WhatsApp with a ready message, add to calendar, report, transparency note, "אין מעגל קרוב?" | `circles.html`, `circles.js`; link from `circle_whatsapp_link` on demand; `.ics` with local time zone (weekly: RRULE until 27.10) | built, tested locally |
+| §9 privacy: no email, phone only; teachers' numbers never public; delete by 30.11, approved recordings stay | Functions never return phones; `purge_personal_data` + account deletion in the worker; `privacy.html` | built, tested |
+| §14 map: palette, accessible, list as a full alternative | Palette style; the schedule view lists every circle; map regions labelled | built |
+| §14 budget | Free tiers + SMS; spend limits in the setup guide | setup guide |
+| §10 kit step 3 back, invitation and post per design-v2-content | `host-kit.html`; the guide already mirrors it | built |
+| §10 "הרעיון" ends with the neutrality promise | `index.html` | built |
 
 ## Assumptions
+- **A10** (design-v2, question #17): the form has no field for "בבית / בדרך / לפני השינה", so the founder sets these tags when approving (the AI suggests them); the length filter uses the measured length.
+- **A11** (design-v2, question #17): `privacy.html` is written by build from design-v2 §9 and the services actually used; it needs the design chat's and a lawyer's review.
+- **A12** (design-v2, question #17): `teachers.md` speaks as an organizational "we" in a few places ("אנחנו מחפשים", "נוסיף מוזיקה", "המדיטציה המרכזית שלנו"); the page uses the impersonal per the user's rule (remark 19). The thank-you screen keeps design's exact text.
+- **A13** (design-v2): if the AI text check can't run (no key, outage, a decline), the circle still goes up (design: no manual approval) and is marked for the founder in admin.
+- **A14** (design-v2): localities are the full CBS list; coordinates come from OpenStreetMap by name; 87 without a match stay selectable and skip the distance warning (`tech/tools/map/localities-missing.txt`).
+- **A15** (design-v2): a weekly circle on Tuesdays meets on election day too, so it can't start before 07:00.
 - **A1** (questions-for-design #1, answered): the draft banner wording and public deploy follow the user's answer, not the release's "internal, do not publish" text.
 - **A7** (design-v1, question #10): the release's host kit has a step "לפתוח את המעגל באתר" (map, phone verification, delete), which is v2. In v1 the kit shows three steps (place, time, invite): "סימון במפה" for a private home reads "לפרסם נקודה כללית", and the invitation template ends "לתיאום: לכתוב לי בוואטסאפ" instead of a link to the circle's page. The rest of the kit is verbatim. When v2 is built the fourth step comes back.
-- **A9** (design-v2, question #16): where design-v2 contradicts or omits a later user decision (remarks 23–29, table "Open against design-v2"), the build follows the user's decision and the live site.
+- **A9** (resolved: design-v2 adopted all of #16): where design-v2 contradicts or omits a later user decision (remarks 23–29, table "Open against design-v2"), the build follows the user's decision and the live site.
 - **A8** (design-v1): the release says removal requests reach the founder "through the contact details on the About page" but gives no contact details beyond the GitHub profile, so the About page offers contact through the GitHub profile. Waiting for the user to choose another channel if wanted.
 - **A2:** the polling-place link points to the Central Elections Committee home page; the exact lookup URL for the 26th Knesset could not be verified from the build environment. Check before promoting.
 - **A4** (question #3): support lines are ERAN 1201, NATAL 1-800-363-363, SAHAR (online chat), plus 101/100 for emergencies.
@@ -138,6 +195,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t3.0 | design-v2 (in progress) | 2026-10-06 | Backend (Supabase), circles, teachers, admin, recordings worker, self-hosted map, all built and tested locally on the branch; `backend-setup.md`; A10–A15; question #17. Site v2.0.0 waits for the user's account setup. |
 | t2.0.15 | design-v1 | 2026-10-06 | v1 approved by the user at site v1.0.13. Next: design-v2 (server features, flagged in stack.md before building). |
 | t2.0.14 | design-v1 + user decisions | 2026-10-06 | Docs only: remarks 25–29 folded in (About wording, guide mirrors the kit, formal disclaimer, "we" neutrality promise, niqqud everywhere confirmed); new table "Open against design-v2" listing where the updated design-v2 contradicts or omits user decisions; assumption A9; questions-for-design #16. |
 | t2.0.13 | design-v1 + user remark | 2026-10-06 | Site v1.0.13: the neutrality promise reads "אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו." in every footer, on the sign and in the guide. |
