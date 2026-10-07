@@ -18,7 +18,7 @@
     } catch (e) {}
   };
 
-  // ---------- breathing: one clock, one circle on screen (v1.1.15, v1.1.15) ----------
+  // ---------- breathing: one clock, one circle on screen (v1.1.13, v1.1.14) ----------
   // Every breathing circle reads the same clock (Date.now() modulo 10 s), so they never drift apart.
   // Each circle has a weight w (0 = resting, 1 = breathing) that eases over 1 s whenever it is turned
   // on or off, so nothing jumps: the circle moves between its resting state (half-way between its
@@ -91,6 +91,29 @@
     }
     updateBreath();
   }
+
+  // ---------- memorial candle, 7–8 October (Israel time) ----------
+  // A quiet line under the header on every page, only on these two days (or with ?memorial to preview).
+  // Outside <main>, so it stays through in-place navigation.
+  (function memorial() {
+    var day = "";
+    try { day = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(new Date()); } catch (e) {}
+    if (!/^2026-10-0[78]$/.test(day) && !/[?&]memorial\b/.test(location.search)) return;
+    var header = document.querySelector(".site-header");
+    if (!header) return;
+    var el = document.createElement("aside");
+    el.className = "memorial";
+    el.setAttribute("aria-label", "נר זיכרון");
+    el.innerHTML =
+      '<svg class="candle" viewBox="0 0 24 32" aria-hidden="true" focusable="false">' +
+        '<path class="flame" d="M12 2c2.6 3.4 4 5.8 4 8a4 4 0 0 1-8 0c0-2.2 1.4-4.6 4-8z"/>' +
+        '<rect class="wick" x="11.4" y="13" width="1.2" height="3" rx=".6"/>' +
+        '<rect class="body" x="7" y="16" width="10" height="14" rx="1.5"/>' +
+      "</svg>" +
+      "<p>שלוש שנים ל-7 באוקטובר. זוכרים את כל מי שאיבדנו, ומחזיקים בלב את מי שעדיין נושאים את היום הזה. " +
+      '<a href="#support">אם עלה משהו קשה</a></p>';
+    header.insertAdjacentElement("afterend", el);
+  })();
 
   // ---------- mobile menu (header is static, bind once) ----------
   var toggle = document.querySelector(".menu-toggle");
