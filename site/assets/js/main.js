@@ -18,7 +18,7 @@
     } catch (e) {}
   };
 
-  // Which meditation led to an action (v1.1.24). When a meditation is heard to the end, this device
+  // Which meditation led to an action (v1.1.25). When a meditation is heard to the end, this device
   // remembers its id for 3 hours (localStorage, never sent). An action in that window is counted twice:
   // as before, and as "<action>-after-<id>". Still only event names leave the device.
   // sign.html and host-guide.html read the same key inline (they don't load this file).
