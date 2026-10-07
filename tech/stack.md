@@ -38,7 +38,7 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 
 ## Flagged features (pending user decision)
 
-> F4–F9 were approved for design-v2, but that direction was **dropped on 2026-10-07**. None of it is on `main`; the built code is on the `archive/v2` branch. A new design that needs a server must be flagged again.
+> F4–F9 were approved for design-v2, but that direction was **dropped on 2026-10-07**. None of it is on `main`; its docs and code are on the `archive/v2` branch. A new design that needs a server must be flagged again.
 
 | Design version | Feature | Options considered | Recommendation | User decision |
 |---|---|---|---|---|

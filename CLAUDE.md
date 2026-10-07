@@ -33,7 +33,7 @@ If anything fails, rewrite it before committing. The full rules are in the "neut
 | `tech/stack.md` | The stack, what it can't do, and decisions on flagged features. |
 | `tech/tools/` | Scripts for generating assets (audio mix, video loop). |
 | `site/` | The website, deployed to GitHub Pages from `main`. |
-| `archive/` | Dropped directions, kept for reference only (see `archive/v2/README.md`). **Not requirements.** |
+| Branch `archive/v2` | The dropped v2 direction (server features), docs and code, kept for reference only. **Not requirements.** |
 
 ## How to work
 

@@ -1,6 +1,6 @@
 # Technical design doc
 
-**Implements:** design-v1 (public launch, no server), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs are in `archive/v2/`, and all of its code (never merged, never deployed) is on the `archive/v2` branch.
+**Implements:** design-v1 (public launch, no server), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
 **Tech doc version:** t2.0.15 · **Site version:** v1.0.13 (shown in every page footer), **approved by the user 2026-10-06**
