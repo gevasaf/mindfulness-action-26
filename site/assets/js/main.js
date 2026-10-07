@@ -50,11 +50,17 @@
     return /(\/|\.html)$/.test(u.pathname);
   }
 
+  // A target inside a closed <details> (the kit's parts) needs its parts opened first.
+  function openParents(el) {
+    for (var d = el; d; d = d.parentElement) if (d.tagName === "DETAILS") d.open = true;
+  }
+  window.openParents = openParents;
+
   function scrollToTarget(hash) {
     var el = hash && document.getElementById(decodeURIComponent(hash.slice(1)));
     // pushState doesn't update :target, so mark the target with a class too
     Array.prototype.forEach.call(document.querySelectorAll(".is-target"), function (x) { x.classList.remove("is-target"); });
-    if (el) { el.classList.add("is-target"); el.scrollIntoView(); } else window.scrollTo(0, 0);
+    if (el) { openParents(el); el.classList.add("is-target"); el.scrollIntoView(); } else window.scrollTo(0, 0);
   }
 
   function swap(url, push) {
@@ -188,6 +194,38 @@
         window.countEvent("kit-copy-" + btn.getAttribute("data-copy"));
       });
     });
+    // Foldable parts: "open all" / "close all", open the part a link points to, everything open for print.
+    var parts = document.querySelectorAll("details.part");
+    var toggleAll = document.querySelector("[data-parts-toggle]");
+    if (parts.length) {
+      var syncToggle = function () {
+        if (!toggleAll) return;
+        var allOpen = Array.prototype.every.call(parts, function (d) { return d.open; });
+        toggleAll.textContent = allOpen ? "לסגור הכול" : "לפתוח הכול";
+      };
+      Array.prototype.forEach.call(parts, function (d) { d.addEventListener("toggle", syncToggle); });
+      if (toggleAll && !toggleAll.dataset.bound) {
+        toggleAll.dataset.bound = "1";
+        toggleAll.addEventListener("click", function () {
+          var open = toggleAll.textContent === "לפתוח הכול";
+          Array.prototype.forEach.call(document.querySelectorAll("details.part"), function (d) { d.open = open; });
+        });
+      }
+      if (location.hash) {
+        var t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+        if (t && t.closest("details")) { openParents(t); t.scrollIntoView(); }
+      }
+      Array.prototype.forEach.call(document.querySelectorAll('a[href^="#"]'), function (a) {
+        if (a.dataset.boundHash) return;
+        a.dataset.boundHash = "1";
+        a.addEventListener("click", function () {
+          var t = document.getElementById(decodeURIComponent(a.getAttribute("href").slice(1)));
+          if (t) openParents(t);
+        });
+      });
+      syncToggle();
+    }
+
     // No clipboard access: select the text so it can be copied by hand.
     function selectText(el) {
       var r = document.createRange(); r.selectNodeContents(el);
@@ -226,6 +264,11 @@
         motionBtn.title = label;
       });
     }
+  });
+
+  // Print shows every folded part.
+  window.addEventListener("beforeprint", function () {
+    Array.prototype.forEach.call(document.querySelectorAll("details.part"), function (d) { d.open = true; });
   });
 
   document.addEventListener("DOMContentLoaded", runInits);

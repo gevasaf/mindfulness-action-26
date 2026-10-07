@@ -398,6 +398,27 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
 .hashtag { white-space: nowrap; }
 
+/* Kit parts (v1.1.4): six foldable parts; closed, their titles read as the table of contents */
+.parts-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 36px; }
+.parts-head h2 { margin: 0; }
+.btn-link { background: none; border: 0; padding: 8px 4px; min-height: 44px; font: inherit; color: var(--sage-ink); text-decoration: underline; cursor: pointer; }
+.parts { display: grid; gap: 10px; margin-top: 12px; }
+details.part { background: var(--card); border: 1px solid var(--line); border-radius: 14px; }
+details.part > summary { list-style: none; display: flex; align-items: center; gap: 14px; padding: 14px 16px; cursor: pointer; min-height: 56px; border-radius: 14px; }
+details.part > summary::-webkit-details-marker { display: none; }
+details.part > summary::after { content: ""; margin-inline-start: auto; flex: none; width: 10px; height: 10px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted); transform: translateY(-3px) rotate(45deg); transition: transform .2s ease; }
+details.part[open] > summary::after { transform: translateY(3px) rotate(-135deg); }
+details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-offset: 2px; }
+.part-n { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--sage-soft); color: var(--sage-ink); font-weight: 700; display: grid; place-items: center; }
+.part-t { display: grid; gap: 2px; }
+.part-h { font-family: var(--brand-font); font-weight: 700; font-size: 1.2rem; color: var(--ink); }
+.part-t small { color: var(--muted); font-size: .95rem; }
+.part-body { padding: 0 18px 18px; border-top: 1px solid var(--line); }
+.part-body > h3:first-of-type, .part-body > p:first-of-type { margin-top: 14px; }
+.part-body h3 { font-size: 1.15rem; margin-top: 26px; }
+.pdf-mark, .print-only { display: none; }
+@media (prefers-reduced-motion: reduce) { details.part > summary::after { transition: none; } }
+
 /* Brand line with the tagline, printed at the top of the kit (the header is hidden there in print) */
 .print-brand { display: none; }
 @media print {
@@ -406,6 +427,30 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
   .print-brand b { font-size: 20px; }
   .print-brand span:last-child { font-weight: 700; font-size: 15px; color: var(--muted); padding-inline-start: 10px; border-inline-start: 1px solid var(--line); }
   .print-brand .pb-mark { width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--sage); background: var(--sage-soft); display: inline-block; }
+}
+
+/* Kit in print and in the PDF: all parts open (main.js opens them), table of contents, a new page per part */
+@media print {
+  .print-only { display: block; }
+  .kit-toc { break-after: page; margin-top: 8mm; }
+  .kit-toc ol { list-style: none; padding: 0; counter-reset: t; }
+  .kit-toc li { counter-increment: t; display: flex; gap: 8px; align-items: baseline; padding: 2.4mm 0; border-bottom: 1px dotted var(--line); font-size: 14px; }
+  .kit-toc li::before { content: counter(t) "."; color: var(--sage-ink); font-weight: 700; min-width: 1.4em; }
+  .kit-toc li:last-child::before { content: ""; }
+  .kit-toc a, .kit-toc .toc-t { flex: 1; }
+  .kit-toc .toc-page { color: var(--muted); }
+  details.part { border: 0; background: none; margin-top: 8mm; }
+  /* Keep a part's title with its first lines: the title block reserves 35mm and may not split,
+     so a title near the bottom of a page moves to the next one. */
+  details.part > summary { display: block; padding: 0; min-height: 0; margin-bottom: 4mm; break-inside: avoid; }
+  details.part > summary::before { content: ""; display: block; height: 35mm; margin-bottom: -35mm; }
+  details.part > summary .part-n { display: inline-grid; vertical-align: middle; margin-inline-end: 10px; }
+  details.part > summary .part-t { display: inline-grid; vertical-align: middle; }
+  details.part > summary::after { display: none; }
+  .part-n { width: 28px; height: 28px; }
+  .part-h { font-size: 22px; }
+  .part-body { padding: 0; border: 0; }
+  .pdf-mark { display: block; height: 0; overflow: visible; font-size: 6px; line-height: 0; color: #fff; direction: ltr; }
 }
 
 /* Print (and the kit PDF, tech/tools/make-assets.mjs): content only, light colours, A4.
