@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.13 · **Site version:** v1.1.13 (shown in every page footer)
+**Tech doc version:** t2.1.14 · **Site version:** v1.1.14 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.14 | design-v1.1 + user request | 2026-10-07 | Site v1.1.14: breathing is no longer CSS keyframes. One clock in `main.js` (`Date.now()` mod 10 s, one `requestAnimationFrame` loop) computes the breath, echo and label values and writes them as custom properties (`--bs`, `--es`, `--eo`, `--la`, `--lb` on `.breath-wrap`; `--ms`, `--es`, `--eo` on `.brand`), so circles can never fall out of sync, whatever is paused or hidden. Each circle has a weight that eases over 1 s between its resting state (half-way between smallest and largest size, echo hidden, "שאיפה" label) and the live breath, so starting or stopping (hand-over to the logo, "לעצור תנועה", in-place navigation) never jumps a frame. The loop stops when everything rests. Tested: steps per 100 ms stay within normal breathing speed; hero and logo read the same value. |
 | t2.1.13 | design-v1.1 + user request | 2026-10-07 | Site v1.1.13: sticky header (`position: sticky`, `scroll-padding-top` for anchors). One breathing circle on screen: the logo no longer breathes once on hover; it loops (`.brand.looping`) only while the home page's `.breath-wrap` is out of view (IntersectionObserver, re-attached on in-place navigation), and never with reduced motion or when motion is stopped. "לעצור תנועה" is kept for the visit (`sessionStorage`), stops the logo too, and the hero starts paused (video not loaded) when it was stopped. All breathing shares one clock: `--breath-phase` / `--logo-phase` = −(Date.now() mod 10 s) as animation delay, so the hand-over is continuous. Tested at 1280 and 390 px and with reduced motion. |
 | t2.1.12 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.12: the video credit is only in About's "תודות", no longer on the home page hero. |
 | t2.1.11 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.11: About, "מי עומד מאחורי זה": the GitHub profile link after the founder's name becomes "יצירת קשר", linking to the contact form (`#contact`). |

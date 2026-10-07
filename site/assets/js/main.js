@@ -18,44 +18,78 @@
     } catch (e) {}
   };
 
-  // ---------- one breathing circle on screen (v1.1.13) ----------
-  // The logo breathes in a loop only while the home page's breathing circle is out of view, so
-  // there is always exactly one breath on screen; none when motion is stopped or reduced.
-  // Every breath follows one clock (Date.now() modulo 10 s), so handing over looks continuous.
+  // ---------- breathing: one clock, one circle on screen (v1.1.14, v1.1.14) ----------
+  // Every breathing circle reads the same clock (Date.now() modulo 10 s), so they never drift apart.
+  // Each circle has a weight w (0 = resting, 1 = breathing) that eases over 1 s whenever it is turned
+  // on or off, so nothing jumps: the circle moves between its resting state (half-way between its
+  // smallest and largest size, echo hidden) and wherever the breath is at that moment.
+  // The home page's circle breathes while motion is on; the logo breathes only while that circle
+  // is out of view, so there is always exactly one breath on screen. With reduced motion, or after
+  // "לעצור תנועה" (kept for the visit), everything rests.
+  var CYCLE = 10000, FADE = 1000;
   var brand = document.querySelector(".brand");
   var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   var motionStopped = false;
   try { motionStopped = sessionStorage.getItem("motion-stopped") === "1"; } catch (e) {}
-  var heroBreathVisible = false, heroObserver = null;
-  function phase() { return -(Date.now() % 10000) + "ms"; }
-  function updateLogo() {
-    if (!brand) return;
-    var loop = !reduceMotion && !motionStopped && !heroBreathVisible;
-    if (loop === brand.classList.contains("looping")) return;
-    if (loop) brand.style.setProperty("--logo-phase", phase());
-    brand.classList.toggle("looping", loop);
+  var heroWrap = null, heroBreathVisible = false, heroObserver = null, raf = 0;
+  function ease(x) { return (1 - Math.cos(Math.PI * Math.min(1, Math.max(0, x)))) / 2; }
+  function lerp(a, b, w) { return a + (b - a) * w; }
+  // A weight that eases from where it is to a new target over FADE ms.
+  function weight() { return { from: 0, to: 0, t0: 0, value: function (now) { return lerp(this.from, this.to, ease((now - this.t0) / FADE)); } }; }
+  var heroW = weight(), logoW = weight();
+  function aim(w, target, now) { if (w.to === target) return; w.from = w.value(now); w.to = target; w.t0 = now; }
+  function breathAt(now) {
+    var p = (Date.now() % CYCLE) / CYCLE;                       // the shared clock, 0..1
+    var b = p < .5 ? ease(p / .5) : ease(2 - p / .5);         // in-breath 0→1, out-breath 1→0
+    var e = p < .5 ? ease(p / .5) : 1;                         // the echo grows on the in-breath only
+    var la = p < .45 ? 1 : p < .5 ? 1 - ease((p - .45) / .05) : p < .95 ? 0 : ease((p - .95) / .05);
+    return { b: b, e: e, la: la };
+  }
+  function frame() {
+    raf = 0;
+    var now = performance.now(), s = breathAt(now);
+    var wh = heroW.value(now), wl = logoW.value(now);
+    if (heroWrap) {
+      heroWrap.style.setProperty("--bs", lerp(1.01, .72 + .58 * s.b, wh).toFixed(4));
+      heroWrap.style.setProperty("--es", lerp(1.01, .72 + 1.03 * s.e, wh).toFixed(4));
+      heroWrap.style.setProperty("--eo", lerp(0, .5 * (1 - s.e), wh).toFixed(4));
+      heroWrap.style.setProperty("--la", lerp(1, s.la, wh).toFixed(4));
+      heroWrap.style.setProperty("--lb", lerp(0, 1 - s.la, wh).toFixed(4));
+    }
+    if (brand) {
+      brand.style.setProperty("--ms", lerp(1.175, 1 + .35 * s.b, wl).toFixed(4));
+      brand.style.setProperty("--es", lerp(1.175, 1 + .5 * s.e, wl).toFixed(4));
+      brand.style.setProperty("--eo", lerp(0, .5 * (1 - s.e), wl).toFixed(4));
+      brand.classList.toggle("looping", logoW.to === 1);
+    }
+    var settled = now - heroW.t0 >= FADE && now - logoW.t0 >= FADE && heroW.to === 0 && logoW.to === 0;
+    if (!settled) raf = requestAnimationFrame(frame);
+  }
+  function updateBreath() {
+    var now = performance.now(), on = !reduceMotion && !motionStopped;
+    aim(heroW, on && heroWrap ? 1 : 0, now);
+    aim(logoW, on && !heroBreathVisible ? 1 : 0, now);
+    if (!raf) raf = requestAnimationFrame(frame);
   }
   window.setMotionStopped = function (on) {
     motionStopped = on;
     try { sessionStorage.setItem("motion-stopped", on ? "1" : "0"); } catch (e) {}
-    updateLogo();
+    updateBreath();
   };
   window.isMotionStopped = function () { return motionStopped; };
   function watchHeroBreath() {
     if (heroObserver) { heroObserver.disconnect(); heroObserver = null; }
-    var wrap = document.querySelector(".breath-wrap");
-    heroBreathVisible = !!wrap;
-    if (wrap) {
-      document.documentElement.style.setProperty("--breath-phase", phase());
-      if ("IntersectionObserver" in window) {
-        heroObserver = new IntersectionObserver(function (entries) {
-          heroBreathVisible = entries[entries.length - 1].isIntersecting;
-          updateLogo();
-        });
-        heroObserver.observe(wrap);
-      }
+    heroWrap = document.querySelector(".breath-wrap");
+    heroBreathVisible = !!heroWrap;
+    heroW = weight();                       // a new hero (in-place navigation) starts resting
+    if (heroWrap && "IntersectionObserver" in window) {
+      heroObserver = new IntersectionObserver(function (entries) {
+        heroBreathVisible = entries[entries.length - 1].isIntersecting;
+        updateBreath();
+      });
+      heroObserver.observe(heroWrap);
     }
-    updateLogo();
+    updateBreath();
   }
 
   // ---------- mobile menu (header is static, bind once) ----------
