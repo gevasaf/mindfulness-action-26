@@ -113,8 +113,7 @@
         '<rect class="wick" x="11.4" y="13" width="1.2" height="3" rx=".6"/>' +
         '<rect class="body" x="7" y="16" width="10" height="14" rx="1.5"/>' +
       "</svg>" +
-      "<p>שלוש שנים ל-7 באוקטובר. זוכרים את כל מי שאיבדנו, ומחזיקים בלב את מי שעדיין נושאים את היום הזה. " +
-      '<a href="#support">אם עלה משהו קשה</a></p>' +
+      "<p>3 שנים ל-7 באוקטובר</p>" +
       '<button type="button" class="memorial-close" aria-label="סגירה" title="סגירה">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg>' +
       "</button>";

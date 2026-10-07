@@ -393,15 +393,15 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .hashtag { white-space: nowrap; }
 
 /* Memorial candle, 7–8 October (v1.1.16; main.js inserts it under the header). Still, no flicker. */
-.memorial { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 10px 16px; background: var(--card); border-bottom: 1px solid var(--line); color: var(--ink); font-size: .95rem; text-align: center; }
+.memorial { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 4px 16px; background: var(--card); border-bottom: 1px solid var(--line); color: var(--ink); font-size: .95rem; text-align: center; }
 .memorial p { margin: 0; max-width: 62ch; }
 .memorial a { color: var(--muted); white-space: nowrap; }
-.memorial .candle { flex: none; width: 24px; height: 32px; }
+.memorial .candle { flex: none; width: 18px; height: 24px; }
 .memorial .flame { fill: #e2a24f; }
 .memorial .wick { fill: var(--ink); }
 .memorial .body { fill: #fffdf9; stroke: var(--line); }
 .memorial { position: relative; padding-inline-end: 52px; padding-inline-start: 52px; }
-.memorial-close { position: absolute; inset-inline-end: 6px; top: 50%; transform: translateY(-50%); width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 0; border-radius: 50%; color: var(--muted); cursor: pointer; }
+.memorial-close { position: absolute; inset-inline-end: 6px; top: 50%; transform: translateY(-50%); width: 40px; height: 40px; display: grid; place-items: center; background: none; border: 0; border-radius: 50%; color: var(--muted); cursor: pointer; }
 .memorial-close:hover { color: var(--ink); background: var(--sage-soft); }
 .memorial-close:focus-visible { outline: 3px solid var(--sage); outline-offset: 1px; }
 .memorial-close svg { width: 18px; height: 18px; fill: currentColor; }
