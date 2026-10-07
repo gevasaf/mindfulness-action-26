@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.18 · **Site version:** v1.1.18 (shown in every page footer)
+**Tech doc version:** t2.1.19 · **Site version:** v1.1.19 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.19 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.19: the memorial line shows on the home page only (hidden when `main` has no `.hero`, checked on load and on every in-place navigation). |
 | t2.1.18 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.18: the memorial line is just the candle, "3 שנים ל-7 באוקטובר" and the X; lower (4 px padding, 18×24 candle, 40 px close button). |
 | t2.1.17 | design-v1.1 + user request | 2026-10-07 | Site v1.1.17: the memorial line has a close button (X, 44 px, `aria-label="סגירה"`); closing it keeps it closed for the rest of that day on that device (`localStorage` key `memorial-closed-<date>`, wrapped in try/catch). |
 | t2.1.16 | design-v1.1 + user request | 2026-10-07 | Site v1.1.16: memorial candle. `main.js` inserts an `<aside class="memorial">` under the header on every page only on 7–8.10.2026 (Israel time via `Intl` with `Asia/Jerusalem`; `?memorial` previews it), with a still SVG candle, a short text and a link to the support lines; hidden in print. Outside `<main>`, so it survives in-place navigation. Also: version bumps now touch only `?v=` and the version marks (an earlier blanket replace had rewritten version numbers inside code comments; fixed). Note: on phones the line pushes the hero's buttons a little lower on those two days. |

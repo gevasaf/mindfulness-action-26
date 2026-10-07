@@ -405,6 +405,7 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .memorial-close:hover { color: var(--ink); background: var(--sage-soft); }
 .memorial-close:focus-visible { outline: 3px solid var(--sage); outline-offset: 1px; }
 .memorial-close svg { width: 18px; height: 18px; fill: currentColor; }
+.memorial[hidden] { display: none; }
 @media print { .memorial { display: none; } }
 
 /* Kit parts (v1.1.4): six foldable parts; closed, their titles read as the table of contents */

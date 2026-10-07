@@ -93,8 +93,8 @@
   }
 
   // ---------- memorial candle, 7–8 October (Israel time) ----------
-  // A quiet line under the header on every page, only on these two days (or with ?memorial to preview).
-  // Outside <main>, so it stays through in-place navigation.
+  // A quiet line under the header, on the home page only, only on these two days (or with ?memorial to preview).
+  // Outside <main>, so it is shown or hidden on every in-place navigation.
   (function memorial() {
     var day = "";
     try { day = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(new Date()); } catch (e) {}
@@ -117,11 +117,15 @@
       '<button type="button" class="memorial-close" aria-label="סגירה" title="סגירה">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg>' +
       "</button>";
+    el.hidden = !document.querySelector("main .hero");
     header.insertAdjacentElement("afterend", el);
+    var closed = false;
     el.querySelector(".memorial-close").addEventListener("click", function () {
       try { localStorage.setItem(key, "1"); } catch (e) {}
+      closed = true;
       el.remove();
     });
+    window.onPage(function () { if (!closed) el.hidden = !document.querySelector("main .hero"); });
   })();
 
   // ---------- mobile menu (header is static, bind once) ----------
