@@ -7,7 +7,7 @@
 //
 // Run from the repo root after changing any source:  node tech/tools/make-assets.mjs
 // Needs the `playwright` npm package and a Chromium it can find (PLAYWRIGHT_BROWSERS_PATH), Python with Pillow
-// for the PNG, and poppler-utils (pdftotext, pdfunite) for the kit's page numbers and appendix.
+// (the PNG) and pypdf (joining the kit and the sign), and poppler-utils (pdftotext, pdfinfo) for the page numbers.
 // Pages are opened from disk; outside requests (GoatCounter) are blocked so nothing is counted.
 // The PDFs are A4, light colour scheme, using the page's own print CSS.
 import { createRequire } from "node:module";
@@ -30,12 +30,18 @@ async function open(src) {
   await page.evaluate(() => document.fonts.ready);
 }
 
-// Page number in the footer; the margins come from the page's @page rule.
-const footer = {
+const SITE = "https://gevasaf.github.io/mindfulness-action-26/";
+
+// Footer on every kit page: the site's address and the page number (Latin only: the footer
+// is drawn with system fonts). The margins come from the page's @page rule.
+const footerTemplate = (num) =>
+  '<div style="width:100%;padding:0 12mm;display:flex;justify-content:space-between;font-size:8.5px;color:#6b665d;font-family:sans-serif">' +
+  `<span>${SITE.replace(/^https:\/\//, "").replace(/\/$/, "")}</span><span>${num}</span></div>`;
+const footer = (num = '<span class="pageNumber"></span>') => ({
   displayHeaderFooter: true,
   headerTemplate: "<span></span>",
-  footerTemplate: '<div style="width:100%;text-align:center;font-size:9px;color:#6b665d;font-family:sans-serif"><span class="pageNumber"></span></div>',
-};
+  footerTemplate: footerTemplate(num),
+});
 
 // 1. Teachers' call
 await open("design/content/teachers-call.html");
@@ -45,13 +51,19 @@ console.log("wrote design/content/teachers-call.pdf");
 // 2. Kit: all parts open, rendered twice so the table of contents can show the page of each part
 //    (found through the invisible "KITPART <id> KITEND" marks), then the sign appended as the last page.
 await open("site/host-kit.html");
-await page.evaluate(() => {
+await page.evaluate((site) => {
   document.title = "ערכה לפתיחת מעגל · נוֹכְחִים";
   document.querySelectorAll("details.part").forEach((d) => { d.open = true; });
-});
+  // Links to other pages point at the public site (opened from disk they would be file:// links);
+  // links inside the kit (#…) stay internal, so the table of contents is clickable.
+  document.querySelectorAll("a[href]").forEach((a) => {
+    const h = a.getAttribute("href");
+    if (!/^(#|[a-z]+:)/i.test(h)) a.setAttribute("href", site + h);
+  });
+}, SITE);
 const kitBody = join(tmp, "kit-body.pdf");
 for (let pass = 1; pass <= 2; pass++) {
-  await page.pdf({ path: kitBody, format: "A4", printBackground: true, preferCSSPageSize: true, ...footer });
+  await page.pdf({ path: kitBody, format: "A4", printBackground: true, preferCSSPageSize: true, ...footer() });
   const pages = execFileSync("pdftotext", [kitBody, "-"], { encoding: "utf8" }).split("\f");
   const found = {};
   pages.forEach((text, i) => {
@@ -64,10 +76,17 @@ for (let pass = 1; pass <= 2; pass++) {
     });
   }, found);
 }
+const kitPages = execFileSync("pdfinfo", [kitBody], { encoding: "utf8" }).match(/Pages:\s+(\d+)/)[1];
+// The sign, slightly scaled so the same footer fits under it, with the next page number.
 await open("site/sign.html");
 const signPdf = join(tmp, "sign.pdf");
-await page.pdf({ path: signPdf, format: "A4", printBackground: true, preferCSSPageSize: true });
-execFileSync("pdfunite", [kitBody, signPdf, "site/assets/kit.pdf"]);
+await page.pdf({
+  path: signPdf, format: "A4", printBackground: true, scale: 0.96,
+  margin: { top: "0", bottom: "11mm", left: "4.2mm", right: "4.2mm" },
+  ...footer(String(Number(kitPages) + 1)),
+});
+// Merge with pypdf, which keeps the kit's internal links (pdfunite drops them).
+execFileSync("python3", ["-c", "import sys;from pypdf import PdfWriter;w=PdfWriter();[w.append(f) for f in sys.argv[1:-1]];w.write(sys.argv[-1])", kitBody, signPdf, "site/assets/kit.pdf"]);
 console.log("wrote site/assets/kit.pdf");
 
 // 3. Group image

@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.4 · **Site version:** v1.1.4 (shown in every page footer)
+**Tech doc version:** t2.1.5 · **Site version:** v1.1.5 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.5 | design-v1.1 + user remarks | 2026-10-07 | Site v1.1.5: "באים בלבן" no longer says which colour not to bring; "להזמין לפתוח מעגלים נוספים" in the kit and the guide. |
 | t2.1.4 | design-v1.1 + user remarks | 2026-10-07 | Site v1.1.4, kit reorganised into six foldable parts (`<details class="part">`: prepare, invite, the circle, after the circle, election day, safety & privacy); "after the circle" follows the flow. Closed, the part titles with a one-line subtitle act as the page's table of contents; "לפתוח הכול" toggles all; a link or hash into a part opens it (`openParents` in `main.js`, also on in-place navigation); `beforeprint` opens everything. Kit PDF: print-only table of contents with page numbers (two render passes; pages found through invisible `KITPART <id> KITEND` marks with `pdftotext`), page numbers in the footer, and the printable sign appended (`pdfunite`). The sign's QR falls back to the public address when opened from disk. |
 | t2.1.3 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.3: the kit's materials list has "רמקול קטן" and "מחצלת" as two items. |
 | t2.1.2 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.2: the kit's group section just says "זה לוקח שתי דקות" (the note that WhatsApp has no link that creates a group stays in the docs, not on the page). |
