@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.20 · **Site version:** v1.1.20 (shown in every page footer)
+**Tech doc version:** t2.1.21 · **Site version:** v1.1.21 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -26,7 +26,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | File | Page | Release § |
 |---|---|---|
 | `index.html` | Home: hero (its play button starts the central meditation), "the idea" (`#idea`, with a healing paragraph and an "עוד על המיזם" link, v1.0.7), three ways (listen, plan, practice together → kit, v1.1.0). The voting-plan teaser and the short about section were removed in v1.0.7 (user request) | §8 "home page structure", §10 "הרעיון" |
-| `meditations.html` | Three meditations, labelled "קול ממוחשב (AI)" | §8, §9 "בעמוד המדיטציות", §10 |
+| `meditations.html` | Four meditations (since v1.1.21: behind-the-curtain, clarity-in-the-noise, arrive-present, my-community), each labelled "קול ממוחשב (AI)" | §8, §9 "בעמוד המדיטציות", §10 |
 | `plan.html` | Voting plan; dedications include "לארץ הזאת" | §8, §10 "הקדשות" |
 | `host-kit.html` | "לפתוח מעגל" (v1.0.4; was "ערכת מארח/ת"; file name kept so links still work): detailed kit (release `design-v1-content/host-kit.md`), see A7 | §8, §10 "ערכת מארח/ת מפורטת" |
 | `election-day.html` | 27.10: morning circles (with a link to the host kit), "on the way" meditation, polling-place link | §8, §10 "עמוד יום הבחירות" |
@@ -153,6 +153,7 @@ After design-v1 (site v1.0.1, waiting for a design release, question #11):
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.21 | design-v1.1 + user decisions | 2026-10-07 | Site v1.1.21: meditations updated. New recordings (ElevenLabs, same voice; voice tracks made outside the repo and mixed here with `mix-meditation-audio.py`, which now mixes only the ids given): `clarity-in-the-noise` rewritten (≈4 min, 16 stanzas), `arrive-present` "להגיע נוֹכְחִים" (≈5 min, 19 stanzas) replacing `on-the-way-to-vote` (audio, JSON and site script removed; the design script stays as history), and `my-community` "הקהילה שלי" (≈4.4 min, 17 stanzas). Updated everywhere they are named: meditations page (cards, descriptions, script panels, "קול ממוחשב (AI)" tags), player list, plan page options and "before you go" link, plan.js minutes, election-day page ("מדיטציה לפני היציאה"), kit (election-day part), home card text, countdown caption. Old links to `#on-the-way-to-vote` scroll to and open `arrive-present` (anchor kept, alias in `player.js`). |
 | t2.1.20 | design-v1.1 + user request | 2026-10-07 | Site v1.1.20: contact form topics (required radio chips: teacher wanting to record, circle question or story, incident report, removal request, other), each with a one-line hint; the email subject names the topic; `?topic=<key>` preselects one. For "מורה: להקליט מדיטציה" the reply field becomes required and its hint changes. Meditations page: a callout for teachers who want to record, linking to `about.html?topic=meditation#contact`. Tested with the API mocked (preselect, required reply, subject sent). |
 | t2.1.19 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.19: the memorial line shows on the home page only (hidden when `main` has no `.hero`, checked on load and on every in-place navigation). |
 | t2.1.18 | design-v1.1 + user remark | 2026-10-07 | Site v1.1.18: the memorial line is just the candle, "3 שנים ל-7 באוקטובר" and the X; lower (4 px padding, 18×24 candle, 40 px close button). |

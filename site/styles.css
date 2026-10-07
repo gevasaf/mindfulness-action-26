@@ -493,3 +493,4 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 .form-status.ok { color: var(--sage-ink); }
 .form-status.err { color: var(--clay-ink); }
 .suggest-med { margin-top: 32px; }
+.old-anchor { display: block; position: relative; top: -80px; }

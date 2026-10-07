@@ -19,7 +19,7 @@ window.onPage(function () {
     afternoon: { label: "אחר הצהריים", time: "16:00" },
     evening: { label: "בערב", time: "19:00" }
   };
-  var MED_MINUTES = { "on-the-way-to-vote": 2, "behind-the-curtain": 7, "clarity-in-the-noise": 3 };
+  var MED_MINUTES = { "arrive-present": 5, "behind-the-curtain": 7, "clarity-in-the-noise": 4, "my-community": 4 };
 
   var out = document.getElementById("plan-result");
   function pc(name) { return out.querySelector('[data-pc="' + name + '"]'); }

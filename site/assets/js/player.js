@@ -12,7 +12,8 @@
   var MEDITATIONS = {
     "behind-the-curtain": { title: "מאחורי הפרגוד", file: "מאחורי-הפרגוד.mp3" },
     "clarity-in-the-noise": { title: "בהירות בתוך הרעש", file: "בהירות-בתוך-הרעש.mp3" },
-    "on-the-way-to-vote": { title: "בדרך לקלפי", file: "בדרך-לקלפי.mp3" }
+    "arrive-present": { title: "להגיע נוֹכְחִים", file: "להגיע-נוכחים.mp3" },
+    "my-community": { title: "הקהילה שלי", file: "הקהילה-שלי.mp3" }
   };
   window.MEDITATIONS = MEDITATIONS;
   var AUDIO_DIR = "content/meditations/audio/";
@@ -263,6 +264,7 @@
   function playFromHash() {
     if (!/meditations\.html$/.test(location.pathname)) return;
     var id = decodeURIComponent(location.hash.slice(1));
+    if (id === "on-the-way-to-vote") id = "arrive-present";   // replaced on 7.10; old shared links still work
     if (MEDITATIONS[id] && id !== current) play(id);
   }
   window.onPage(playFromHash);
