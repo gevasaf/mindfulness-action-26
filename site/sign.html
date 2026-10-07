@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>שלט להדפסה · נוֹכְחִים</title>
-<meta name="description" content="שלט להדפסה למעגל נשימה של חצי שעה לקראת הבחירות, עם קוד QR לאתר.">
+<meta name="description" content="שלט להדפסה למעגל נשימה של חצי שעה לקראת הבחירות, עם קוד QR לאתר, ואם רוצים גם לקבוצת הוואטסאפ של המעגל.">
+<script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/print.css?v=1.0.13">
+<link rel="stylesheet" href="assets/print.css?v=1.1.0">
 <style>
   .sign { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 0; }
   .sign .mark { width: 70px; height: 70px; border-radius: 50%; border: 3px solid #6f8a72; background: #e6ece4; margin: 6mm 0 4mm; }
@@ -20,11 +21,33 @@
   .qr-wrap { display: flex; align-items: center; gap: 8mm; margin: 0 0 10mm; text-align: start; }
   .qr svg { width: 42mm; height: 42mm; display: block; }
   .qr-wrap p { font-size: 18px; max-width: 70mm; margin: 0; }
+  .qrs { display: flex; align-items: center; justify-content: center; gap: 12mm; margin: 0 0 10mm; }
+  .qrs[hidden], .qr-wrap[hidden] { display: none; }
+  .qr-group { display: flex; align-items: center; gap: 6mm; text-align: start; }
+  .qr-group .qr svg { width: 55mm; height: 55mm; }
+  .qr-group p { font-size: 22px; font-weight: 700; max-width: 55mm; margin: 0; line-height: 1.35; }
+  .qr-small { display: flex; flex-direction: column; align-items: center; gap: 2mm; font-size: 14px; color: #625d55; }
+  .qr-small .qr svg { width: 24mm; height: 24mm; }
   .neutral { font-size: 18px; background: #f4e4dc; border-radius: 10px; padding: 4mm 6mm; margin: 0; }
+  .sign.has-group h1 { font-size: 64px; margin-top: 3mm; }
+  .sign.has-group .soft { margin-bottom: 7mm; }
+  .sign.has-group .fill { margin-bottom: 8mm; }
+  .group-field { max-width: 210mm; margin: 10px auto 0; padding: 12px 8px 0; border-top: 1px solid #d8d1c4; font-size: .95rem; }
+  .group-field label { display: block; font-weight: 600; margin-bottom: 4px; }
+  .group-field input { width: 100%; max-width: 420px; font: inherit; padding: 10px 12px; border: 1px solid #c9c1b3; border-radius: 10px; background: #fffdf9; color: #2b2925; direction: ltr; text-align: left; min-height: 44px; }
+  .group-field .hint { display: block; color: #625d55; margin-top: 4px; }
+  .group-field .err { color: #9a4f33; margin-top: 4px; }
+  @media print { .group-field { display: none; } }
 </style>
 </head>
 <body>
 <div class="toolbar"><span>ממלאים ביד את היום, השעה והמקום, ומדפיסים.</span><span><button class="btn secondary" type="button" onclick="window.print()">להדפסה</button> <a href="host-kit.html">לערכה לפתיחת מעגל</a></span></div>
+<div class="group-field">
+  <label for="group-link">קישור לקבוצת הוואטסאפ של המעגל (לא חובה)</label>
+  <input id="group-link" type="url" inputmode="url" autocomplete="off" spellcheck="false" placeholder="https://chat.whatsapp.com/..." aria-describedby="group-hint group-err">
+  <span class="hint" id="group-hint">עם קישור, על השלט יופיע קוד QR גדול להצטרפות לקבוצה, ולידו QR קטן לאתר. הקישור נשאר בדפדפן שלך: לא נשמר ולא נשלח לשום מקום. איך פותחים קבוצה: <a href="host-kit.html#group">בערכה</a>.</span>
+  <p class="err" id="group-err" role="alert" hidden>זה לא נראה כמו קישור הזמנה לקבוצת וואטסאפ. הקישור מתחיל ב-https://chat.whatsapp.com/</p>
+</div>
 <main class="sheet sign" id="main">
   <div class="mark" aria-hidden="true"></div>
   <p class="brand">נוֹכְחִים</p>
@@ -33,21 +56,54 @@
   <p class="lead">חצי שעה של שקט, מדיטציה קצרה ושיתוף במילה אחת. יחד.</p>
   <p class="soft">כל מי שגר כאן מוזמן/ת לשבת איתנו. לא צריך ניסיון.</p>
   <div class="fill"><div>מתי:<span></span></div><div>איפה:<span></span></div></div>
-  <div class="qr-wrap">
+  <div class="qr-wrap" id="qr-site-only">
     <div class="qr" id="qr" role="img" aria-label="קוד QR לאתר"></div>
-    <p>מדיטציות קצרות ותוכנית הצבעה אישית:<br><b id="qr-url"></b></p>
+    <p>מדיטציות קצרות ותוכנית הצבעה אישית:<br><b class="qr-url"></b></p>
+  </div>
+  <div class="qrs" id="qr-both" hidden>
+    <div class="qr-group">
+      <div class="qr" id="qr-group" role="img" aria-label="קוד QR להצטרפות לקבוצת הוואטסאפ של המעגל"></div>
+      <p>סורקים<br>ומצטרפים<br>לקבוצה של המעגל</p>
+    </div>
+    <div class="qr-small">
+      <div class="qr" id="qr-site" role="img" aria-label="קוד QR לאתר"></div>
+      <span>מדיטציות ותוכנית הצבעה</span>
+    </div>
   </div>
   <p class="neutral">אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
-  <div class="sheet-foot"><span>גרסה v1.0.13</span><span>נוֹכְחִים</span></div>
+  <div class="sheet-foot"><span>גרסה v1.1.0</span><span>נוֹכְחִים · מעגל עצמאי, באחריות מי שפתח/ה אותו</span></div>
 </main>
 <script src="assets/js/vendor/qrcode.js"></script>
 <script>
-  // QR points at the site's home page, wherever it is hosted.
   (function () {
-    var url = new URL("./", location.href).href;
-    var q = qrcode(0, "M"); q.addData(url); q.make();
-    document.getElementById("qr").innerHTML = q.createSvgTag({ cellSize: 4, margin: 0, scalable: true });
-    document.getElementById("qr-url").textContent = url.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    function svg(text) { var q = qrcode(0, "M"); q.addData(text); q.make(); return q.createSvgTag({ cellSize: 4, margin: 0, scalable: true }); }
+    // The site QR points at the home page, wherever it is hosted, tagged so visits from signs can be counted (GoatCounter campaign).
+    var home = new URL("./", location.href).href;
+    var siteQr = svg(home + "?utm_source=sign");
+    document.getElementById("qr").innerHTML = siteQr;
+    document.getElementById("qr-site").innerHTML = siteQr;
+    Array.prototype.forEach.call(document.querySelectorAll(".qr-url"), function (el) {
+      el.textContent = home.replace(/^https?:\/\//, "").replace(/\/$/, "");
+    });
+
+    // Optional WhatsApp group link: only chat.whatsapp.com invite links. Kept in the page, never stored or sent.
+    var input = document.getElementById("group-link"), err = document.getElementById("group-err");
+    var sheet = document.getElementById("main"), only = document.getElementById("qr-site-only"), both = document.getElementById("qr-both");
+    function update() {
+      var v = input.value.trim(), ok = /^https:\/\/chat\.whatsapp\.com\/[A-Za-z0-9_-]{8,}\/?$/.test(v);
+      err.hidden = !v || ok;
+      input.setAttribute("aria-invalid", v && !ok ? "true" : "false");
+      if (ok) document.getElementById("qr-group").innerHTML = svg(v);
+      only.hidden = ok; both.hidden = !ok;
+      sheet.classList.toggle("has-group", ok);
+    }
+    input.addEventListener("input", update);
+    update();
+
+    // Anonymous count of printed signs, with or without a group QR (event name only, never the link).
+    window.addEventListener("beforeprint", function () {
+      try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: both.hidden ? "sign-print" : "sign-print-group", title: "sign-print", event: true }); } catch (e) {}
+    });
   })();
 </script>
 </body>

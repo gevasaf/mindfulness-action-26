@@ -6,7 +6,7 @@
 <title>דף הנחיה למעגל · נוֹכְחִים</title>
 <meta name="description" content="דף הנחיה של עמוד אחד למי שפותח/ת מעגל נשימה של חצי שעה.">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/print.css?v=1.0.13">
+<link rel="stylesheet" href="assets/print.css?v=1.1.0">
 <style>
   .guide { font-size: 13.5px; line-height: 1.55; }
   .guide h1 { font-size: 30px; margin: 0 0 1mm; }
@@ -20,8 +20,10 @@
   .flow td:first-child { white-space: nowrap; font-weight: 700; color: #4f6852; width: 16mm; }
   .say { background: #e6ece4; border-radius: 8px; padding: 3mm 4mm; margin: 2mm 0 0; }
   .help { background: #f4e4dc; border-radius: 8px; padding: 3mm 4mm; margin-top: 4mm; }
-  @media (max-width: 820px) { .cols { grid-template-columns: 1fr; } }
+  .indep { font-size: 12px; color: #625d55; margin: 4mm 0 0; }
+  @media screen and (max-width: 820px) { .cols { grid-template-columns: 1fr; } }
 </style>
+<script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
 <div class="toolbar"><span>עמוד אחד, להדפסה או לטלפון.</span><span><button class="btn secondary" type="button" onclick="window.print()">להדפסה</button> <a href="host-kit.html">לערכה לפתיחת מעגל</a></span></div>
@@ -34,7 +36,7 @@
       <h2>לפני המעגל</h2>
       <ul>
         <li>מקום ציבורי, פתוח ושקט, <b>הרחק מקלפיות</b>.</li>
-        <li>שני אנשים: <b>מנחה</b>, ו<b>מלווה</b> בעיניים פקוחות ששומר/ת על המעגל ושם/ה לב לסביבה, ולא מתרגל/ת.</li>
+        <li>שני אנשים: <b>מנחה</b>, ו<b>מלווה</b> בעיניים פקוחות ששומר/ת על המעגל ושם/ה לב לסביבה, ולא מתרגל/ת. ואם רוצים, <b>צלם/ת</b>: משתתף/ת אחר/ת, לא המלווה.</li>
         <li>טלפון עם מדיטציה מהאתר ("להורדה"), ורמקול קטן.</li>
         <li>מחצלת למי שאין, והשלט עם קוד ה-QR.</li>
         <li>להכיר את קווי הסיוע שבתחתית הדף.</li>
@@ -54,7 +56,8 @@
 
       <h2>אחרי המעגל: להעביר הלאה</h2>
       <ul>
-        <li><b>לשתף ברשתות:</b> תמונה אחת ומשפט על החוויה, עם קישור לאתר. רק מאחור, מרחוק, או ברשות, בלי פנים של מי שלא הסכים.</li>
+        <li><b>לשתף ברשתות:</b> תמונה אחת ומשפט על החוויה, עם <b>#לפני_שבוחרים_נושמים</b> וקישור לאתר.</li>
+        <li><b>צילום:</b> מאחור או מרחוק. פנים רק ברשות של כל מי שבתמונה. בלי פנים של ילדים, בלי כתובת של בית פרטי, ולא ליד קלפי.</li>
         <li><b>להזמין לפתוח מעגל משלהם:</b> בשכונה, בעבודה או עם המשפחה. כל מה שצריך נמצא באתר, בעמוד "לפתוח מעגל".</li>
       </ul>
     </div>
@@ -67,7 +70,7 @@
         <tr><td>7–10 דק'</td><td>מדיטציה: מוקלטת מהאתר, או מונחית בקול שלך</td></tr>
         <tr><td>4 דק'</td><td>סבב במילה אחת: מה אני מרגיש/ה עכשיו? מותר לוותר.</td></tr>
         <tr><td>5 דק'</td><td>פינת הקשבה (אופציונלי): בזוגות, "מה חשוב לי בתקופה הזו", והשני רק מקשיב</td></tr>
-        <tr><td>2 דק'</td><td>סיום: נשימה אחת, תודה, והזמנה להכין תוכנית הצבעה באתר ולפתוח מעגל משלהם</td></tr>
+        <tr><td>2 דק'</td><td>סיום: נשימה אחת, תודה, והזמנה להכין תוכנית הצבעה באתר, לשתף ברשתות ולפתוח מעגל משלהם</td></tr>
       </table>
 
       <h2>בטיחות</h2>
@@ -89,7 +92,14 @@
       </div>
     </div>
   </div>
-  <div class="sheet-foot"><span>גרסה v1.0.13</span><span>אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</span></div>
+  <p class="indep">המעגל עצמאי, באחריות מי שפותח/ת אותו. נוֹכְחִים מציע ערכה והנחיות, אבל לא מארגן מעגלים ולא אחראי להם.</p>
+  <div class="sheet-foot"><span>גרסה v1.1.0</span><span>אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</span></div>
 </main>
+<script>
+  // Anonymous count of printed guides (GoatCounter, event name only).
+  window.addEventListener("beforeprint", function () {
+    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "guide-print", title: "guide-print", event: true }); } catch (e) {}
+  });
+</script>
 </body>
 </html>

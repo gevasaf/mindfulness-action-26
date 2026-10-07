@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<!-- Source of site/assets/group-image.png: the suggested WhatsApp group photo for a circle (640×640).
+     WhatsApp crops group photos to a circle, so everything sits inside the middle circle.
+     Regenerate with: node tech/tools/make-assets.mjs -->
+<link rel="stylesheet" href="../../site/styles.css">
+<style>
+  html, body { margin: 0; width: 640px; height: 640px; overflow: hidden; }
+  body { background: #f7f3ec; display: grid; place-items: center; }
+  .wrap { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .breath { width: 150px; height: 150px; border-radius: 50%; background: #e6ece4; border: 6px solid #6f8a72; box-shadow: 0 0 0 26px rgb(111 138 114 / 14%), 0 0 0 56px rgb(111 138 114 / 7%); margin-bottom: 70px; }
+  h1 { font-family: var(--brand-font); font-weight: 700; color: #2b2925; font-size: 50px; line-height: 1.15; margin: 0 0 14px; }
+  .brand { font-family: var(--brand-font); font-weight: 700; color: #4f6852; font-size: 30px; margin: 0; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="breath" aria-hidden="true"></div>
+    <h1>לפני שבוחרים,<br>נושמים</h1>
+    <p class="brand">נוֹכְחִים</p>
+  </div>
+</body>
+</html>

@@ -390,3 +390,29 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 
 .say-box { background: var(--card); border: 1px solid var(--line); border-inline-start: 4px solid var(--clay); border-radius: 10px; padding: 14px 18px; margin: 12px 0; line-height: 1.7; }
 .steps > li ul { margin: 6px 0 0; padding-inline-start: 18px; }
+
+/* Circle kit (v1.1): copy buttons, group image, hashtag */
+.copy-btn { margin: 0 0 4px; }
+.steps > li .say-box { margin: 10px 0; }
+.group-image { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: 10px; }
+.group-image img { width: 120px; height: 120px; border-radius: 50%; border: 1px solid var(--line); display: block; }
+.hashtag { white-space: nowrap; }
+
+/* Print (and the kit PDF, tech/tools/make-assets.mjs): content only, light colours, A4.
+   Site pages only: the printables (sign, guide) have their own sheet layout in print.css. */
+@media print {
+  @page { size: A4; margin: 14mm 12mm; }
+  :root { --paper: #fff; --card: #fff; --ink: #2b2925; --muted: #625d55; --line: #e2dbcf; --sage: #6f8a72; --sage-ink: #4f6852; --sage-soft: #e6ece4; --clay: #b9684a; --clay-ink: #9a4f33; --clay-soft: #f4e4dc; color-scheme: light; }
+  body:has(.site-header) { font-size: 12.5px; line-height: 1.5; padding-bottom: 0 !important; }
+  .skip, .site-nav, .menu-toggle, .no-print, .copy-btn, .pbar, .pfull, .site-footer .version a { display: none !important; }
+  .site-header { border: 0; }
+  .site-header .inner { padding: 0 0 4mm; }
+  .page, .section { padding: 0 !important; }
+  .page .inner, .section .inner, .site-header .inner, .site-footer .inner { max-width: none; padding: 0; }
+  .prose h1 { font-size: 26px; }
+  .prose h2 { font-size: 17px; margin-top: 7mm !important; break-after: avoid; }
+  .steps > li, .say-box, .callout, .prose li, .support li { break-inside: avoid; }
+  .support { background: none; border-top: 1px solid var(--line); margin-top: 6mm; padding-top: 4mm !important; }
+  .site-footer { padding: 4mm 0 0; }
+  .prose a, .support a, .site-footer a { color: inherit; text-decoration: none; }
+}

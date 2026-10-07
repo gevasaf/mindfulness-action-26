@@ -52,9 +52,18 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 | design-v2 | **F8. Map** (circles map, "pick a spot" when opening a circle) | (a) **MapLibre GL (self-hosted JS) + Protomaps vector tiles for the region, self-hosted, styled in the site palette with the boundary layer removed**: matches "quiet, palette colours" and the neutrality note (no border line drawn), no third-party map requests. (b) Leaflet + CARTO Positron tiles: quick, light grey, free for low traffic, but draws administrative boundaries and is a third-party request. (c) Leaflet + OpenStreetMap standard tiles: colourful, draws boundaries, usage policy limits. | **(a)**, with the full list/schedule view as the accessible alternative (design §14). | **(a) self-hosted, palette, no boundary lines** (user, 2026-10-06) |
 | design-v2 | **F9. Personal data** (verified phone numbers, teachers' names and photos) | Required by design: phone numbers only, no email, everything deleted by 30.11.2026. Needs a privacy notice on the site, consent texts reviewed by a lawyer (design §13 already says so), and a scheduled deletion job. | Build the privacy page and the 30.11 deletion job; the user arranges the legal review of the consent texts before launch. | **accepted**; lawyer review of consent texts is the user's (2026-10-06) |
 
+### Decided for design-v1.1 (2026-10-07, no new service)
+| Feature | Options considered | User decision |
+|---|---|---|
+| **F10. Page of social posts by hashtag** | Automatic collection needs a server and platform API access (Instagram: business account, app review, server-side token; X: paid API; TikTok and Facebook: no public hashtag search). Embeds load the platforms' tracking scripts. Manual curation would stay static. | **Dropped** (user, 2026-10-07): technically problematic, and unclear and unattractive as a page. |
+| **F11. Link that creates a WhatsApp group** for a circle | Not possible: WhatsApp links can open a chat or share text, not create a group (group creation exists only in the business API). | Kit gives steps plus copy buttons and a group image. |
+| **F12. Circle group QR on the sign** | Generated in the browser with the existing self-hosted QR library; the link is never stored or sent. | Built (fits the stack). |
+| **F13. Measurement without registration** | Existing GoatCounter: anonymous events for kit PDF, prints and copies; `utm_source=sign` on the sign's QR. Posts with the hashtag counted by hand, no data about who posts. | Built (within F3). |
+
 ## Stack change log
 | Date | Change | Reason | Approved by user |
 |---|---|---|---|
+| 2026-10-07 | `tech/tools/make-assets.mjs` (Playwright, Pillow) renders the kit PDF, the teachers' call PDF and the circle group image; GoatCounter also on the printables | design-v1.1 | within current stack |
 | 2026-10-07 | Server stack (F4–F9) shelved, never deployed | design-v2 dropped | yes |
 | 2026-10-06 | Supabase (DB, storage, phone OTP, RLS, edge functions), Twilio Verify SMS, Cloudflare Turnstile, GitHub Actions worker (ffmpeg mix, ElevenLabs Scribe, Claude Opus 5.5), self-hosted MapLibre + Protomaps tiles | design-v2 (F4–F9) | yes |
 | 2026-10-06 | Initial stack: static HTML/CSS/JS on GitHub Pages | Simplest start | yes |

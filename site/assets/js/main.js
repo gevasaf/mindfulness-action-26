@@ -158,6 +158,43 @@
     });
   });
 
+  // Circle kit (v1.1): "copy" buttons for the group name, description, invitation and post;
+  // anonymous counts on downloads (data-count="<event>"); the site's own address in the texts.
+  window.onPage(function kitTools() {
+    if (/^https?:$/.test(location.protocol)) {
+      var site = new URL("./", location.href).href.replace(/^https?:\/\//, "").replace(/\/$/, "");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-site-url]"), function (el) { el.textContent = site; });
+    }
+    Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function (a) {
+      if (a.dataset.bound) return;
+      a.dataset.bound = "1";
+      a.addEventListener("click", function () { window.countEvent(a.getAttribute("data-count")); });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = "1";
+      var label = btn.textContent;
+      btn.addEventListener("click", function () {
+        var src = document.getElementById(btn.getAttribute("data-copy"));
+        if (!src) return;
+        var text = src.innerText.trim();
+        var done = function () {
+          btn.textContent = "הועתק ✓";
+          setTimeout(function () { btn.textContent = label; }, 2000);
+        };
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () { selectText(src); });
+        } else selectText(src);
+        window.countEvent("kit-copy-" + btn.getAttribute("data-copy"));
+      });
+    });
+    // No clipboard access: select the text so it can be copied by hand.
+    function selectText(el) {
+      var r = document.createRange(); r.selectNodeContents(el);
+      var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r);
+    }
+  });
+
   // Hero video strip (design-v0 §7): a pre-rendered ping-pong loop, no sound.
   // Skipped (poster image only) for reduced motion, data saver or slow connections.
   window.onPage(function heroVideo() {
