@@ -253,6 +253,9 @@ main { display: block; }
 .on-med-page .chev { transform: rotate(180deg); }
 .pbar-title:hover { text-decoration: underline; }
 .pbar-meta { font-size: .8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pbar-voice { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pfull-head { min-width: 0; }
+.pfull-voice { font-size: .9rem; color: var(--muted); margin-top: 2px; }
 .pseek { display: block; width: 100%; margin: 0; height: 18px; accent-color: var(--sage-ink); cursor: pointer; }
 .pbar .pseek { height: 14px; margin-top: -7px; }
 body.has-pbar { padding-bottom: 92px; }
@@ -291,7 +294,7 @@ html.pfull-open, html.pfull-open body { overflow: hidden; }
 .pfull-caption p.on { opacity: 1; }
 .pfull-controls { width: min(560px, 100%); margin: 0 auto; padding: 0 20px calc(28px + env(safe-area-inset-bottom)); }
 .pfull-row { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 10px; position: relative; }
-@media (max-width: 520px) { .pfull-row { gap: 6px; } .pfull-note { display: none; } .pfull-time { min-width: 0; } }
+@media (max-width: 520px) { .pfull-row { gap: 6px; } .pfull-time { min-width: 0; } }
 .pfull-time { font-size: .85rem; color: var(--muted); font-variant-numeric: tabular-nums; min-width: 84px; text-align: center; }
 @media (prefers-reduced-motion: reduce) {
   .pfull-bg span { animation: none; }
