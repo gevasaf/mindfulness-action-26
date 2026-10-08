@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.23 · **Site version:** v1.1.23 (shown in every page footer)
+**Tech doc version:** t2.1.30 · **Site version:** v1.1.30 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -26,7 +26,7 @@ Flat, static pages in `site/`, one shared header (brand + nav) and footer (suppo
 | File | Page | Release § |
 |---|---|---|
 | `index.html` | Home: hero (its play button starts the central meditation), "the idea" (`#idea`, with a healing paragraph and an "עוד על המיזם" link, v1.0.7), three ways (listen, plan, practice together → kit, v1.1.0). The voting-plan teaser and the short about section were removed in v1.0.7 (user request) | §8 "home page structure", §10 "הרעיון" |
-| `meditations.html` | Four meditations (since v1.1.22: behind-the-curtain, clarity-in-the-noise, arrive-present, my-community), each labelled "קול ממוחשב (AI)" | §8, §9 "בעמוד המדיטציות", §10 |
+| `meditations.html` | Five meditations (v1.1.22: behind-the-curtain, clarity-in-the-noise, arrive-present, my-community; v1.1.30: imagine-good), each labelled "קול ממוחשב (AI)" | §8, §9 "בעמוד המדיטציות", §10 |
 | `plan.html` | Voting plan; dedications include "לארץ הזאת" | §8, §10 "הקדשות" |
 | `host-kit.html` | "לפתוח מעגל" (v1.0.4; was "ערכת מארח/ת"; file name kept so links still work): detailed kit (release `design-v1-content/host-kit.md`), see A7 | §8, §10 "ערכת מארח/ת מפורטת" |
 | `election-day.html` | 27.10: morning circles (with a link to the host kit), "on the way" meditation, polling-place link | §8, §10 "עמוד יום הבחירות" |
@@ -174,6 +174,7 @@ When teachers' recordings arrive, each gets its own id, and the existing events 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.30 | design-v1.1 + user request | 2026-10-08 | Site v1.1.30: fifth meditation `imagine-good` "לדמיין טוב" (hope, ≈1.5 min, 8 stanzas; ElevenLabs voice recorded outside the repo, mixed with `mix-meditation-audio.py`). Card with script panel and "קול ממוחשב (AI)" tag on the meditations page, player list, plan options and minutes, home "להאזין" card text. |
 | t2.1.29 | design-v1.1 + user request | 2026-10-07 | Site v1.1.29: a "דף הנחיה" button joins the two at the top of the kit page (PDF, sign). |
 | t2.1.28 | design-v1.1 + user request | 2026-10-07 | Site v1.1.28: wording left over from the dropped server direction (v2) cleaned up. Kit "זמן": the one-off / weekly choice (a v2 form field) became a suggestion ("אפשר פעם אחת, ואפשר גם להפוך את זה להרגל שבועי"), "זה קבוע" dropped from the half hour, and the election-day bullet shortened to a pointer to part 6 (it repeated it). Kit "מקום": private homes no longer say "on your own responsibility" or "a general point" (from the v2 map); publish only the neighbourhood, give the address to those who join. Kit safety: reporting an incident is now an option ("אם קרה משהו חריג שכדאי שנדע"). Election-day page: the callout no longer promises anything about independent circles ("המעגלים מתקיימים הרחק מהקלפיות. נוֹכְחִים לא פועל..."). Same in `design/content/host-kit.md`; kit PDF regenerated. |
 | t2.1.27 | design-v1.1 + user request | 2026-10-07 | Site v1.1.27, kit PDF: the circle guide (`host-guide.html`) is appendix A and the sign appendix B; both listed in the print table of contents (appendices unnumbered: `li:has(.toc-t)`), and a print-only line under "מה להביא" says the guide and the sign are at the end of the booklet. `make-assets.mjs` renders the guide once to count its pages, then both appendices with their page numbers in the footer. |

@@ -13,7 +13,8 @@
     "behind-the-curtain": { title: "מאחורי הפרגוד", file: "מאחורי-הפרגוד.mp3" },
     "clarity-in-the-noise": { title: "בהירות בתוך הרעש", file: "בהירות-בתוך-הרעש.mp3" },
     "arrive-present": { title: "להגיע נוֹכְחִים", file: "להגיע-נוכחים.mp3" },
-    "my-community": { title: "הקהילה שלי", file: "הקהילה-שלי.mp3" }
+    "my-community": { title: "הקהילה שלי", file: "הקהילה-שלי.mp3" },
+    "imagine-good": { title: "לדמיין טוב", file: "לדמיין-טוב.mp3" }
   };
   window.MEDITATIONS = MEDITATIONS;
   var AUDIO_DIR = "content/meditations/audio/";
