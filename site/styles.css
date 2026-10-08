@@ -494,3 +494,9 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 .form-status.err { color: var(--clay-ink); }
 .suggest-med { margin-top: 32px; }
 .old-anchor { display: block; position: relative; top: -80px; }
+
+/* Add to home screen: the quiet line (shares the memorial line's look) and the how-to text */
+.a2hs .btn-link { min-height: 40px; padding: 4px 2px; }
+.a2hs-how { margin: 0; color: var(--ink); }
+[data-a2hs-static][hidden] { display: none; }
+[data-a2hs-static] .a2hs-how { margin-top: 10px; color: var(--muted); }
