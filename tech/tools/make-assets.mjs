@@ -6,6 +6,7 @@
 //                                                                          circle guide, appendix B the sign)
 //   tech/tools/group-image.html       -> site/assets/group-image.png        (suggested WhatsApp group photo, 640×640)
 //   tech/tools/share-image.html       -> site/assets/share.jpg              (link preview image, Open Graph, 1200×630)
+//   site/assets/icon.svg              -> site/assets/icons/*.png            (home-screen icons: 180, 192, 512)
 //
 // Run from the repo root after changing any source:  node tech/tools/make-assets.mjs
 // Needs the `playwright` npm package and a Chromium it can find (PLAYWRIGHT_BROWSERS_PATH), Python with Pillow
@@ -16,7 +17,7 @@ import { createRequire } from "node:module";
 import { pathToFileURL } from "node:url";
 import { resolve, join } from "node:path";
 import { execFileSync } from "node:child_process";
-import { mkdtempSync, rmSync } from "node:fs";
+import { mkdtempSync, rmSync, readFileSync, mkdirSync } from "node:fs";
 import { tmpdir } from "node:os";
 
 // require() so a globally installed playwright is found through NODE_PATH too
@@ -117,6 +118,18 @@ await open("tech/tools/share-image.html");
 await page.setViewportSize({ width: 1200, height: 630 });
 await page.screenshot({ path: "site/assets/share.jpg", type: "jpeg", quality: 82 });
 console.log("wrote site/assets/share.jpg");
+
+// 5. Home-screen icons (web app manifest and iOS): the site icon on the page colour, full bleed, with the
+//    circle inside the central safe zone so the same image works as a "maskable" icon.
+mkdirSync("site/assets/icons", { recursive: true });
+const iconSvg = readFileSync("site/assets/icon.svg", "utf8");
+for (const [size, name] of [[180, "apple-touch-icon.png"], [192, "icon-192.png"], [512, "icon-512.png"]]) {
+  await page.setViewportSize({ width: size, height: size });
+  await page.setContent(`<body style="margin:0;width:${size}px;height:${size}px;background:#f7f3ec;display:grid;place-items:center">` +
+    iconSvg.replace("<svg ", `<svg width="${Math.round(size * 0.66)}" height="${Math.round(size * 0.66)}" `) + "</body>");
+  await page.screenshot({ path: `site/assets/icons/${name}` });
+  console.log(`wrote site/assets/icons/${name}`);
+}
 
 await browser.close();
 rmSync(tmp, { recursive: true, force: true });

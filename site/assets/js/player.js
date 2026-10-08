@@ -226,6 +226,15 @@
   audio.addEventListener("pause", syncButtons);
   audio.addEventListener("timeupdate", tick);
   audio.addEventListener("loadedmetadata", tick);
+  // Offline (the audio is never stored): say so instead of a silent play button
+  audio.addEventListener("error", function () {
+    if (!current || navigator.onLine !== false) return;
+    var msg = "אין חיבור לאינטרנט. המדיטציות צריכות חיבור.";
+    each("title", function (a) { a.querySelector(".ptitle-text").textContent = msg; });
+    setCaption(msg);
+    current = null;
+    syncButtons();
+  });
   audio.addEventListener("ended", function () {
     window.countEvent("listen-complete-" + current);
     window.rememberMeditation(current);

@@ -11,6 +11,7 @@
 | Fonts | **Self-hosted** Assistant + Frank Ruhl Libre, plus M PLUS Rounded 1c for the brand name (v1.0.1) and all titles (v1.0.6) (Hebrew subset with niqqud, 5 KB, + Latin subset, 22 KB) (woff2, SIL OFL) in `site/assets/fonts/` | No third-party requests; fast. |
 | Navigation (v0.2) | Vanilla JS in-place navigation (swap `<main>`, History API) | Lets the meditation player keep playing across pages. No framework, no build step; plain page loads without JS. |
 | Third-party code | `site/assets/js/vendor/qrcode.js` (qrcode-generator, MIT), self-hosted | QR on the printable sign. |
+| Offline / home screen (v1.1.31) | Web app manifest + a small service worker (`site/sw.js`), plain JS | Opens without a connection and from a home-screen icon. Static files only, nothing sent. |
 | Audio (v0) | Pre-rendered MP3s in `site/content/meditations/audio/` (ElevenLabs voice + generated music, mono 80 kbps) with stanza timing JSON, played by the global player (`player.js`) | Shareable files, same voice everywhere. See F1. |
 
 ### One-time setup (repo owner)
@@ -64,6 +65,7 @@ Third-party embeds keep us on Pages, but they are still a decision (privacy, cos
 ## Stack change log
 | Date | Change | Reason | Approved by user |
 |---|---|---|---|
+| 2026-10-08 | Web app manifest and offline service worker | add to home screen, open without a connection | within current stack (user asked) |
 | 2026-10-07 | Web3Forms contact form on the About page (F14) | contact without publishing a phone or email | yes |
 | 2026-10-07 | `tech/tools/make-assets.mjs` (Playwright, Pillow) renders the kit PDF, the teachers' call PDF and the circle group image; GoatCounter also on the printables | design-v1.1 | within current stack |
 | 2026-10-07 | Server stack (F4–F9) shelved, never deployed | design-v2 dropped | yes |

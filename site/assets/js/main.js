@@ -455,5 +455,15 @@
     Array.prototype.forEach.call(document.querySelectorAll("details.part"), function (d) { d.open = true; });
   });
 
+  // Offline: a service worker keeps the pages, styles and fonts (not the audio). Secure origins only.
+  if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) {
+    window.addEventListener("load", function () { navigator.serviceWorker.register("sw.js").catch(function () {}); });
+  }
+
+  // Home screen: the browser's own install banner is held back; the site offers it only at its own
+  // moments (window.installPrompt, Android/Chrome). Installs and launches from the icon are counted.
+  window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); window.installPrompt = e; });
+  window.addEventListener("appinstalled", function () { window.installPrompt = null; window.countEvent("home-screen-added"); });
+
   document.addEventListener("DOMContentLoaded", runInits);
 })();
