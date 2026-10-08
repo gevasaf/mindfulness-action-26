@@ -460,14 +460,14 @@
   // (localStorage, never sent), and from another day on a quiet line with an X appears under the header,
   // on phones only and never once the site runs from the icon. Its link or its X ends it for good.
   // The election-day page has the same offer as a fixed part of the page ([data-a2hs-static]).
+  // ?homescreen previews the line on any device, without storing anything.
   var A2HS_DONE = "home-screen-done", FIRST_DAY = "first-visit-day";
   var standalone = (window.matchMedia && matchMedia("(display-mode: standalone)").matches) || navigator.standalone === true;
   var isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
   function a2hsDone() { try { localStorage.setItem(A2HS_DONE, "1"); } catch (e) {} }
   // The browser's install dialog where there is one (Android, Chrome); otherwise a short how-to in `how`.
-  function addToHome(how, where) {
-    window.countEvent("home-screen-click-" + where);
-    a2hsDone();
+  function addToHome(how, where, preview) {
+    if (!preview) { window.countEvent("home-screen-click-" + where); a2hsDone(); }
     if (window.installPrompt) {
       var p = window.installPrompt; window.installPrompt = null;
       p.prompt();
@@ -481,37 +481,38 @@
   }
 
   (function homeScreenLine() {
-    if (standalone) return;
+    var preview = /[?&]homescreen\b/.test(location.search);
+    if (standalone && !preview) return;
     var today = "";
     try { today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Jerusalem" }).format(new Date()); } catch (e) { return; }
-    try {
+    if (!preview) try {
       if (localStorage.getItem(A2HS_DONE)) return;
       var first = localStorage.getItem(FIRST_DAY);
       if (!first) { localStorage.setItem(FIRST_DAY, today); return; }
       if (first === today) return;
     } catch (e) { return; }
-    if (!(window.matchMedia && matchMedia("(pointer: coarse)").matches)) return;
+    if (!preview && !(window.matchMedia && matchMedia("(pointer: coarse)").matches)) return;
     var header = document.querySelector(".site-header");
     if (!header) return;
     var el = document.createElement("aside");
     el.className = "memorial a2hs";
     el.setAttribute("aria-label", "הוספה למסך הבית");
     el.innerHTML =
-      '<p>לחזור לנשימה בלחיצה אחת: <button type="button" class="btn-link a2hs-add">להוסיף למסך הבית</button></p>' +
+      '<img class="a2hs-ic" src="assets/icons/icon-192.png" alt="" width="22" height="22">' +
+      '<p>נשימה בלחיצה אחת: <button type="button" class="btn-link a2hs-add">להוסיף למסך הבית</button></p>' +
       '<p class="a2hs-how" hidden></p>' +
       '<button type="button" class="memorial-close" aria-label="סגירה" title="סגירה">' +
         '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12l5.6 5.6-1.4 1.4L12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z"/></svg>' +
       "</button>";
     var memorialLine = document.querySelector(".memorial:not(.a2hs)");
     (memorialLine || header).insertAdjacentElement("afterend", el);
-    window.countEvent("home-screen-offer");
+    if (!preview) window.countEvent("home-screen-offer");
     el.querySelector(".a2hs-add").addEventListener("click", function () {
-      if (addToHome(el.querySelector(".a2hs-how"), "line")) el.remove();
+      if (addToHome(el.querySelector(".a2hs-how"), "line", preview)) el.remove();
       else el.querySelector("p").hidden = true;
     });
     el.querySelector(".memorial-close").addEventListener("click", function () {
-      window.countEvent("home-screen-dismiss");
-      a2hsDone();
+      if (!preview) { window.countEvent("home-screen-dismiss"); a2hsDone(); }
       el.remove();
     });
   })();

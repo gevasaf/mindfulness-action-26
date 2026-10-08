@@ -498,5 +498,14 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 /* Add to home screen: the quiet line (shares the memorial line's look) and the how-to text */
 .a2hs .btn-link { min-height: 40px; padding: 4px 2px; }
 .a2hs-how { margin: 0; color: var(--ink); }
-[data-a2hs-static][hidden] { display: none; }
-[data-a2hs-static] .a2hs-how { margin-top: 10px; color: var(--muted); }
+.a2hs .a2hs-ic { width: 22px; height: 22px; border-radius: 6px; flex: none; }
+.memorial.a2hs { padding-inline-start: 12px; }
+.a2hs-card { display: flex; gap: 20px; align-items: flex-start; margin: 36px 0 8px; padding: 22px; border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--sage-soft), var(--card)); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.a2hs-card h2 { margin: 0 0 6px; font-size: 1.35rem; }
+.a2hs-card p { margin: 0 0 14px; }
+.a2hs-card .a2hs-how { margin: 12px 0 0; color: var(--muted); }
+.a2hs-app { flex: none; display: grid; justify-items: center; gap: 6px; font-size: .8rem; color: var(--muted); }
+.a2hs-app img { width: 64px; height: 64px; border-radius: 16px; box-shadow: 0 4px 14px rgb(0 0 0 / .12); }
+@media (max-width: 480px) { .a2hs-card { padding: 18px; gap: 14px; } .a2hs-card h2 { font-size: 1.15rem; } .a2hs-app img { width: 52px; height: 52px; border-radius: 13px; } }
+@media print { .a2hs-card { display: none; } }
