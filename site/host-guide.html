@@ -18,7 +18,7 @@
 <meta property="og:image:alt" content="לפני שבוחרים, נושמים · מיינדפולנס לקראת הבחירות לכנסת · 27.10 · נוֹכְחִים">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="assets/print.css?v=1.1.22">
+<link rel="stylesheet" href="assets/print.css?v=1.1.23">
 <style>
   .guide { font-size: 13.5px; line-height: 1.55; }
   .guide h1 { font-size: 30px; margin: 0 0 1mm; }
@@ -105,12 +105,18 @@
     </div>
   </div>
   <p class="indep">המעגל עצמאי, באחריות מי שפותח/ת אותו. נוֹכְחִים מציע ערכה והנחיות, אבל לא מארגן מעגלים ולא אחראי להם.</p>
-  <div class="sheet-foot"><span>גרסה v1.1.22</span><span>אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</span></div>
+  <div class="sheet-foot"><span>גרסה v1.1.29</span><span>אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</span></div>
 </main>
 <script>
-  // Anonymous count of printed guides (GoatCounter, event name only).
+  // Anonymous count of printed guides (GoatCounter, event name only), plus "guide-print-after-<id>"
+  // when a meditation was heard to the end in the last 3 hours (same key as main.js, never sent).
   window.addEventListener("beforeprint", function () {
-    try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: "guide-print", title: "guide-print", event: true }); } catch (e) {}
+    try {
+      if (!window.goatcounter || !window.goatcounter.count) return;
+      window.goatcounter.count({ path: "guide-print", title: "guide-print", event: true });
+      var v = JSON.parse(localStorage.getItem("nkh-last-meditation"));
+      if (v && /^[a-z0-9-]+$/.test(v.id) && Date.now() - v.t < 3 * 3600 * 1000) window.goatcounter.count({ path: "guide-print-after-" + v.id, title: "guide-print", event: true });
+    } catch (e) {}
   });
 </script>
 </body>

@@ -1,8 +1,9 @@
 // Renders the project's PDFs and the circle group image from their HTML sources with headless Chromium (Playwright).
 //
 //   design/content/teachers-call.html -> design/content/teachers-call.pdf  (the call to teachers, sent on WhatsApp)
-//   site/host-kit.html + site/sign.html -> site/assets/kit.pdf            (the circle kit with its table of contents,
-//                                                                          page numbers, and the sign as an appendix)
+//   site/host-kit.html + host-guide.html + sign.html -> site/assets/kit.pdf  (the circle kit with its table of
+//                                                                          contents and page numbers; appendix A is the
+//                                                                          circle guide, appendix B the sign)
 //   tech/tools/group-image.html       -> site/assets/group-image.png        (suggested WhatsApp group photo, 640×640)
 //   tech/tools/share-image.html       -> site/assets/share.jpg              (link preview image, Open Graph, 1200×630)
 //
@@ -50,7 +51,21 @@ await page.pdf({ path: "design/content/teachers-call.pdf", format: "A4", printBa
 console.log("wrote design/content/teachers-call.pdf");
 
 // 2. Kit: all parts open, rendered twice so the table of contents can show the page of each part
-//    (found through the invisible "KITPART <id> KITEND" marks), then the sign appended as the last page.
+//    (found through the invisible "KITPART <id> KITEND" marks), then the circle guide (appendix A) and the
+//    sign (appendix B) appended. Each appendix is rendered once first to know its page count; the final
+//    renders below carry the right page numbers in their footers.
+const pageCount = (f) => Number(execFileSync("pdfinfo", [f], { encoding: "utf8" }).match(/Pages:\s+(\d+)/)[1]);
+// The guide and the sign have no margins of their own (@page margin 0), so they are slightly scaled
+// to leave room for the same footer.
+const appendixPdf = (path, num) => page.pdf({
+  path, format: "A4", printBackground: true, scale: 0.96,
+  margin: { top: "0", bottom: "11mm", left: "4.2mm", right: "4.2mm" },
+  ...footer(num),
+});
+const guidePdf = join(tmp, "guide.pdf");
+await open("site/host-guide.html");
+await appendixPdf(guidePdf, "");
+const guidePages = pageCount(guidePdf);
 await open("site/host-kit.html");
 await page.evaluate((site) => {
   document.title = "ערכה לפתיחת מעגל · נוֹכְחִים";
@@ -71,23 +86,22 @@ for (let pass = 1; pass <= 2; pass++) {
     for (const m of text.matchAll(/KITPART ([a-z-]+) KITEND/g)) if (!(m[1] in found)) found[m[1]] = i + 1;
   });
   found.appendix = pages.filter((t) => t.trim()).length + 1;
+  found["appendix-sign"] = found.appendix + guidePages;
   await page.evaluate((found) => {
     document.querySelectorAll("[data-toc-page]").forEach((el) => {
       el.textContent = found[el.getAttribute("data-toc-page")] || "";
     });
   }, found);
 }
-const kitPages = execFileSync("pdfinfo", [kitBody], { encoding: "utf8" }).match(/Pages:\s+(\d+)/)[1];
-// The sign, slightly scaled so the same footer fits under it, with the next page number.
+const kitPages = pageCount(kitBody);
+// Appendices with their page numbers in the footer: the guide right after the kit, then the sign.
+await open("site/host-guide.html");
+await appendixPdf(guidePdf, guidePages === 1 ? String(kitPages + 1) : '<span class="pageNumber"></span>');
 await open("site/sign.html");
 const signPdf = join(tmp, "sign.pdf");
-await page.pdf({
-  path: signPdf, format: "A4", printBackground: true, scale: 0.96,
-  margin: { top: "0", bottom: "11mm", left: "4.2mm", right: "4.2mm" },
-  ...footer(String(Number(kitPages) + 1)),
-});
+await appendixPdf(signPdf, String(kitPages + guidePages + 1));
 // Merge with pypdf, which keeps the kit's internal links (pdfunite drops them).
-execFileSync("python3", ["-c", "import sys;from pypdf import PdfWriter;w=PdfWriter();[w.append(f) for f in sys.argv[1:-1]];w.write(sys.argv[-1])", kitBody, signPdf, "site/assets/kit.pdf"]);
+execFileSync("python3", ["-c", "import sys;from pypdf import PdfWriter;w=PdfWriter();[w.append(f) for f in sys.argv[1:-1]];w.write(sys.argv[-1])", kitBody, guidePdf, signPdf, "site/assets/kit.pdf"]);
 console.log("wrote site/assets/kit.pdf");
 
 // 3. Group image

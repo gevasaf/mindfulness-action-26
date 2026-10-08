@@ -446,7 +446,7 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
   .kit-toc ol { list-style: none; padding: 0; counter-reset: t; }
   .kit-toc li { counter-increment: t; display: flex; gap: 8px; align-items: baseline; padding: 2.4mm 0; border-bottom: 1px dotted var(--line); font-size: 14px; }
   .kit-toc li::before { content: counter(t) "."; color: var(--sage-ink); font-weight: 700; min-width: 1.4em; }
-  .kit-toc li:last-child::before { content: ""; }
+  .kit-toc li:has(.toc-t)::before { content: ""; }
   .kit-toc a, .kit-toc .toc-t { flex: 1; }
   .kit-toc .toc-page { color: var(--muted); }
   details.part { border: 0; background: none; margin-top: 8mm; }

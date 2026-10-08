@@ -168,7 +168,7 @@ window.onPage(function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     render(read());
-    if (out.hidden) window.countEvent("plan-created");
+    if (out.hidden) window.countAction("plan-created");
     window.planMade = true; // in memory only: the player stops suggesting a plan
     out.hidden = false;
     out.querySelector("h3").focus();
@@ -177,15 +177,15 @@ window.onPage(function () {
   form.addEventListener("change", function () { if (!out.hidden) render(read()); });
 
   out.querySelector("[data-act=whatsapp]").addEventListener("click", function () {
-    window.countEvent("plan-whatsapp");
+    window.countAction("plan-whatsapp");
     window.open("https://wa.me/?text=" + encodeURIComponent(shareText(read())), "_blank", "noopener");
   });
   out.querySelector("[data-act=calendar]").addEventListener("click", function () {
-    window.countEvent("plan-calendar");
+    window.countAction("plan-calendar");
     download(new Blob([ics(read())], { type: "text/calendar;charset=utf-8" }), "voting-plan-27-10.ics");
   });
   out.querySelector("[data-act=image]").addEventListener("click", function () {
-    window.countEvent("plan-image");
+    window.countAction("plan-image");
     var p = read();
     var ready = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
     ready.then(function () { return cardImage(p); }).then(function (blob) {

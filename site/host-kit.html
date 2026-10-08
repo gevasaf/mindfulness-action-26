@@ -21,10 +21,10 @@
 <link rel="icon" href="assets/icon.svg" type="image/svg+xml">
 <link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=1.1.22">
-<script src="assets/js/main.js?v=1.1.22" defer></script>
-<script src="assets/js/plan.js?v=1.1.22" defer></script>
-<script src="assets/js/player.js?v=1.1.22" defer></script>
+<link rel="stylesheet" href="styles.css?v=1.1.27">
+<script src="assets/js/main.js?v=1.1.23" defer></script>
+<script src="assets/js/plan.js?v=1.1.23" defer></script>
+<script src="assets/js/player.js?v=1.1.23" defer></script>
 <script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -52,24 +52,26 @@
     <h1 id="page-h">לפתוח מעגל תרגול</h1>
     <p class="lede">לבד קל לדחות. יחד, עשרים דקות של שקט הופכות לרגע שזוכרים.</p>
     <p>מעגל הוא כמה אנשים שיושבים זה לצד זה, נושמים, מאזינים למדיטציה, ומשתפים במילה או שתיים. גם מי שחושבים אחרת. לא צריך ניסיון בהנחיה: הערכה הזו, ומדיטציה מוקלטת, מספיקות.</p>
-    <div class="btn-row no-print"><a class="btn secondary" href="assets/kit.pdf" download="ערכה-לפתיחת-מעגל-נוכחים.pdf" data-count="kit-pdf">הערכה כ-PDF, להורדה ולהעברה</a></div>
+    <div class="btn-row no-print"><a class="btn secondary" href="assets/kit.pdf" download="ערכה-לפתיחת-מעגל-נוכחים.pdf" data-count="kit-pdf">הערכה כ-PDF להדפסה</a> <a class="btn secondary" href="sign.html" data-no-swap target="_blank">שלט להדפסה</a> <a class="btn secondary" href="host-guide.html" data-no-swap target="_blank">דף הנחיה</a></div>
 
-    <div class="callout"><b>מעגל עצמאי.</b> כל מעגל מאורגן ומונחה באופן עצמאי, בהתנדבות, באחריות מי שפותח/ת אותו. נוֹכְחִים מציע ערכה, נוסחים והנחיות, אבל לא מארגן את המעגלים, לא מפקח עליהם, ולא יכול להיות אחראי להם, למה שקורה בהם או לקבוצות שנפתחות סביבם. המעגלים לא נרשמים באתר.</div>
+    <div class="callout"><b>מעגל עצמאי.</b> כל מעגל מאורגן ומונחה באופן עצמאי, בהתנדבות, באחריות מי שפותח/ת אותו. נוֹכְחִים מציע ערכה, נוסחים והנחיות, אבל לא מארגן את המעגלים, לא מפקח עליהם, ולא יכול להיות אחראי להם, למה שקורה בהם או לקבוצות שנפתחות סביבם.</div>
 
     <nav class="kit-toc print-only" aria-label="תוכן העניינים">
       <h2>תוכן העניינים</h2>
       <ol>
         <li><a href="#prepare">להתכונן</a><span class="toc-page" data-toc-page="prepare"></span></li>
+        <li><a href="#group">קבוצת וואטסאפ למעגל</a><span class="toc-page" data-toc-page="group"></span></li>
         <li><a href="#invite">להזמין</a><span class="toc-page" data-toc-page="invite"></span></li>
         <li><a href="#circle">המעגל עצמו (30 דקות)</a><span class="toc-page" data-toc-page="circle"></span></li>
         <li><a href="#after">אחרי המעגל: להעביר הלאה</a><span class="toc-page" data-toc-page="after"></span></li>
         <li><a href="#election-day">יום הבחירות</a><span class="toc-page" data-toc-page="election-day"></span></li>
         <li><a href="#safety">בטיחות ופרטיות</a><span class="toc-page" data-toc-page="safety"></span></li>
-        <li><span class="toc-t">נספח: שלט להדפסה</span><span class="toc-page" data-toc-page="appendix"></span></li>
+        <li><span class="toc-t">נספח א: דף הנחיה למעגל</span><span class="toc-page" data-toc-page="appendix"></span></li>
+        <li><span class="toc-t">נספח ב: שלט להדפסה</span><span class="toc-page" data-toc-page="appendix-sign"></span></li>
       </ol>
     </nav>
 
-    <div class="parts-head no-print"><h2>הערכה בשישה חלקים</h2><button class="btn-link" type="button" data-parts-toggle>לפתוח הכול</button></div>
+    <div class="parts-head no-print"><h2>הערכה בשבעה חלקים</h2><button class="btn-link" type="button" data-parts-toggle>לפתוח הכול</button></div>
     <div class="parts">
 
     <details class="part" id="prepare">
@@ -79,16 +81,16 @@
         <h3>מקום</h3>
         <ul>
           <li><b>ממליצים בחום על מקום ציבורי ופתוח:</b> גינה, פארק, דשא ליד ספרייה, חוף.</li>
-          <li>בבית פרטי: על אחריותך. עדיף לפרסם נקודה כללית ולתת את הכתובת רק למי שפונה.</li>
+          <li>בבית פרטי: עדיף לפרסם רק את השכונה, ולתת את הכתובת המלאה למי שמצטרף/ת.</li>
           <li>שקט יחסית, עם צל או קורת גג.</li>
           <li><b>הרחק מקלפיות</b>, ובמיוחד ביום הבחירות.</li>
           <li>נגיש: שביל ישר, ספסלים למי שלא יושב על הקרקע.</li>
         </ul>
         <h3>זמן</h3>
         <ul>
-          <li><b>ביום הבחירות, 27.10.</b> זה היום שבו הכי מקווים להרבה מעגלים. הבוקר הוא הכי מתאים: "נושמים ויוצאים להצביע". אבל אפשר בכל שעה שהקלפיות פתוחות.</li>
-          <li><b>חד-פעמי</b> (תאריך ושעה), או <b>כל שבוע עד הבחירות</b> (למשל כל שלישי ב-19:00, עד 27.10 כולל).</li>
-          <li><b>כל מעגל נמשך חצי שעה.</b> זה קבוע, ומספיק בדיוק.</li>
+          <li><b>מומלץ במיוחד: בוקר יום הבחירות, 27.10</b> (ראו <a href="#election-day">חלק 6</a>).</li>
+          <li>אפשר פעם אחת, ואפשר גם להפוך את זה להרגל שבועי עד הבחירות.</li>
+          <li><b>חצי שעה</b> מספיקה בדיוק.</li>
         </ul>
         <h3>מי עושה מה</h3>
         <ul>
@@ -104,6 +106,7 @@
           <li><b>השלט</b> (A4), עם קוד QR לאתר. אם מדביקים בו קישור לקבוצת הוואטסאפ של המעגל, מופיע גם QR גדול להצטרפות לקבוצה.</li>
           <li><b>דף ההנחיה:</b> עמוד אחד עם מהלך המעגל, הכללים ומספרי קווי הסיוע.</li>
         </ul>
+        <p class="print-only"><b>דף ההנחיה והשלט נמצאים כנספחים בסוף החוברת</b> (נספח א: דף ההנחיה, נספח ב: השלט), מוכנים להדפסה.</p>
         <div class="btn-row no-print">
           <a class="btn secondary" href="sign.html" data-no-swap target="_blank">שלט להדפסה</a>
           <a class="btn secondary" href="host-guide.html" data-no-swap target="_blank">דף הנחיה</a>
@@ -112,30 +115,10 @@
       </div>
     </details>
 
-    <details class="part" id="invite">
-      <summary><span class="part-n" aria-hidden="true">2</span><span class="part-t"><span class="part-h">להזמין</span><small>ערוצים, נוסח הזמנה, וקבוצת וואטסאפ למעגל</small></span></summary>
+    <details class="part" id="group">
+      <summary><span class="part-n" aria-hidden="true">2</span><span class="part-t"><span class="part-h">קבוצת וואטסאפ למעגל</span><small>מקום אחד לכל מי שמגיע: שם, תיאור, תמונה והגדרות</small></span></summary>
       <div class="part-body">
-        <span class="pdf-mark" aria-hidden="true">KITPART invite KITEND</span>
-        <p>המעגל מתמלא מהאנשים שלך. כמה דרכים, ואפשר את כולן:</p>
-        <ul>
-          <li><b>אישית:</b> לחברים, לשכנים, למשפחה.</li>
-          <li><b>בקבוצות הוואטסאפ שכבר יש לך:</b> הבניין, השכונה, ההורים בגן ובבית הספר, החוג, העבודה. אם זה מתאים לקבוצה.</li>
-          <li><b>ברשתות:</b> פוסט עם ההזמנה וההאשטאג <bdi class="hashtag">#לפני_שבוחרים_נושמים</bdi>, ולתייג חברים מהאזור.</li>
-          <li><b>ברחוב:</b> לתלות את <a href="sign.html" data-no-swap target="_blank">השלט</a> בלוח המודעות השכונתי (אם מותר), ובמקום המעגל ביום עצמו. מי שעובר ליד יכול לסרוק ולהצטרף.</li>
-          <li><b><a href="#group">קבוצת וואטסאפ למעגל</a>:</b> מקום אחד לכל מי שמגיע, מכל הכיוונים. מומלץ, לא חובה.</li>
-        </ul>
-
-        <h3>נוסח הזמנה לשיתוף</h3>
-        <blockquote class="say-box" id="invite-text">מוזמנים למעגל נשימה שקט לפני הבחירות 🌾<br>
-[יום ושעה] · [מקום]<br>
-חצי שעה של שקט, מדיטציה קצרה ושיתוף במילה אחת. לא צריך ניסיון.<br>
-אם יש, אפשר לבוא בלבן.<br>
-לא אומרים כאן למי להצביע. רק עוצרים יחד.<br>
-להצטרפות לקבוצה של המעגל: [קישור לקבוצה] (או: לתיאום, לכתוב לי בוואטסאפ)<br>
-#לפני_שבוחרים_נושמים</blockquote>
-        <button class="btn secondary copy-btn" type="button" data-copy="invite-text">להעתיק את ההזמנה</button>
-
-        <h3 id="group">קבוצת וואטסאפ למעגל</h3>
+        <span class="pdf-mark" aria-hidden="true">KITPART group KITEND</span>
         <p>קבוצה אחת שאליה מזמינים מכל מקום: מהרשתות, מהקבוצות המקומיות, ומהשלט ברחוב. שם מעדכנים על המעגל, ושם אפשר להמשיך אחריו. זה לוקח שתי דקות:</p>
         <ol class="steps">
           <li><b>פותחים קבוצה חדשה</b> בוואטסאפ, עם חבר/ה אחד/ת לפחות. כדאי שיהיה/תהיה גם מנהל/ת.</li>
@@ -164,6 +147,31 @@
           <li><b>קישור ההזמנה:</b> בפרטי הקבוצה, "הזמנה באמצעות קישור", ולהעתיק. את הקישור שמים בהזמנה, בפוסט, וב<a href="sign.html" data-no-swap target="_blank">שלט</a>: מדביקים אותו בעמוד השלט, ועל השלט מופיע קוד QR להצטרפות לקבוצה.</li>
         </ol>
         <p><b>חשוב לדעת:</b> בקבוצה כולם רואים את מספרי הטלפון של כולם. זה כתוב בתיאור, וכדאי להגיד את זה גם בהזמנה. מי שלא נוח לו/ה, יכול/ה לתאם איתך בהודעה פרטית.</p>
+      </div>
+    </details>
+
+    <details class="part" id="invite">
+      <summary><span class="part-n" aria-hidden="true">3</span><span class="part-t"><span class="part-h">להזמין</span><small>ערוצים, נוסח הזמנה, ותשובה למי שפונה</small></span></summary>
+      <div class="part-body">
+        <span class="pdf-mark" aria-hidden="true">KITPART invite KITEND</span>
+        <p>המעגל מתמלא מהאנשים שלך. כמה דרכים, ואפשר את כולן:</p>
+        <ul>
+          <li><b>אישית:</b> לחברים, לשכנים, למשפחה.</li>
+          <li><b>בקבוצות הוואטסאפ שכבר יש לך:</b> הבניין, השכונה, ההורים בגן ובבית הספר, החוג, העבודה. אם זה מתאים לקבוצה.</li>
+          <li><b>ברשתות:</b> פוסט עם ההזמנה וההאשטאג <bdi class="hashtag">#לפני_שבוחרים_נושמים</bdi>, ולתייג חברים מהאזור.</li>
+          <li><b>ברחוב:</b> לתלות את <a href="sign.html" data-no-swap target="_blank">השלט</a> בלוח המודעות השכונתי (אם מותר), ובמקום המעגל ביום עצמו. מי שעובר ליד יכול לסרוק ולהצטרף.</li>
+          <li><b><a href="#group">קבוצת וואטסאפ למעגל</a>:</b> מקום אחד לכל מי שמגיע, מכל הכיוונים. מומלץ, לא חובה.</li>
+        </ul>
+
+        <h3>נוסח הזמנה לשיתוף</h3>
+        <blockquote class="say-box" id="invite-text">מוזמנים למעגל נשימה שקט לפני הבחירות 🌾<br>
+[יום ושעה] · [מקום]<br>
+חצי שעה של שקט, מדיטציה קצרה ושיתוף במילה אחת. לא צריך ניסיון.<br>
+אם יש, אפשר לבוא בלבן.<br>
+לא אומרים כאן למי להצביע. רק עוצרים יחד.<br>
+להצטרפות לקבוצה של המעגל: [קישור לקבוצה] (או: לתיאום, לכתוב לי בוואטסאפ)<br>
+#לפני_שבוחרים_נושמים</blockquote>
+        <button class="btn secondary copy-btn" type="button" data-copy="invite-text">להעתיק את ההזמנה</button>
 
         <h3>כשמישהו פונה אלייך בוואטסאפ</h3>
         <p>נוסח מוצע לתשובה:</p>
@@ -178,9 +186,12 @@
     </details>
 
     <details class="part" id="circle">
-      <summary><span class="part-n" aria-hidden="true">3</span><span class="part-t"><span class="part-h">המעגל עצמו (30 דקות)</span><small>המהלך, דקה אחרי דקה</small></span></summary>
+      <summary><span class="part-n" aria-hidden="true">4</span><span class="part-t"><span class="part-h">המעגל עצמו (30 דקות)</span><small>המהלך, דקה אחרי דקה</small></span></summary>
       <div class="part-body">
         <span class="pdf-mark" aria-hidden="true">KITPART circle KITEND</span>
+        <h3>באים בלבן</h3>
+        <p>מציעים לבוא בלבן: חולצה לבנה, צעיף לבן, מה שיש. זה סימן היכר שקט ופשוט, שלכל אחד יש בארון. זו המלצה ולא חובה. ביום הבחירות, לבוא בלבן למעגל ולא להנחות אנשים לבוא בלבן לקלפי.</p>
+        <h3>המהלך</h3>
         <ol>
           <li><b>התכנסות (3 דקות):</b> לשבת במעגל. ברכה קצרה: "תודה שבאתם. אנחנו כאן כדי לעצור יחד. בלי פוליטיקה של מפלגות, רק נוכחות."</li>
           <li><b>כללים (דקה):</b> "מותר לעצום עיניים או להשאיר פקוחות. מותר לצאת בכל רגע. מה שנאמר כאן נשאר כאן."</li>
@@ -188,16 +199,14 @@
           <li><b>מדיטציה (7 עד 10 דקות):</b> מוקלטת מהאתר, דרך רמקול קטן, או מונחית בקול שלך.</li>
           <li><b>סבב במילה אחת (4 דקות):</b> "מילה אחת על מה שאני מרגיש/ה עכשיו." מותר לוותר.</li>
           <li><b>פינת הקשבה (אופציונלי, 5 דקות):</b> בזוגות, כל אחד ואחת מדברים שתי דקות על "מה חשוב לי בתקופה הזו", והשני רק מקשיב.</li>
-          <li><b>סיום (2 דקות):</b> נשימה אחת, תודה, ושלוש הזמנות: "מי שרוצה, אפשר להכין תוכנית הצבעה באתר. דקה אחת.", "מי שרוצה, אפשר לשתף ברשתות, עם <bdi>#לפני_שבוחרים_נושמים</bdi>." ו"מי שרוצה, אפשר לפתוח מעגל משלך."</li>
+          <li><b>סיום (2 דקות):</b> נשימה אחת, תודה, והזמנה: מי שרוצה, אפשר להכין <a href="plan.html">תוכנית הצבעה</a> באתר, דקה אחת. ואז להעביר הלאה, כמו שמפורט ב<a href="#after">חלק 5: אחרי המעגל</a>.</li>
         </ol>
         <div class="callout warm"><b>רגישות:</b> רבים מאיתנו נושאים טראומה. אף פעם לא מכריחים להיזכר. תמיד אפשר לפקוח עיניים, לעצור ולבקש עזרה. כדאי להכיר את קווי הסיוע שבתחתית העמוד לפני המעגל.</div>
-        <h3>באים בלבן</h3>
-        <p>מציעים לבוא בלבן: חולצה לבנה, צעיף לבן, מה שיש. זה סימן היכר שקט ופשוט, שלכל אחד יש בארון. זו המלצה ולא חובה. ביום הבחירות, לבוא בלבן למעגל ולא להנחות אנשים לבוא בלבן לקלפי.</p>
       </div>
     </details>
 
     <details class="part" id="after">
-      <summary><span class="part-n" aria-hidden="true">4</span><span class="part-t"><span class="part-h">אחרי המעגל: להעביר הלאה</span><small>לשתף, ולהזמין לפתוח מעגל</small></span></summary>
+      <summary><span class="part-n" aria-hidden="true">5</span><span class="part-t"><span class="part-h">אחרי המעגל: להעביר הלאה</span><small>לשתף, ולהזמין לפתוח מעגל</small></span></summary>
       <div class="part-body">
         <span class="pdf-mark" aria-hidden="true">KITPART after KITEND</span>
         <p>מעגל אחד מזמין את הבא. שני דברים קטנים שעוזרים לזה לקרות:</p>
@@ -216,7 +225,7 @@
     </details>
 
     <details class="part" id="election-day">
-      <summary><span class="part-n" aria-hidden="true">5</span><span class="part-t"><span class="part-h">יום הבחירות</span><small>היום החשוב ביותר למעגלים</small></span></summary>
+      <summary><span class="part-n" aria-hidden="true">6</span><span class="part-t"><span class="part-h">יום הבחירות</span><small>היום החשוב ביותר למעגלים</small></span></summary>
       <div class="part-body">
         <span class="pdf-mark" aria-hidden="true">KITPART election-day KITEND</span>
         <ul>
@@ -230,7 +239,7 @@
     </details>
 
     <details class="part" id="safety">
-      <summary><span class="part-n" aria-hidden="true">6</span><span class="part-t"><span class="part-h">בטיחות ופרטיות</span><small>מה עושים כשמשהו משתבש, וכללי צילום</small></span></summary>
+      <summary><span class="part-n" aria-hidden="true">7</span><span class="part-t"><span class="part-h">בטיחות ופרטיות</span><small>מה עושים כשמשהו משתבש, וכללי צילום</small></span></summary>
       <div class="part-body">
         <span class="pdf-mark" aria-hidden="true">KITPART safety KITEND</span>
         <h3>בטיחות ואי-אלימות</h3>
@@ -239,7 +248,7 @@
           <li><b>אלימות או איום:</b> מתרחקים, ופונים למשטרה (<a href="tel:100">100</a>). מתעדים רק אם בטוח לעשות את זה.</li>
           <li><b>מצוקה רגשית במעגל:</b> לפנות בעדינות, להציע מים ומקום שקט, ולהפנות לקווי הסיוע (ער"ן <a href="tel:1201">1201</a>, נט"ל <a href="tel:1800363363">1-800-363-363</a>).</li>
           <li><b>מעגל גדול:</b> כשמגיעים יותר מכ-30 אנשים, עדיף לפצל לשני מעגלים.</li>
-          <li><b>אחרי המעגל:</b> לספר על כל אירוע חריג, דרך <a href="about.html#contact">טופס יצירת הקשר</a>, כדי ללמוד ממנו.</li>
+          <li><b>אחרי המעגל:</b> אם קרה משהו חריג שכדאי שנדע, אפשר לספר לנו דרך <a href="about.html#contact">טופס יצירת הקשר</a>.</li>
         </ul>
         <h3>צילום ופרטיות</h3>
         <ul>
@@ -274,7 +283,7 @@
   <div class="inner">
     <p><b>נוֹכְחִים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
     <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">גרסה <bdi dir="ltr">v1.1.22</bdi> · 7.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p class="version">גרסה <bdi dir="ltr">v1.1.29</bdi> · 7.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>

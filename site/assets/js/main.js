@@ -18,6 +18,27 @@
     } catch (e) {}
   };
 
+  // Which meditation led to an action (v1.1.29). When a meditation is heard to the end, this device
+  // remembers its id for 3 hours (localStorage, never sent). An action in that window is counted twice:
+  // as before, and as "<action>-after-<id>". Still only event names leave the device.
+  // sign.html and host-guide.html read the same key inline (they don't load this file).
+  var LAST_MED = "nkh-last-meditation", LAST_MED_MS = 3 * 3600 * 1000;
+  window.rememberMeditation = function (id) {
+    try { localStorage.setItem(LAST_MED, JSON.stringify({ id: id, t: Date.now() })); } catch (e) {}
+  };
+  function lastMeditation() {
+    try {
+      var v = JSON.parse(localStorage.getItem(LAST_MED));
+      if (v && /^[a-z0-9-]+$/.test(v.id) && Date.now() - v.t < LAST_MED_MS) return v.id;
+    } catch (e) {}
+    return null;
+  }
+  window.countAction = function (name) {
+    window.countEvent(name);
+    var id = lastMeditation();
+    if (id) window.countEvent(name + "-after-" + id);
+  };
+
   // ---------- breathing: one clock, one circle on screen (v1.1.13, v1.1.14) ----------
   // Every breathing circle reads the same clock (Date.now() modulo 10 s), so they never drift apart.
   // Each circle has a weight w (0 = resting, 1 = breathing) that eases over 1 s whenever it is turned
@@ -273,7 +294,7 @@
     Array.prototype.forEach.call(document.querySelectorAll("[data-count]"), function (a) {
       if (a.dataset.bound) return;
       a.dataset.bound = "1";
-      a.addEventListener("click", function () { window.countEvent(a.getAttribute("data-count")); });
+      a.addEventListener("click", function () { window.countAction(a.getAttribute("data-count")); });
     });
     Array.prototype.forEach.call(document.querySelectorAll("[data-copy]"), function (btn) {
       if (btn.dataset.bound) return;
