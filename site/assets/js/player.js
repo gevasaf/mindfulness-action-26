@@ -6,7 +6,7 @@
 //     captions that fade in and out with each stanza.
 // Any element with data-play="<id>" starts / toggles that meditation, and so does a link to
 // meditations.html#<id> (v1.1.9).
-// Recordings: ElevenLabs voice + a quiet music bed, mixed in the repo; stanza
+// Recordings: ElevenLabs voice (or a person's: voice = their name, shown instead of the AI note) + a quiet music bed, mixed in the repo; stanza
 // timings from site/content/meditations/audio/<id>.json. See tech/design-doc.md.
 (function () {
   var MEDITATIONS = {
@@ -14,7 +14,7 @@
     "clarity-in-the-noise": { title: "בהירות בתוך הרעש", file: "בהירות-בתוך-הרעש.mp3" },
     "arrive-present": { title: "להגיע נוֹכְחִים", file: "להגיע-נוכחים.mp3" },
     "my-community": { title: "הקהילה שלי", file: "הקהילה-שלי.mp3" },
-    "imagine-good": { title: "לדמיין טוב", file: "לדמיין-טוב.mp3" }
+    "imagine-good": { title: "לדמיין טוב", file: "לדמיין-טוב.mp3", voice: "אסף גבע" }
   };
   window.MEDITATIONS = MEDITATIONS;
   var AUDIO_DIR = "content/meditations/audio/";
@@ -51,7 +51,7 @@
       '<button type="button" class="ibtn ibtn-main" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
       '<div class="pbar-info">' +
         '<a class="pbar-title" data-p="title" href="meditations.html"><span class="ptitle-text"></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7.4 8.6 12 13.2l4.6-4.6L18 10l-6 6-6-6z"/></svg></a>' +
-        '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi> · קול ממוחשב (AI)</div>' +
+        '<div class="pbar-meta"><bdi dir="ltr" data-p="time">0:00</bdi><span data-p="ai"> · קול ממוחשב (AI)</span></div>' +
       "</div>" +
       '<div class="pbar-end">' +
         '<a class="btn pbar-plan" data-p="plan" href="plan.html" aria-label="התוכנית שלי: תוכנית ההצבעה">התוכנית שלי</a>' +
@@ -88,7 +88,7 @@
         '<button type="button" class="ibtn ibtn-main ibtn-big" data-p="toggle" aria-label="נגינה">' + icon("play") + "</button>" +
         '<a class="ibtn ibtn-share" data-p="share" href="meditations.html" target="_blank" rel="noopener" aria-label="שיתוף בוואטסאפ" title="שיתוף בוואטסאפ">' + icon("share") + "</a>" +
         '<button type="button" class="ibtn" data-p="close" aria-label="עצירה וסגירת הנגן">' + icon("close") + "</button>" +
-        '<span class="pfull-time pfull-note">קול ממוחשב (AI)</span>' +
+        '<span class="pfull-time pfull-note" data-p="ai">קול ממוחשב (AI)</span>' +
       "</div>" +
     "</div>";
 
@@ -167,6 +167,9 @@
     stanzas = []; caption = -2; setCaption(""); setEnded(false);
     audio.src = AUDIO_DIR + id + ".mp3";
     each("title", function (a) { a.querySelector(".ptitle-text").textContent = MEDITATIONS[id].title; a.href = "meditations.html#" + id; });
+    // Who is speaking: the AI note, or the person's name
+    var v = MEDITATIONS[id].voice;
+    each("ai", function (n) { n.textContent = (n.classList.contains("pfull-note") ? "" : " · ") + (v ? "בקול של " + v : "קול ממוחשב (AI)"); });
     // Share the meditation that is playing now (same text as the page's share buttons)
     var url = new URL("meditations.html#" + id, location.href).href;
     each("share", function (a) { a.href = "https://wa.me/?text=" + encodeURIComponent(MEDITATIONS[id].title + ": רגע של נשימה לפני הבחירות.\n" + url); });

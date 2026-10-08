@@ -119,7 +119,7 @@ main { display: block; }
 
 /* Labels required by design-v0 §8 */
 .tag { display: inline-block; font-family: var(--sans); font-size: .78rem; font-weight: 600; line-height: 1.2; padding: 3px 10px; border-radius: 999px; vertical-align: middle; white-space: nowrap; }
-.tag-tts { background: var(--card); color: var(--muted); border: 1px solid var(--line); }
+.tag-tts, .tag-voice { background: var(--card); color: var(--muted); border: 1px solid var(--line); }
 
 /* Buttons */
 .btn {
