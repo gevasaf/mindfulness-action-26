@@ -25,7 +25,7 @@
 <link rel="preload" href="assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css?v=1.1.32">
 <script src="assets/js/main.js?v=1.1.32" defer></script>
-<script src="assets/js/plan.js?v=1.1.23" defer></script>
+<script src="assets/js/plan.js?v=1.1.33" defer></script>
 <script src="assets/js/player.js?v=1.1.31" defer></script>
 <script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
@@ -89,13 +89,21 @@
             <option value="">בלי הקדשה, רק להיות שם</option>
             <option value="לילדים שלי">לילדים שלי</option>
             <option value="למשפחה שלי">למשפחה שלי</option>
+            <option value="להורים שלי">להורים שלי</option>
+            <option value="לאמא שלי">לאמא שלי</option>
+            <option value="לאבא שלי">לאבא שלי</option>
             <option value="לאנשים הקרובים לי">לאנשים הקרובים לי</option>
             <option value="לזכרם של מי שאיבדנו">לזכרם של מי שאיבדנו</option>
             <option value="לשכנים שלי, גם לאלה שחושבים אחרת">לשכנים שלי, גם לאלה שחושבים אחרת</option>
             <option value="לעתיד של כולנו">לעתיד של כולנו</option>
             <option value="לארץ הזאת">לארץ הזאת</option>
             <option value="לעצמי">לעצמי</option>
+            <option value="other">למישהו אחר: להקליד שם</option>
           </select>
+        </div>
+        <div class="field" data-dedication-other hidden>
+          <label for="dedicationOther">למי?<span class="hint">לדוגמה: לסבתא רחל, לזכרו של דני.</span></label>
+          <input type="text" id="dedicationOther" name="dedicationOther" maxlength="30" autocomplete="off">
         </div>
         <div class="field">
           <label for="meditation">מדיטציה לדרך<span class="hint">הקישור אליה ייכנס לתזכורת ביומן. לא חובה.</span></label>
@@ -160,7 +168,7 @@
   <div class="inner">
     <p><b>נוֹכְחִים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
     <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">גרסה <bdi dir="ltr">v1.1.32</bdi> · 8.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
+    <p class="version">גרסה <bdi dir="ltr">v1.1.33</bdi> · 8.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog">מה השתנה</a></p>
   </div>
 </footer>
 </body>

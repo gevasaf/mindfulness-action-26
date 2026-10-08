@@ -4,9 +4,9 @@
 //
 // Fields (all optional): when, where (calendar only: never on the shared card or
 // text, since a polling place reveals where someone lives), with whom, whom I
-// invite, whom I dedicate the moment behind the curtain to (a fixed list, so a
-// shared card can't carry a slogan), and a meditation for the way (its link goes
-// into the calendar event).
+// invite, whom I dedicate the moment behind the curtain to (a list, or a short name
+// typed in: 30 characters, no links, hashtags or @, so the card stays a dedication),
+// and a meditation for the way (its link goes into the calendar event).
 window.onPage(function () {
   var form = document.getElementById("plan-form");
   if (!form) return;
@@ -27,6 +27,19 @@ window.onPage(function () {
 
   function clean(s) { return (s || "").replace(/\s+/g, " ").trim().slice(0, 60); }
 
+  var otherField = form.querySelector("[data-dedication-other]");
+  function dedication() {
+    var v = form.elements.dedication.value;
+    if (v !== "other") return v;
+    return clean(form.elements.dedicationOther.value.replace(/\S*(https?:|www\.)\S*/gi, "").replace(/[#@]/g, "")).slice(0, 30);
+  }
+  function showOther() { otherField.hidden = form.elements.dedication.value !== "other"; }
+  showOther(); // the browser may restore the choice on reload
+  form.elements.dedication.addEventListener("change", function () {
+    showOther();
+    if (!otherField.hidden) form.elements.dedicationOther.focus();
+  });
+
   function read() {
     var slot = (form.querySelector("input[name=slot]:checked") || {}).value || "morning";
     var exact = form.elements.exact.value;
@@ -38,7 +51,7 @@ window.onPage(function () {
       where: clean(form.elements.where.value),
       withWhom: clean(form.elements.withWhom.value) || "לבד, ובשקט",
       invite: clean(form.elements.invite.value),
-      dedication: form.elements.dedication.value,
+      dedication: dedication(),
       med: meds[med] ? med : "",
       medTitle: meds[med] ? meds[med].title : "",
       medUrl: meds[med] ? new URL("meditations.html#" + med, location.href).href : ""
