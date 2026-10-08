@@ -14,7 +14,7 @@ import subprocess, re, json, sys, pathlib
 U = pathlib.Path(sys.argv[1])
 OUT = pathlib.Path("site/content/meditations/audio"); OUT.mkdir(parents=True, exist_ok=True)
 PRE, TAIL = 3.0, 6.0
-VOICE = {"imagine-good": "אסף גבע"}
+VOICE = {m: "מוריה רוזנברג" for m in ("behind-the-curtain", "clarity-in-the-noise", "arrive-present", "my-community", "imagine-good")}
 # soft D-A-E-F#-D pad with slow breath-like swells (same chord as the in-browser pad)
 notes = [(146.83, .050, -4), (220.0, .073, 4), (329.63, .096, -4), (369.99, .119, 4), (293.66, .142, -4)]
 expr = "+".join(f"0.18*sin(2*PI*{f*(2**(c/1200)):.3f}*t)*(0.6+0.4*sin(2*PI*{l}*t+{i}))" for i, (f, l, c) in enumerate(notes))

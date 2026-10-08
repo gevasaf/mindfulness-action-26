@@ -12,7 +12,7 @@
 | Navigation (v0.2) | Vanilla JS in-place navigation (swap `<main>`, History API) | Lets the meditation player keep playing across pages. No framework, no build step; plain page loads without JS. |
 | Third-party code | `site/assets/js/vendor/qrcode.js` (qrcode-generator, MIT), self-hosted | QR on the printable sign. |
 | Offline / home screen (v1.1.31) | Web app manifest + a small service worker (`site/sw.js`), plain JS | Opens without a connection and from a home-screen icon. Static files only, nothing sent. |
-| Audio (v0) | Pre-rendered MP3s in `site/content/meditations/audio/` (ElevenLabs voice + generated music, mono 80 kbps) with stanza timing JSON, played by the global player (`player.js`) | Shareable files, same voice everywhere. See F1. |
+| Audio (v0) | Pre-rendered MP3s in `site/content/meditations/audio/` (a human voice, Moria Rosenberg, since v1.1.36, earlier ElevenLabs; + generated music, mono 80 kbps) with stanza timing JSON, played by the global player (`player.js`) | Shareable files, same voice everywhere. See F1. |
 
 ### One-time setup (repo owner)
 - Repo **Settings → Pages → Build and deployment → Source: GitHub Actions**. The deploy workflow fails until this is set.

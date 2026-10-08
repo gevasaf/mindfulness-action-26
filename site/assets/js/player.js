@@ -6,15 +6,15 @@
 //     captions that fade in and out with each stanza.
 // Any element with data-play="<id>" starts / toggles that meditation, and so does a link to
 // meditations.html#<id> (v1.1.9).
-// Recordings: ElevenLabs voice (or a person's: voice = their name, shown instead of the AI note) + a quiet music bed, mixed in the repo; stanza
+// Recordings: a person's voice (voice = their name; without it, the "קול ממוחשב (AI)" note for an ElevenLabs voice) + a quiet music bed, mixed in the repo; stanza
 // timings from site/content/meditations/audio/<id>.json. See tech/design-doc.md.
 (function () {
   var MEDITATIONS = {
-    "behind-the-curtain": { title: "מאחורי הפרגוד", file: "מאחורי-הפרגוד.mp3" },
-    "clarity-in-the-noise": { title: "בהירות בתוך הרעש", file: "בהירות-בתוך-הרעש.mp3" },
-    "arrive-present": { title: "להגיע נוֹכְחִים", file: "להגיע-נוכחים.mp3" },
-    "my-community": { title: "הקהילה שלי", file: "הקהילה-שלי.mp3" },
-    "imagine-good": { title: "לדמיין טוב", file: "לדמיין-טוב.mp3", voice: "אסף גבע" }
+    "behind-the-curtain": { title: "מאחורי הפרגוד", file: "מאחורי-הפרגוד.mp3", voice: "מוריה רוזנברג" },
+    "clarity-in-the-noise": { title: "בהירות בתוך הרעש", file: "בהירות-בתוך-הרעש.mp3", voice: "מוריה רוזנברג" },
+    "arrive-present": { title: "להגיע נוֹכְחִים", file: "להגיע-נוכחים.mp3", voice: "מוריה רוזנברג" },
+    "my-community": { title: "הקהילה שלי", file: "הקהילה-שלי.mp3", voice: "מוריה רוזנברג" },
+    "imagine-good": { title: "לדמיין טוב", file: "לדמיין-טוב.mp3", voice: "מוריה רוזנברג" }
   };
   window.MEDITATIONS = MEDITATIONS;
   var AUDIO_DIR = "content/meditations/audio/";
