@@ -175,6 +175,7 @@ When teachers' recordings arrive, each gets its own id, and the existing events 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.40 | user request | 2026-10-08 | Site v1.1.40: links to other sites (Central Elections Committee, סה"ר, GitHub, Pexels) open in a new tab (`target="_blank" rel="noopener"`), so the site and a playing meditation stay open; WhatsApp shares already did. Internal links and `tel:` stay as they are. |
 | t2.1.39 | user request | 2026-10-08 | Site v1.1.39: plan page link-preview text (`description`, `og:description`) is now "לתכנן מראש את הרגע שמאחורי הפרגוד, כדי להגיע אליו נוֹכְחִים: מתי, עם מי, ולמי מקדישים. התוכנית נוצרת רק במכשיר שלך.", in the same words as the line before the form; "לא שואלים בעד מי" dropped there. |
 | t2.1.38 | user request | 2026-10-08 | Site v1.1.38: plan page line before the form is now "לתכנן את הרגע מראש, כדי להגיע אליו נוֹכְחִים." (what a plan is for, in the project's words), replacing "דקה לתכנן את הדרך. לא שואלים בעד מי.". |
 | t2.1.37 | user request | 2026-10-08 | Site v1.1.37: the player names the voice on its own line: in the bar, under the time (no " · " prefix); in full screen, under the title (it was at the end of the controls row and hidden below 520 px). `player.js` / `styles.css` `?v=` bumped. |
