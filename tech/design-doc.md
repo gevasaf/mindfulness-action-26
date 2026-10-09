@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.34 · **Site version:** v1.1.34 (shown in every page footer)
+**Tech doc version:** t2.1.41 · **Site version:** v1.1.41 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -175,6 +175,7 @@ When teachers' recordings arrive, each gets its own id, and the existing events 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.41 | user request | 2026-10-09 | Site v1.1.41: search engines. `site/sitemap.xml` (the 8 public pages; submit it in Google Search Console, since a project site can't have its own robots.txt at the host root), `<link rel="canonical">` on every page (not 404), home `<title>` without niqqud ("נוכחים: לפני שבוחרים, נושמים · מיינדפולנס לקראת הבחירות", since people search without niqqud; `og:title` keeps it), WebSite JSON-LD with alternate names, "נוכחים" in the home description, meditations description says "מיינדפולנס" and "לקראת הבחירות לכנסת". Google Search Console verification tag still to add (owner's step). When `sitemap.xml` changes pages, update it by hand. |
 | t2.1.40 | user request | 2026-10-08 | Site v1.1.40: links to other sites (Central Elections Committee, סה"ר, GitHub, Pexels) open in a new tab (`target="_blank" rel="noopener"`), so the site and a playing meditation stay open; WhatsApp shares already did. Internal links and `tel:` stay as they are. |
 | t2.1.39 | user request | 2026-10-08 | Site v1.1.39: plan page link-preview text (`description`, `og:description`) is now "לתכנן מראש את הרגע שמאחורי הפרגוד, כדי להגיע אליו נוֹכְחִים: מתי, עם מי, ולמי מקדישים. התוכנית נוצרת רק במכשיר שלך.", in the same words as the line before the form; "לא שואלים בעד מי" dropped there. |
 | t2.1.38 | user request | 2026-10-08 | Site v1.1.38: plan page line before the form is now "לתכנן את הרגע מראש, כדי להגיע אליו נוֹכְחִים." (what a plan is for, in the project's words), replacing "דקה לתכנן את הדרך. לא שואלים בעד מי.". |
