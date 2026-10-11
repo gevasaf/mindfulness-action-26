@@ -51,7 +51,7 @@ while True:
 def c(name): return counts.get(name, 0)
 def total(rx): return sum(n for p, n in counts.items() if re.fullmatch(rx, p))
 
-# Arrivals from shared links: the plan's share and invite links carry utm_source, which GoatCounter
+# Arrivals from shared links: the plan's share link carries utm_source, which GoatCounter
 # records as the referrer ("campaign"). Read from the top referrers; 0 if the endpoint differs.
 refs = {}
 try:
@@ -68,18 +68,19 @@ steps = [
     ("התחילו מדיטציה", total(r"listen-(?!complete-).*"), 0),
     ("האזינו עד הסוף", total(r"listen-complete-.*"), 1),
     ("הכינו תוכנית הצבעה", c("plan-created"), 2),
-    ("שיתפו או הזמינו", c("plan-whatsapp") + c("plan-image") + c("plan-invite"), 3),
-    ("הגיעו מקישור ששותף", refs.get("plan-share", 0) + refs.get("plan-invite", 0), 4),
+    ("הוסיפו תזכורת ליומן", c("plan-calendar"), 3),
+    ("שיתפו את הכרטיס", c("plan-whatsapp") + c("plan-image"), 3),
+    ("הגיעו מקישור ששותף", refs.get("plan-share", 0), 5),
     ("עברו לעמוד המעגלים", c("/host-kit.html"), 0),
-    ("קראו את הערכה או הורידו", c("kit-read") + c("kit-pdf"), 6),
-    ("הדפיסו שלט או דף הנחיה", c("sign-print") + c("sign-print-group") + c("guide-print"), 7),
+    ("קראו את הערכה או הורידו", c("kit-read") + c("kit-pdf"), 7),
+    ("הדפיסו שלט או דף הנחיה", c("sign-print") + c("sign-print-group") + c("guide-print"), 8),
 ]
 print(f"משפך נוֹכְחִים, {START} עד {END}\n")
 for name, n, base in steps:
     b = steps[base][1] if base is not None else 0
     rate = f"{100 * n / b:5.1f}% מ\"{steps[base][0]}\"" if b else ""
     print(f"{n:7d}  {name:28} {rate}")
-print("\nהגעה לעמוד המעגלים: מהתוכנית", c("circle-from-plan"), "· מסוף מדיטציה", c("circle-from-player"),
+print("\nהגעה לעמוד המעגלים: מסוף מדיטציה", c("circle-from-player"),
       "· קריאת ערכה", c("kit-read"), "· PDF", c("kit-pdf"))
 print("כניסות מהשלט (QR):", refs.get("sign", 0), "· ממייל למורים:", refs.get("teacher-email", 0), "· מהודעות:", refs.get("dm", 0))
 

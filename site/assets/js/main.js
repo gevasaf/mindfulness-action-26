@@ -572,6 +572,7 @@
   window.addEventListener("beforeinstallprompt", function (e) { e.preventDefault(); window.installPrompt = e; });
   window.addEventListener("appinstalled", function () {
     window.installPrompt = null; a2hsDone(); window.countEvent("home-screen-added");
+    try { localStorage.setItem("home-screen-added", "1"); } catch (e) {} // the player then suggests a circle
     var line = document.querySelector(".a2hs"); if (line) line.remove();
   });
 

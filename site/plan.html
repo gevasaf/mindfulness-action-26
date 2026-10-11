@@ -24,10 +24,10 @@
 <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.png">
 <link rel="preload" href="assets/fonts/assistant-hebrew-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/m-plus-rounded-1c-hebrew-700-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="styles.css?v=1.1.43">
-<script src="assets/js/main.js?v=1.1.43" defer></script>
-<script src="assets/js/plan.js?v=1.1.43" defer></script>
-<script src="assets/js/player.js?v=1.1.43" defer></script>
+<link rel="stylesheet" href="styles.css?v=1.1.44">
+<script src="assets/js/main.js?v=1.1.44" defer></script>
+<script src="assets/js/plan.js?v=1.1.44" defer></script>
+<script src="assets/js/player.js?v=1.1.44" defer></script>
 <script data-goatcounter="https://mindfulness-action-26.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </head>
 <body>
@@ -134,21 +134,18 @@
           </dl>
           <p class="pc-foot">לפני שבוחרים, נושמים.</p>
         </div>
-        <div class="btn-row" style="margin-top:16px">
-          <button type="button" class="btn" data-act="whatsapp" aria-label="שיתוף בוואטסאפ"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>שיתוף</button>
-          <button type="button" class="btn secondary" data-act="image">לשמור כתמונה</button>
-          <button type="button" class="btn secondary" data-act="calendar">תזכורת ליומן</button>
+        <div class="plan-next" data-plan-next>
+          <div class="plan-step" data-step="calendar">
+            <button type="button" class="btn" data-act="calendar"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 2h2v2h6V2h2v2h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3Zm12 8H5v9h14Zm-8 2h2v2h2v2h-2v2h-2v-2H9v-2h2Z"/></svg>להוסיף תזכורת ליומן</button>
+            <p class="plan-step-alt"><button type="button" class="btn-link" data-act="skip">בלי יומן, ישר לשיתוף</button></p>
+          </div>
+          <div class="plan-step" data-step="share" hidden>
+            <p class="plan-step-done" data-calendar-done hidden>✓ קובץ התזכורת הורד. לפתוח אותו כדי להוסיף ליומן.</p>
+            <button type="button" class="btn" data-act="whatsapp"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>לשתף את הכרטיס בוואטסאפ</button>
+            <p class="plan-step-alt"><button type="button" class="btn-link" data-act="image">או לשמור כתמונה</button></p>
+          </div>
         </div>
         <p style="margin-top:16px">איפה הקלפי שלי? <a href="https://www.bechirot.gov.il/" rel="noopener" target="_blank">לבדיקה באתר ועדת הבחירות המרכזית</a>.</p>
-        <div class="invite-step">
-          <p>ועכשיו, אם מתאים: להזמין שלושה אנשים קרובים להכין תוכנית משלהם. בלי לשתף את התוכנית שלך, רק הזמנה. כל אחד ואחת, והבחירה שלהם.</p>
-          <button type="button" class="btn secondary" data-act="invite"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 12a4 4 0 1 0-4-4 4 4 0 0 0 4 4Zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2Zm9 4c-2.7 0-8 1.3-8 4v2h16v-2c0-2.7-5.3-4-8-4Z"/></svg>להזמין בוואטסאפ</button>
-        </div>
-        <div class="next-step">
-          <h3>להביא גם אחרים לנשימה</h3>
-          <p>חצי שעה של נשימה במעגל, עם שכנים או חברים, לפני הבחירות או ביום עצמו. הערכה מוכנה: מקום, הזמנה, ומהלך המעגל צעד אחר צעד.</p>
-          <a class="btn" href="host-kit.html" data-count="circle-from-plan">לפתוח מעגל נשימה</a>
-        </div>
       </div>
     </div>
     <h2 style="margin-top:56px">לפני שיוצאים</h2>
@@ -177,7 +174,7 @@
   <div class="inner">
     <p><b>נוֹכְחִים</b> הוא מיזם אזרחי והתנדבותי של מיינדפולנס. אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</p>
     <p>כל התכנים והקוד של האתר פתוחים לכולם ב-<a href="https://github.com/gevasaf/mindfulness-action-26" target="_blank" rel="noopener">GitHub</a>. האתר סופר ביקורים ופעולות (כמו האזנה או הכנת תוכנית) בעזרת GoatCounter, בלי עוגיות ובלי מידע אישי. מה שכותבים בתוכנית ההצבעה לא נשלח לשום מקום.</p>
-    <p class="version">גרסה <bdi dir="ltr">v1.1.43</bdi> · 11.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog" target="_blank" rel="noopener">מה השתנה</a></p>
+    <p class="version">גרסה <bdi dir="ltr">v1.1.44</bdi> · 11.10.2026 · <a href="https://github.com/gevasaf/mindfulness-action-26/blob/main/tech/design-doc.md#changelog" target="_blank" rel="noopener">מה השתנה</a></p>
   </div>
 </footer>
 </body>

@@ -80,7 +80,7 @@
     '<div class="pfull-caption" aria-live="polite"><p></p><p></p></div>' +
     '<div class="pfull-end">' +
       '<a class="btn pfull-plan" data-p="plan" href="plan.html" aria-label="התוכנית שלי: תוכנית ההצבעה">התוכנית שלי</a>' +
-      '<p class="pfull-circle-lead">תוכנית ההצבעה כבר מוכנה. אפשר להביא גם אחרים לנשימה:</p>' +
+      '<p class="pfull-circle-lead">ועכשיו, אפשר להביא גם אחרים לנשימה:</p>' +
       '<a class="btn pfull-circle" data-p="circle" href="host-kit.html">לפתוח מעגל נשימה</a>' +
       '<a href="#support" data-p="help">אם עלה משהו קשה, אפשר לדבר עם מישהו: קווי סיוע</a>' +
     "</div>" +
@@ -153,19 +153,19 @@
   }
 
   // ---------- end of a meditation ----------
-  // The support lines and the next step appear together: an invitation to plan the vote, or, once a
-  // plan was made on this device (window.planMade, or the "plan-made" mark in localStorage: only that
-  // a plan was made, never its content), an invitation to open a breathing circle.
-  // In the bar they replace the title and time until playback or seeking resumes.
-  function planDone() {
-    if (window.planMade) return true;
-    try { return localStorage.getItem("plan-made") === "1"; } catch (e) { return false; }
+  // The support lines and the next step appear together: an invitation to plan the vote, or, for
+  // someone already committed (a calendar reminder was added on this device, or the site runs from a
+  // home-screen icon), an invitation to open a breathing circle. Only marks are kept, never content.
+  function committed() {
+    if (window.matchMedia && matchMedia("(display-mode: standalone)").matches) return true;
+    if (navigator.standalone === true) return true;
+    try { return localStorage.getItem("plan-calendar") === "1" || localStorage.getItem("home-screen-added") === "1"; } catch (e) { return false; }
   }
   function setEnded(on) {
     [bar, full].forEach(function (el) {
       el.classList.toggle("ended", on);
-      el.classList.toggle("show-plan", on && !planDone());
-      el.classList.toggle("show-circle", on && planDone());
+      el.classList.toggle("show-plan", on && !committed());
+      el.classList.toggle("show-circle", on && committed());
     });
   }
 

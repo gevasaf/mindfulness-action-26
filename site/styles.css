@@ -513,16 +513,15 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 @media (max-width: 480px) { .a2hs-card { padding: 18px; gap: 14px; } .a2hs-card h2 { font-size: 1.15rem; } .a2hs-app img { width: 52px; height: 52px; border-radius: 13px; } }
 @media print { .a2hs-card { display: none; } }
 
-/* Next step: a breathing circle (end of the plan, end of a meditation once a plan was made) */
-.next-step { margin-top: 28px; padding: 20px 22px; border-radius: var(--radius); background: var(--sage-soft); border: 1px solid var(--line); }
-.next-step h3 { margin: 0 0 6px; font-size: 1.2rem; }
-.next-step p { margin: 0 0 14px; }
+/* End of a meditation: a breathing circle for someone already committed (calendar or home screen) */
 .pbar-circle, .pfull-circle, .pfull-circle-lead { display: none; }
 .pbar-circle { min-height: 40px; padding: 6px 16px; font-size: .95rem; white-space: nowrap; }
 .pbar.show-circle .pbar-circle { display: inline-flex; }
 .pfull.show-circle .pfull-circle-lead { display: block; margin: 0; }
 .pfull.show-circle .pfull-circle { display: inline-flex; min-height: 56px; padding: 12px 34px; font-size: 1.2rem; box-shadow: 0 6px 22px rgb(79 104 82 / 28%); }
-@media print { .next-step { display: none; } }
-.invite-step { margin-top: 20px; }
-.invite-step p { margin: 0 0 10px; color: var(--muted); }
-@media print { .invite-step { display: none; } }
+/* After the plan card: one step at a time (calendar, then share) */
+.plan-next { margin-top: 18px; }
+.plan-step { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.plan-step-alt { margin: 0; }
+.plan-step-done { margin: 0; color: var(--sage-ink); font-weight: 600; }
+@media print { .plan-next { display: none; } }

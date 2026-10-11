@@ -1,6 +1,6 @@
 // "My voting plan": runs entirely in the browser. What people type is never sent
-// or stored (no cookies; localStorage keeps only the mark "plan-made", so the player can
-// suggest the next step, a breathing circle). The only network call is an anonymous
+// or stored (no cookies; localStorage keeps only the mark "plan-calendar", that a reminder
+// was added, so the player can suggest the next step). The only network call is an anonymous
 // GoatCounter event name ("plan-created" etc.), never the plan itself. design-v0 §8, §13.
 //
 // Fields (all optional): when, where (calendar only: never on the shared card or
@@ -183,20 +183,22 @@ window.onPage(function () {
     e.preventDefault();
     render(read());
     if (out.hidden) window.countAction("plan-created");
-    window.planMade = true; // the player suggests a circle instead of a plan
-    try { localStorage.setItem("plan-made", "1"); } catch (e) {}
     out.hidden = false;
     out.querySelector("h3").focus();
   });
   form.addEventListener("input", function () { if (!out.hidden) render(read()); });
   form.addEventListener("change", function () { if (!out.hidden) render(read()); });
 
-  // Invite without sharing the plan itself: a short message with the link (v1.1.43)
-  out.querySelector("[data-act=invite]").addEventListener("click", function () {
-    window.countAction("plan-invite");
-    window.open("https://wa.me/?text=" + encodeURIComponent(
-      "הכנתי תוכנית קטנה ליום הבחירות: מתי, עם מי, ולמי להקדיש את הרגע שמאחורי הפרגוד. זה לוקח דקה, ואפשר להכין גם לך:\n" +
-      SITE_URL + "plan.html?utm_source=plan-invite"), "_blank", "noopener");
+  // After the card: one step at a time (v1.1.44). First the calendar reminder, then sharing the card.
+  function showShare(afterCalendar) {
+    out.querySelector('[data-step="calendar"]').hidden = true;
+    out.querySelector('[data-step="share"]').hidden = false;
+    out.querySelector("[data-calendar-done]").hidden = !afterCalendar;
+  }
+  out.querySelector("[data-act=skip]").addEventListener("click", function () {
+    window.countEvent("plan-calendar-skip");
+    showShare(false);
+    out.querySelector("[data-act=whatsapp]").focus();
   });
   out.querySelector("[data-act=whatsapp]").addEventListener("click", function () {
     window.countAction("plan-whatsapp");
@@ -205,6 +207,9 @@ window.onPage(function () {
   out.querySelector("[data-act=calendar]").addEventListener("click", function () {
     window.countAction("plan-calendar");
     download(new Blob([ics(read())], { type: "text/calendar;charset=utf-8" }), "voting-plan-27-10.ics");
+    // The mark only (no content): from now on, the end of a meditation suggests a breathing circle
+    try { localStorage.setItem("plan-calendar", "1"); } catch (e) {}
+    showShare(true);
   });
   out.querySelector("[data-act=image]").addEventListener("click", function () {
     window.countAction("plan-image");
