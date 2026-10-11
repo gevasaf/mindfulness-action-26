@@ -324,6 +324,7 @@
         toggleAll.textContent = allOpen ? "לסגור הכול" : "לפתוח הכול";
       };
       Array.prototype.forEach.call(parts, function (d) { d.addEventListener("toggle", syncToggle); });
+      trackKitReading(parts);
       if (toggleAll && !toggleAll.dataset.bound) {
         toggleAll.dataset.bound = "1";
         toggleAll.addEventListener("click", function () {
@@ -344,6 +345,40 @@
         });
       });
       syncToggle();
+    }
+
+    // Reading the kit counts too (v1.1.43): the page holds the same content as the PDF, so reading it
+    // here is as much a sign of a circle in the making as downloading it. Events: "kit-part-<id>" the
+    // first time each part is opened on a page view, and "kit-read" (with "-after-<meditation>") once
+    // per visit, when 3 parts are opened ("open all" included), or after a minute on the page with half
+    // of it scrolled. Only the event names are sent.
+    function trackKitReading(parts) {
+      var opened = {}, n = 0, done = false;
+      try { done = sessionStorage.getItem("kit-read") === "1"; } catch (e) {}
+      function read() {
+        if (done) return;
+        done = true;
+        try { sessionStorage.setItem("kit-read", "1"); } catch (e) {}
+        window.countAction("kit-read");
+      }
+      Array.prototype.forEach.call(parts, function (d) {
+        d.addEventListener("toggle", function () {
+          if (!d.open || opened[d.id]) return;
+          opened[d.id] = true; n++;
+          window.countEvent("kit-part-" + d.id);
+          if (n >= 3) read();
+        });
+      });
+      var seconds = 0, depth = 0;
+      var timer = setInterval(function () {
+        if (!document.body.contains(parts[0])) { clearInterval(timer); return; } // left the page (in-place navigation)
+        if (done) { clearInterval(timer); return; }
+        if (document.visibilityState !== "visible") return;
+        seconds++;
+        var h = document.documentElement.scrollHeight - innerHeight;
+        if (h > 0) depth = Math.max(depth, scrollY / h);
+        if (seconds >= 60 && depth >= 0.5) read();
+      }, 1000);
     }
 
     // No clipboard access: select the text so it can be copied by hand.

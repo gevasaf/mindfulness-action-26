@@ -1,5 +1,6 @@
 // "My voting plan": runs entirely in the browser. What people type is never sent
-// or stored (no cookies, no localStorage). The only network call is an anonymous
+// or stored (no cookies; localStorage keeps only the mark "plan-made", so the player can
+// suggest the next step, a breathing circle). The only network call is an anonymous
 // GoatCounter event name ("plan-created" etc.), never the plan itself. design-v0 §8, §13.
 //
 // Fields (all optional): when, where (calendar only: never on the shared card or
@@ -76,7 +77,7 @@ window.onPage(function () {
       (p.invite ? "מזמין/ה גם את: " + p.invite + "\n" : "") +
       (p.dedication ? "את הרגע מאחורי הפרגוד אני מקדיש/ה " + p.dedication + "\n" : "") +
       (p.medTitle ? "בדרך אקשיב למדיטציה \"" + p.medTitle + "\"\n" : "") +
-      "\nלפני שבוחרים, נושמים. אפשר להכין תוכנית משלך כאן:\n" + SITE_URL + "plan.html";
+      "\nלפני שבוחרים, נושמים. אפשר להכין תוכנית משלך כאן:\n" + SITE_URL + "plan.html?utm_source=plan-share";
   }
 
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
@@ -182,13 +183,21 @@ window.onPage(function () {
     e.preventDefault();
     render(read());
     if (out.hidden) window.countAction("plan-created");
-    window.planMade = true; // in memory only: the player stops suggesting a plan
+    window.planMade = true; // the player suggests a circle instead of a plan
+    try { localStorage.setItem("plan-made", "1"); } catch (e) {}
     out.hidden = false;
     out.querySelector("h3").focus();
   });
   form.addEventListener("input", function () { if (!out.hidden) render(read()); });
   form.addEventListener("change", function () { if (!out.hidden) render(read()); });
 
+  // Invite without sharing the plan itself: a short message with the link (v1.1.43)
+  out.querySelector("[data-act=invite]").addEventListener("click", function () {
+    window.countAction("plan-invite");
+    window.open("https://wa.me/?text=" + encodeURIComponent(
+      "הכנתי תוכנית קטנה ליום הבחירות: מתי, עם מי, ולמי להקדיש את הרגע שמאחורי הפרגוד. זה לוקח דקה, ואפשר להכין גם לך:\n" +
+      SITE_URL + "plan.html?utm_source=plan-invite"), "_blank", "noopener");
+  });
   out.querySelector("[data-act=whatsapp]").addEventListener("click", function () {
     window.countAction("plan-whatsapp");
     window.open("https://wa.me/?text=" + encodeURIComponent(shareText(read())), "_blank", "noopener");

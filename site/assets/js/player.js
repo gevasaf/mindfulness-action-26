@@ -55,6 +55,7 @@
       "</div>" +
       '<div class="pbar-end">' +
         '<a class="btn pbar-plan" data-p="plan" href="plan.html" aria-label="התוכנית שלי: תוכנית ההצבעה">התוכנית שלי</a>' +
+        '<a class="btn pbar-circle" data-p="circle" href="host-kit.html">לפתוח מעגל נשימה</a>' +
         '<a class="pbar-help" href="#support" data-p="help" title="אם עלה משהו קשה, אפשר לדבר עם מישהו">קווי סיוע</a>' +
       "</div>" +
       '<button type="button" class="ibtn" data-p="back" aria-label="15 שניות אחורה">' + icon("back") + "</button>" +
@@ -79,6 +80,8 @@
     '<div class="pfull-caption" aria-live="polite"><p></p><p></p></div>' +
     '<div class="pfull-end">' +
       '<a class="btn pfull-plan" data-p="plan" href="plan.html" aria-label="התוכנית שלי: תוכנית ההצבעה">התוכנית שלי</a>' +
+      '<p class="pfull-circle-lead">תוכנית ההצבעה כבר מוכנה. אפשר להביא גם אחרים לנשימה:</p>' +
+      '<a class="btn pfull-circle" data-p="circle" href="host-kit.html">לפתוח מעגל נשימה</a>' +
       '<a href="#support" data-p="help">אם עלה משהו קשה, אפשר לדבר עם מישהו: קווי סיוע</a>' +
     "</div>" +
     '<div class="pfull-controls">' +
@@ -150,13 +153,19 @@
   }
 
   // ---------- end of a meditation ----------
-  // The support lines and an invitation to plan the vote appear together. The
-  // plan link is skipped if a plan was already made in this visit (in memory).
+  // The support lines and the next step appear together: an invitation to plan the vote, or, once a
+  // plan was made on this device (window.planMade, or the "plan-made" mark in localStorage: only that
+  // a plan was made, never its content), an invitation to open a breathing circle.
   // In the bar they replace the title and time until playback or seeking resumes.
+  function planDone() {
+    if (window.planMade) return true;
+    try { return localStorage.getItem("plan-made") === "1"; } catch (e) { return false; }
+  }
   function setEnded(on) {
     [bar, full].forEach(function (el) {
       el.classList.toggle("ended", on);
-      el.classList.toggle("show-plan", on && !window.planMade);
+      el.classList.toggle("show-plan", on && !planDone());
+      el.classList.toggle("show-circle", on && planDone());
     });
   }
 
@@ -260,6 +269,7 @@
       case "title": closeFull(); break;
       case "help": closeFull(); break; // #support is on every page
       case "plan": window.countEvent("plan-from-player-" + current); closeFull(); setEnded(false); break;
+      case "circle": window.countAction("circle-from-player"); closeFull(); setEnded(false); break;
       case "share": window.countEvent("share-whatsapp-player-" + current); break; // the link opens WhatsApp // the link itself navigates (in place, via main.js)
     }
   });
