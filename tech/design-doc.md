@@ -3,7 +3,7 @@
 **Implements:** design-v1.1 ("community without a server"), as described in `design/philosophy.html` (status 2026-10-07). The v2 direction (server: teachers, circles map) was dropped on 2026-10-07; its docs and code (never merged, never deployed) are on the `archive/v2` branch.
 
 > Older references below to `design/releases/…`, `questions-for-design #N` and `ITERATIONS.md` point to files removed on 2026-10-07 when the workflow was simplified. They are still in the git history.
-**Tech doc version:** t2.1.44 · **Site version:** v1.1.44 (shown in every page footer)
+**Tech doc version:** t2.1.45 · **Site version:** v1.1.45 (shown in every page footer)
 **Stack:** see [`stack.md`](stack.md)
 
 ## Overview
@@ -175,6 +175,7 @@ When teachers' recordings arrive, each gets its own id, and the existing events 
 ## Changelog
 | Tech doc version | Implements | Date | Summary |
 |---|---|---|---|
+| t2.1.45 | design (funnel) + user request | 2026-10-11 | Site v1.1.45: plan page arriving from a shared plan (`?utm_source=plan-share`, read by `plan.js`): a welcome above the form (`[data-from-share]`), gender-neutral, one sentence on what the project is, and a quiet link that plays `imagine-good`. Everyone else sees the page unchanged. |
 | t2.1.44 | design (funnel) + user request | 2026-10-11 | Site v1.1.44: one call to action at a time after the plan card: "להוסיף תזכורת ליומן", then "לשתף את הכרטיס בוואטסאפ" (with "בלי יומן, ישר לשיתוף" and "או לשמור כתמונה" as quiet links). The invite button and the circle card at the end of the plan are gone. The circle invitation at the end of a meditation is shown only to the committed: calendar reminder added (`plan-calendar`) or home-screen icon (standalone, `home-screen-added`); `plan-made` is no longer stored. Funnel report steps follow. |
 | t2.1.43 | design (funnel) + user request | 2026-10-11 | Site v1.1.43: the funnel as a ladder. End of the plan: "להזמין בוואטסאפ" (an invitation without the plan) and a "להביא גם אחרים לנשימה" card with "לפתוח מעגל נשימה". End of a meditation: the plan invitation, or, once a plan was made on this device (localStorage `plan-made`, only the mark), "לפתוח מעגל נשימה". Circles page renamed (menu "מעגלי נשימה", title and h1 "לפתוח מעגל נשימה"), its share button removed. Kit reading measured (`kit-part-<id>`, `kit-read`); utm on plan share/invite links; `tech/tools/funnel-report.py`. |
 | t2.1.42 | user request | 2026-10-09 | Site v1.1.42: Google Search Console verification meta tag on the home page (URL-prefix property for the project path). |

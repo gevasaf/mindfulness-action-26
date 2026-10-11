@@ -23,6 +23,9 @@ window.onPage(function () {
   var MED_MINUTES = { "arrive-present": 6, "behind-the-curtain": 8, "clarity-in-the-noise": 6, "my-community": 5, "imagine-good": 4 };
 
   var out = document.getElementById("plan-result");
+  // Arriving from a shared plan (v1.1.45): a short welcome that says what this is, and a breath first
+  var welcome = document.querySelector("[data-from-share]");
+  if (welcome) welcome.hidden = !/[?&]utm_source=plan-share\b/.test(location.search);
   function pc(name) { return out.querySelector('[data-pc="' + name + '"]'); }
   function rows(name) { return out.querySelectorAll('[data-pc-row="' + name + '"]'); }
 

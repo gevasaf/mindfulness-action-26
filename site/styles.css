@@ -525,3 +525,8 @@ details.part > summary:focus-visible { outline: 3px solid var(--sage); outline-o
 .plan-step-alt { margin: 0; }
 .plan-step-done { margin: 0; color: var(--sage-ink); font-weight: 600; }
 @media print { .plan-next { display: none; } }
+
+/* Plan page, arriving from a shared plan */
+.from-share { margin: 0 0 24px; padding: 16px 20px; border-radius: 12px; background: var(--sage-soft); border-inline-start: 4px solid var(--sage); }
+.from-share p { margin: 0 0 6px; }
+.from-share p:last-child { margin: 0; }
