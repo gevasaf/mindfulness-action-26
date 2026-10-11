@@ -67,12 +67,12 @@ steps = [
     ("ביקורים (צפיות בעמודים)", pages, None),
     ("התחילו מדיטציה", total(r"listen-(?!complete-).*"), 0),
     ("האזינו עד הסוף", total(r"listen-complete-.*"), 1),
-    ("הכינו תוכנית הצבעה", c("plan-created"), 2),
+    ("הכינו תוכנית הצבעה (מכשירים)", c("plan-created"), 2),
     ("הוסיפו תזכורת ליומן", c("plan-calendar"), 3),
     ("שיתפו את הכרטיס", c("plan-whatsapp") + c("plan-image"), 3),
     ("הגיעו מקישור ששותף", refs.get("plan-share", 0), 5),
     ("עברו לעמוד המעגלים", c("/host-kit.html"), 0),
-    ("קראו את הערכה או הורידו", c("kit-read") + c("kit-pdf"), 7),
+    ("קראו, הורידו או הדפיסו את הערכה", c("kit-read") + c("kit-pdf") + c("kit-print"), 7),
     ("הדפיסו שלט או דף הנחיה", c("sign-print") + c("sign-print-group") + c("guide-print"), 8),
 ]
 print(f"משפך נוֹכְחִים, {START} עד {END}\n")
@@ -81,13 +81,22 @@ for name, n, base in steps:
     rate = f"{100 * n / b:5.1f}% מ\"{steps[base][0]}\"" if b else ""
     print(f"{n:7d}  {name:28} {rate}")
 print("\nהגעה לעמוד המעגלים: מסוף מדיטציה", c("circle-from-player"),
-      "· קריאת ערכה", c("kit-read"), "· PDF", c("kit-pdf"))
+      "· קריאת ערכה", c("kit-read"), "· PDF", c("kit-pdf"), "· הדפסת העמוד", c("kit-print"))
+print("תוכניות נוספות באותו מכשיר (עדכון או תוכנית שנייה):", c("plan-created-again"),
+      "· דילגו על היומן:", c("plan-calendar-skip"))
+print("התחלות האזנה לפי מקום: עמוד ראשי", c("listen-src-hero"), "· עמוד המדיטציות", c("listen-src-meditations"),
+      "· יום הבחירות", c("listen-src-election-day"), "· פתיחה למי שהגיע משיתוף", c("listen-src-plan-welcome"),
+      "· מהנגן", c("listen-src-player"), "· אחר", c("listen-src-other"))
+home = c("/")
+if home: print(f"מבקרי העמוד הראשי שלחצו על ההאזנה בפתיחה: {100 * c('listen-src-hero') / home:.1f}% ({c('listen-src-hero')} מתוך {home})")
+print("שיתופי מדיטציות בוואטסאפ:", total(r"share-whatsapp-(?!page).*"), "· פתיחות מהאייקון במסך הבית:", refs.get("homescreen", 0),
+      "· הוספות למסך הבית (אנדרואיד):", c("home-screen-added"))
 print("כניסות מהשלט (QR):", refs.get("sign", 0), "· ממייל למורים:", refs.get("teacher-email", 0), "· מהודעות:", refs.get("dm", 0))
 
-print("\nלפי מדיטציה: התחלות · סיום · % סיום · תוכניות אחרי · מעגל/ערכה אחרי")
+print("\nלפי מדיטציה (סיום = לפחות 80% הושמעו): התחלות · סיום · % סיום · תוכניות אחרי · מעגל/ערכה אחרי")
 for m in MEDS:
     s, f = c(f"listen-{m}"), c(f"listen-complete-{m}")
     plans = c(f"plan-created-after-{m}")
-    circle = sum(c(f"{a}-after-{m}") for a in ("circle-from-player", "kit-read", "kit-pdf", "sign-print", "guide-print"))
+    circle = sum(c(f"{a}-after-{m}") for a in ("circle-from-player", "kit-read", "kit-pdf", "kit-print", "sign-print", "sign-print-group", "guide-print"))
     print(f"{m:22} {s:6d} {f:6d} {(100 * f / s if s else 0):6.1f}% {plans:6d} {circle:6d}")
 print("\nמספרים קטנים הם רעש: עד כמה עשרות בכל שלב, קוראים מגמות, לא אחוזים.")

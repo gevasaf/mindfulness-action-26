@@ -1,6 +1,7 @@
 // "My voting plan": runs entirely in the browser. What people type is never sent
-// or stored (no cookies; localStorage keeps only the mark "plan-calendar", that a reminder
-// was added, so the player can suggest the next step). The only network call is an anonymous
+// or stored (no cookies; localStorage keeps only the marks "plan-made" and "plan-calendar":
+// that a plan was made, so a second one is counted apart, and that a reminder was added, so the
+// player can suggest the next step). The only network call is an anonymous
 // GoatCounter event name ("plan-created" etc.), never the plan itself. design-v0 §8, §13.
 //
 // Fields (all optional): when, where (calendar only: never on the shared card or
@@ -185,7 +186,13 @@ window.onPage(function () {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     render(read());
-    if (out.hidden) window.countAction("plan-created");
+    // First plan on this device: "plan-created" (about people); a later one: "plan-created-again".
+    // Only the mark "plan-made" is kept, never the plan.
+    if (out.hidden) {
+      var again = false;
+      try { again = localStorage.getItem("plan-made") === "1"; localStorage.setItem("plan-made", "1"); } catch (e) {}
+      window.countAction(again ? "plan-created-again" : "plan-created");
+    }
     out.hidden = false;
     out.querySelector("h3").focus();
   });
@@ -193,6 +200,7 @@ window.onPage(function () {
   form.addEventListener("change", function () { if (!out.hidden) render(read()); });
 
   // After the card: one step at a time (v1.1.44). First the calendar reminder, then sharing the card.
+  var calendarCounted = false;
   function showShare(afterCalendar) {
     out.querySelector('[data-step="calendar"]').hidden = true;
     out.querySelector('[data-step="share"]').hidden = false;
@@ -208,7 +216,7 @@ window.onPage(function () {
     window.open("https://wa.me/?text=" + encodeURIComponent(shareText(read())), "_blank", "noopener");
   });
   out.querySelector("[data-act=calendar]").addEventListener("click", function () {
-    window.countAction("plan-calendar");
+    if (!calendarCounted) { calendarCounted = true; window.countAction("plan-calendar"); } // once per page view
     download(new Blob([ics(read())], { type: "text/calendar;charset=utf-8" }), "voting-plan-27-10.ics");
     // The mark only (no content): from now on, the end of a meditation suggests a breathing circle
     try { localStorage.setItem("plan-calendar", "1"); } catch (e) {}

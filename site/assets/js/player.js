@@ -172,7 +172,7 @@
   // ---------- actions ----------
   function load(id) {
     current = id;
-    started = false;
+    started = false; played = 0; lastT = 0;
     stanzas = []; caption = -2; setCaption(""); setEnded(false);
     audio.src = AUDIO_DIR + id + ".mp3";
     each("title", function (a) { a.querySelector(".ptitle-text").textContent = MEDITATIONS[id].title; a.href = "meditations.html#" + id; });
@@ -231,10 +231,25 @@
   window.sitePlayer = { play: play, toggle: toggle, stop: stop, current: function () { return current; }, audio: audio };
 
   // ---------- events ----------
+  // Measurement (v1.1.46): "listen-<id>" when playback starts, plus "listen-src-<where>" (hero,
+  // meditations, election-day, plan-welcome, player, other) to see which entry points start listening.
+  // "listen-complete-<id>" only when at least 80% of the track was actually played (seeking to the
+  // end doesn't count); only then is the meditation remembered for "-after-" attribution.
+  var played = 0, lastT = 0, startSrc = "other";
   audio.addEventListener("play", function () {
-    if (!started) { started = true; window.countEvent("listen-" + current); }
+    if (!started) {
+      started = true; played = 0; lastT = audio.currentTime;
+      window.countEvent("listen-" + current);
+      window.countEvent("listen-src-" + startSrc);
+    }
     syncButtons();
   });
+  audio.addEventListener("timeupdate", function () {
+    var t = audio.currentTime, dt = t - lastT;
+    if (!audio.seeking && dt > 0 && dt < 1.5) played += dt;
+    lastT = t;
+  });
+  audio.addEventListener("seeked", function () { lastT = audio.currentTime; });
   audio.addEventListener("pause", syncButtons);
   audio.addEventListener("timeupdate", tick);
   audio.addEventListener("loadedmetadata", tick);
@@ -248,8 +263,10 @@
     syncButtons();
   });
   audio.addEventListener("ended", function () {
-    window.countEvent("listen-complete-" + current);
-    window.rememberMeditation(current);
+    if (audio.duration && played >= 0.8 * audio.duration) {
+      window.countEvent("listen-complete-" + current);
+      window.rememberMeditation(current);
+    }
     started = false;
     setCaption("סוף המדיטציה.\nלאט, לחזור לחדר, לגוף, לנשימה.");
     setEnded(true);
@@ -259,9 +276,16 @@
   document.addEventListener("click", function (e) {
     var t = e.target.closest ? e.target.closest("[data-play], [data-p]") : null;
     if (!t) return;
-    if (t.hasAttribute("data-play")) { e.preventDefault(); toggle(t.getAttribute("data-play")); return; }
+    if (t.hasAttribute("data-play")) {
+      e.preventDefault();
+      var page = (location.pathname.match(/([a-z-]+)\.html$/) || [])[1];
+      startSrc = t.closest(".hero") ? "hero" : t.closest("[data-from-share]") ? "plan-welcome"
+        : page === "meditations" || page === "election-day" ? page : "other";
+      toggle(t.getAttribute("data-play"));
+      return;
+    }
     switch (t.getAttribute("data-p")) {
-      case "toggle": toggle(); break;
+      case "toggle": startSrc = "player"; toggle(); break;
       case "back": audio.currentTime = Math.max(0, audio.currentTime - 15); break;
       case "expand": openFull(); break;
       case "collapse": closeFull(); break;

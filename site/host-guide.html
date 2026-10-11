@@ -108,14 +108,15 @@
     </div>
   </div>
   <p class="indep">המעגל עצמאי, באחריות מי שפותח/ת אותו. נוֹכְחִים מציע ערכה והנחיות, אבל לא מארגן מעגלים ולא אחראי להם.</p>
-  <div class="sheet-foot"><span>גרסה v1.1.45</span><span>אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</span></div>
+  <div class="sheet-foot"><span>גרסה v1.1.46</span><span>אנחנו לא אומרים לכם למי להצביע, ולעולם לא נשאל אתכם למי תצביעו.</span></div>
 </main>
 <script>
   // Anonymous count of printed guides (GoatCounter, event name only), plus "guide-print-after-<id>"
   // when a meditation was heard to the end in the last 3 hours (same key as main.js, never sent).
   window.addEventListener("beforeprint", function () {
     try {
-      if (!window.goatcounter || !window.goatcounter.count) return;
+      if (window.__printCounted || !window.goatcounter || !window.goatcounter.count) return;
+        window.__printCounted = true; // once per page view: print preview and retries fire beforeprint again
       window.goatcounter.count({ path: "guide-print", title: "guide-print", event: true });
       var v = JSON.parse(localStorage.getItem("nkh-last-meditation"));
       if (v && /^[a-z0-9-]+$/.test(v.id) && Date.now() - v.t < 3 * 3600 * 1000) window.goatcounter.count({ path: "guide-print-after-" + v.id, title: "guide-print", event: true });

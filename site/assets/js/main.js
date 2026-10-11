@@ -486,7 +486,10 @@
   });
 
   // Print shows every folded part.
+  var kitPrinted = false;
   window.addEventListener("beforeprint", function () {
+    // Printing the kit page from the browser is a circle in the making too (once per page view)
+    if (!kitPrinted && document.querySelector("main details.part")) { kitPrinted = true; window.countAction("kit-print"); }
     Array.prototype.forEach.call(document.querySelectorAll("details.part"), function (d) { d.open = true; });
   });
 
