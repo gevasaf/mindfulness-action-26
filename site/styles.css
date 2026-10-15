@@ -385,6 +385,19 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .site-footer .inner { max-width: 1080px; margin: 0 auto; display: grid; gap: 10px; }
 .site-footer a { color: var(--muted); }
 
+/* Partner credit (v1.1.47, shown only with ?preview=educare). The logo keeps its own colours;
+   multiply drops a white background into the paper colour, and in dark mode it sits on a light card. */
+.site-footer .partner a { color: var(--sage-ink); font-weight: 600; }
+.site-footer .partner a.has-logo { display: inline-block; vertical-align: middle; margin-inline-start: 6px; }
+.partner-logo { display: block; height: 44px; width: auto; mix-blend-mode: multiply; }
+.partner-card { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
+.partner-card p { flex: 1 1 260px; margin: 0; }
+.partner-card .partner-logo { height: 84px; }
+.partner-logo-link:not(.has-logo) { font-weight: 600; }
+@media (prefers-color-scheme: dark) {
+  .partner-logo { mix-blend-mode: normal; background: #fffdf9; border-radius: 10px; padding: 6px 10px; box-sizing: content-box; }
+}
+
 .say-box { background: var(--card); border: 1px solid var(--line); border-inline-start: 4px solid var(--clay); border-radius: 10px; padding: 14px 18px; margin: 12px 0; line-height: 1.7; }
 .steps > li ul { margin: 6px 0 0; padding-inline-start: 18px; }
 

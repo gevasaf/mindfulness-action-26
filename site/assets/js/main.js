@@ -579,5 +579,41 @@
     var line = document.querySelector(".a2hs"); if (line) line.remove();
   });
 
+  // Partner preview (v1.1.47): the distribution partner's credit (footer, about page) stays hidden
+  // unless the visit was opened with ?preview=educare (kept for the visit; ?preview=off clears it).
+  // Hidden, not secret: the markup is in the public repo. The logo is used once
+  // assets/partners/educare.png exists; until then the partner's name shows as text.
+  var PREVIEW = "nkh-preview", PARTNER_LOGO = "assets/partners/educare.png", partnerLogo = null;
+  var previewArg = (location.search.match(/[?&]preview=([a-z]+)/) || [])[1];
+  var previewOn = previewArg === "educare";
+  try {
+    if (previewArg === "educare") sessionStorage.setItem(PREVIEW, "educare");
+    else if (previewArg === "off") sessionStorage.removeItem(PREVIEW);
+    previewOn = sessionStorage.getItem(PREVIEW) === "educare";
+  } catch (e) {}
+  function showPartnerLogo() {
+    document.querySelectorAll("[data-partner-link]:not(.has-logo)").forEach(function (a) {
+      var name = a.textContent.trim();
+      a.classList.add("has-logo");
+      a.setAttribute("aria-label", name);
+      a.textContent = "";
+      var img = document.createElement("img");
+      img.className = "partner-logo";
+      img.src = PARTNER_LOGO;
+      img.alt = "";
+      a.appendChild(img);
+    });
+  }
+  window.onPage(function () {
+    if (!previewOn) return;
+    document.querySelectorAll("[data-partner]").forEach(function (el) { el.hidden = false; });
+    document.querySelectorAll("[data-partner-off]").forEach(function (el) { el.hidden = true; });
+    if (!partnerLogo) {
+      partnerLogo = new Image();
+      partnerLogo.onload = function () { partnerLogo.ok = true; showPartnerLogo(); };
+      partnerLogo.src = PARTNER_LOGO;
+    } else if (partnerLogo.ok) showPartnerLogo();
+  });
+
   document.addEventListener("DOMContentLoaded", runInits);
 })();
