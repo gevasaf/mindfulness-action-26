@@ -390,9 +390,11 @@ details.script .script-body { white-space: pre-line; font-size: 1rem; color: var
 .site-footer .partner a { color: var(--sage-ink); font-weight: 600; }
 .site-footer .partner { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .site-footer .partner[hidden] { display: none; }
+.site-footer .partner a.has-logo { display: inline-flex; align-items: center; gap: 10px; }
 .partner-logo { display: block; height: 64px; width: auto; }
-.partner-card { display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
-.partner-card p { flex: 1 1 260px; margin: 0; }
+.partner-card { display: flex; gap: 20px; align-items: flex-start; flex-wrap: wrap; }
+.partner-text { flex: 1 1 260px; }
+.partner-text p { margin: 0 0 10px; }
 .partner-card .partner-logo { height: 88px; }
 .partner-logo-link:not(.has-logo) { font-weight: 600; }
 

@@ -581,8 +581,10 @@
 
   // Partner preview (v1.1.47): the distribution partner's credit (footer, about page) stays hidden
   // unless the visit was opened with ?preview=educare (kept for the visit; ?preview=off clears it).
-  // Hidden, not secret: the markup is in the public repo. The logo replaces the partner's name
-  // once assets/partners/educare.png has loaded (v1.1.48); if it fails, the name stays as text.
+  // Hidden, not secret: the markup is in the public repo. Once assets/partners/educare.png has
+  // loaded, the logo goes before the partner's name in each [data-partner-link] (footer: logo and
+  // name in one link, v1.1.49), or replaces it with data-partner-link="logo" (about page).
+  // If the logo fails, the name stays as text.
   var PREVIEW = "nkh-preview", PARTNER_LOGO = "assets/partners/educare.png", partnerLogo = null;
   var previewArg = (location.search.match(/[?&]preview=([a-z]+)/) || [])[1];
   var previewOn = previewArg === "educare";
@@ -593,10 +595,9 @@
   } catch (e) {}
   function showPartnerLogo() {
     document.querySelectorAll("[data-partner-link]:not(.has-logo)").forEach(function (a) {
-      var name = a.textContent.trim();
+      var logoOnly = a.getAttribute("data-partner-link") === "logo";
       a.classList.add("has-logo");
-      a.setAttribute("aria-label", name);
-      a.textContent = "";
+      if (logoOnly) { a.setAttribute("aria-label", a.textContent.trim()); a.textContent = ""; }
       // Two versions from tech/tools/partner-logo.py: the partner's colours, and one with the dark
       // teal lifted for the dark theme
       var pic = document.createElement("picture");
@@ -609,7 +610,7 @@
       img.alt = "";
       img.width = 320; img.height = 303;
       pic.appendChild(dark); pic.appendChild(img);
-      a.appendChild(pic);
+      a.insertBefore(pic, a.firstChild);
     });
   }
   window.onPage(function () {
